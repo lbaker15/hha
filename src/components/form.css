@@ -1,0 +1,204 @@
+@charset "UTF-8";
+/* CSS Document */
+
+/*--------------------------------------------------------------
+>>> TABLE OF CONTENTS:
+----------------------------------------------------------------
+# Universal
+# Rating Page
+# Professional Page
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+# Universal
+--------------------------------------------------------------*/
+body {
+	/* background-image: url("images/hhback.jpg"); */
+    background-size: cover;
+    font-family: 'Open Sans', sans-serif;
+    font-size: calc(13px + 1vw);
+    line-height: 1.2;
+    margin: 0;
+}
+a {
+    text-decoration: underline;
+}
+a:hover {
+    text-decoration: none;
+}
+#logorow img{
+    max-width: 50%;
+    height: auto;
+}
+#logorow {
+    text-align: center;
+    padding-top: 30px;
+}
+.white {
+    color: #fff;
+}
+.hide {
+    display: none;
+}
+.padthat {
+   padding: 0 calc(3vw + 10px);
+}
+/*--------------------------------------------------------------
+# Rating Page
+--------------------------------------------------------------*/
+#ratingfeeling label {
+    display: inline-block;
+    text-align: center;
+    font-size: calc(9px + 1vw);
+    width: 8vw;
+}
+#ratingfeeling label input{
+    display: block;
+    margin: auto;
+}
+#ratingfeeling {
+    background-size: 90.2% 8px;
+    background-repeat: no-repeat;
+    background-position: 4vw 2px;
+}
+#maincontent {
+    text-align: center;
+}
+#maincontentinner {
+    text-align: left;
+    display: inline-block;
+    margin: auto;
+}
+#feeling {
+    padding-left: calc(4vw - 9px);
+    margin: 10vh 0 5vh;
+    font-weight: bold;
+}
+#ratingleft {
+    float:left;
+}
+#ratingright {
+    float:right;
+}
+#ratingwords {
+    text-align:center;
+    font-size: calc(11px + 1vw);
+   padding:0 calc(4vw - 9px);
+    font-weight: bold;
+    margin-top: 1vh;
+}
+/*--------------------------------------------------------------
+# Professional Page
+--------------------------------------------------------------*/
+#surroundit {
+    display: contents;
+}
+#blackback {
+    position: fixed;
+    width:100vw;
+    height: 100vh;
+    background-color: #000;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    opacity: 0.8;
+}
+#nineoneone {
+    position: fixed;
+    width:80vw;
+    max-height: 50vh;
+    background-color: #fff;
+    top: 25vh;
+    left: 9vw;
+    z-index: 2;
+    overflow: scroll;
+    padding: 2vw;
+    font-weight: bold;
+}
+#nineoneone h2 {
+    font-size: calc(13px + 1vw);
+    color: #E72943;
+    margin-bottom: 0;
+}
+#nineoneone a {   
+    color: #E72943;
+}
+#close {
+    position: fixed;
+    color: #fff;
+    border: 4px solid #fff;
+    top: 22vh;
+    left: 92vw;
+    z-index: 3;
+    background-color: #000;
+    font-weight: bold;
+    border-radius: 50px;
+    line-height: 35px;
+    padding-bottom: 5px;
+    width: 40px;
+    text-align: center;
+    cursor: pointer;
+}
+#languagepreference, #gender, #dob, #whattreatment, #address, #travelradius {
+    background-color: #fff;
+    color: #000;
+    font-size: calc(11px + 1vw);
+    padding: 2vw;
+}
+iframe {
+    width: 100%;
+}
+#languagepreference h2, #gender h2, #dob h2, #whattreatment h2, #address h2, #travelradius h2 {   
+    font-size: calc(13px + 1vw);
+    margin: 0;
+}
+#languagepreference input, #gender input, #whattreatment input, #travelradius input {
+   height: calc(20px + 0.5vw);
+    width: calc(20px + 0.5vw);
+    position: relative;
+    top: 2px;
+}
+.genderwidth {
+   height: auto !important;
+    width: 95% !important;
+    position: static !important;
+    margin-top: 10px;
+    padding: 5px;
+}
+#dob input, #address {
+    width: 95%;
+    margin-top: 5px;
+}
+#gender, #dob, #whattreatment, #address, #travelradius {
+    margin-top: calc(20px + 1vw);
+}
+#morelang {
+    border:1px solid #bcbec0;
+    padding: 5px;
+    margin: calc(5px + 1vw) 5px 5px;
+}
+#morelang.opened::after {
+     content: "-";
+    padding-right: 5px;
+    float: right;
+}
+#morelang:hover {
+    background-color: #eee;
+}
+#morelang::after {
+     content: "+";
+    padding-right: 5px;
+    float: right;
+}
+.onepad {
+    padding: 20px 0.5vw;
+}
+.mediumfont {
+    font-size: calc(11px + 1vw);
+}
+@media only screen and (max-width: 767px) {
+    #close {
+        top: 20vh;
+        left: 85vw;
+    }
+}
