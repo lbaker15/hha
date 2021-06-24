@@ -18,19 +18,19 @@ let values = [
 
 class Treatment extends React.Component {
     render() {
-        const {handleInput} = this.props;
+        const {handleInputArray} = this.props;
         return (
             <React.Fragment>
                 <h2>What are you seeking support for?</h2>
-                    {values.map(x => {
+                    {values.map((x,i) => {
                         return (
-                            <React.Fragment>
-                                <label>
+                            <React.Fragment key={x+i}>
+                                <label key={x+i}>
                                     <input 
                                     type="checkbox"
                                     name="treatment" 
                                     value={x.value} 
-                                    onChange={handleInput}
+                                    onChange={handleInputArray}
                                     id="treatment_a"></input>
                                     {x.value}
                                 </label>

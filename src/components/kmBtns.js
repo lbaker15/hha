@@ -3,7 +3,7 @@ import React from 'react';
 let btnValues = [
     {amount: '0-2 km', value: 2},
     {amount: '2-20 km', value: 20},
-    {amount: '>20 km', value: 0}
+    {amount: '>20 km', value: 100}
 ]
 
 class KmBtns extends React.Component {
@@ -15,8 +15,8 @@ class KmBtns extends React.Component {
                 {
                 btnValues.map((x, i) => {
                     return (
-                        <React.Fragment>
-                            <label>
+                        <React.Fragment key={x+i}>
+                            <label key={x+i}>
                                 <input 
                                 type="radio" 
                                 name="travelradius" 

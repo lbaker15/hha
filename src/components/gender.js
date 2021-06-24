@@ -21,8 +21,8 @@ class Gender extends React.Component {
             <React.Fragment>
                 {genders.map((x, i) => {
                     return (
-                        <React.Fragment>
-                            <label>
+                        <React.Fragment key={x+i}>
+                            <label key={x+i}>
                                 <input 
                                 type="radio" 
                                 name="gender" 

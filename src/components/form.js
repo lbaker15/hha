@@ -2,9 +2,48 @@ import React from 'react';
 import ListOfLanguages from './listOfLanguages';
 import Gender from './gender';
 import GeneralInput from './generalInput';
+import {connect} from 'react-redux';
 import KmBtns from './kmBtns';
+import Map from './map';
 import Treatment from './treatment';
 import './form.css';
+
+let markersArr = new Array;
+const handleMarkers = (state, props) => {
+    const infoWindow = new window.google.maps.InfoWindow();
+    state.coords.map(x => {
+       let marker = new window.google.maps.Marker({
+           position: x,
+           map: props.mapSaved,
+           title: `
+           <h1 style="
+           margin-bottom: 0;
+           color: black; font-family: poppins;"> ${x.title1} </h1>
+           <h2 style="
+           margin-bottom: 0;
+           margin-top: 0;
+           font-weight: 200;
+           font-size: 16px;
+           color: black; font-family: poppins;"> ${x.title2} </h2>
+           <h3 style="
+           margin-top: 5px;
+           font-weight: 400;
+           color: black; font-family: poppins;"> ${x.address} </h3>
+           `
+       });
+       markersArr.push(marker)
+       marker.addListener("click", () => {
+           infoWindow.close();
+           infoWindow.setContent(marker.getTitle());
+           infoWindow.open(marker.getMap(), marker);
+       })
+     })
+}
+const clearMarkers = () => {
+    markersArr.forEach(m => {
+        m.setMap(null)
+    })
+}
 
 class Form extends React.Component {
     state = {
@@ -12,23 +51,27 @@ class Form extends React.Component {
         preferredLanguage: [],
         gender: '',
         age: '',
-        address: ''
+        address: '',
+        coords: [],
+        travelradius: '',
+        treatment: [],
+        alert: ''
     }
     handleLanguageClick = () => {
         this.setState((prev) => ({
             languageHide: !prev.languageHide
         }))
     }
-    handlePreferredLang = (e) => {
-        const check = this.state.preferredLanguage;
+    handleInputArray = (e) => {
+        const check = this.state[e.target.name];
         if (!check.find(x => x === e.target.value) ) {
             this.setState((prev) => ({
-                preferredLanguage: prev.preferredLanguage.concat(e.target.value)
+                [e.target.name]: prev[e.target.name].concat(e.target.value)
             }))
         } else {
             let newArr = check.filter(x => x !== e.target.value)
             this.setState({
-                preferredLanguage: newArr
+                [e.target.name]: newArr
             })
         }
     }
@@ -43,9 +86,57 @@ class Form extends React.Component {
             })
         }
     }
-    
+    handleClick = () => {
+        const {languageHide, travelradius, preferredLanguage, address, gender, age} = this.state;
+        //FORM VALIDATION WOULD GO HERE
+        if (address.length > 0 && travelradius.length > 0) {
+        let obj = {
+            "address": address,
+            "distanceLimit": travelradius
+        }
+        //INIT LOADER, MAKE CLEAR MARKERS ASYNC
+        clearMarkers()
+        this.setState({
+            coords: []
+        })
+        fetch('https://hannahs-heart-2.herokuapp.com/data/get-providers', {
+            method: 'POST',
+            body: JSON.stringify(obj),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log('returned', data)
+            Promise.all(
+                data.Data.map(x => {
+                    console.log('x', x)
+                    let {lat, lng, name, discipline, businessAddress} = x;
+                    return this.setState((prev) => ({
+                        coords: prev.coords.concat({address: businessAddress, title1: name, title2: discipline, lat: Number(lat), lng: Number(lng)})
+                    }))
+                })
+            )
+            .then(() => {
+                console.log('handle', this.state)
+                handleMarkers(this.state, this.props)
+            })
+        })
+        } else {
+            //ALERT TO FILL IN TRAVEL RADIUS/ADDRESS
+            this.setState({
+                alert: 'Please ensure your address and travel radius are filled in.'
+            })
+            setTimeout(() => {
+                this.setState({
+                    alert: ''
+                })
+            }, 5000)
+        }
+    }
     render() {
-        const {languageHide, preferredLanguage, address, gender, age} = this.state;
+        const {languageHide, alert, preferredLanguage, coords, address, gender, age} = this.state;
         console.log(this.state)
         return (
             <React.Fragment>
@@ -57,20 +148,20 @@ class Form extends React.Component {
                             <h2>Preferred Language(s)</h2>
                             <label style={{userSelect: 'none'}}>
                                 <input 
-                                onChange={this.handlePreferredLang}
-                                type="checkbox" name="languages" value="English" id="languages_20"></input>
+                                onChange={this.handleInputArray}
+                                type="checkbox" name="preferredLanguage" value="English" id="languages_20"></input>
                                 English</label>
                                 <br/>
                             <label style={{userSelect: 'none'}}>
                                 <input 
-                                onChange={this.handlePreferredLang}
-                                type="checkbox" name="languages" value="French" id="languages_25"></input>
+                                onChange={this.handleInputArray}
+                                type="checkbox" name="preferredLanguage" value="French" id="languages_25"></input>
                                 French</label>
                             <div 
                             onClick={this.handleLanguageClick}
                             id="morelang">Select</div>
                                 <div id="otherlanguages" className={languageHide ? "hide" : null}>
-                                    <ListOfLanguages handlePreferredLang={this.handlePreferredLang} />
+                                    <ListOfLanguages handlePreferredLang={this.handleInputArray} />
                                 </div>
                         </div>
                         
@@ -84,7 +175,7 @@ class Form extends React.Component {
                         </div>
 
                         <div id="whattreatment">
-                            <Treatment handleInput={this.handleInputField} />    
+                            <Treatment handleInputArray={this.handleInputArray} handleInput={this.handleInputField} />    
                         </div>
                             
                         <div id="address">
@@ -94,7 +185,21 @@ class Form extends React.Component {
                         <div id="travelradius">
                             <KmBtns handleInput={this.handleInputField} />
                         </div>
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d356824.9034804846!2d-76.9793230649993!3d45.67703177095065!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1srenfrew%20county%20mental%20health!5e0!3m2!1sen!2sca!4v1620401817455!5m2!1sen!2sca" width="600" height="450" allowfullscreen="" loading="lazy"></iframe>
+
+                        <div class="btnFlex">
+                            <div class="alertMsg">
+                                {alert}
+                            </div>
+                            <button
+                            onClick={this.handleClick}
+                            >Submit</button>
+                            <div class="loader">
+
+                            </div>
+                        </div>
+
+                        <Map coords={coords} />
+
                         </div>
                     </div>
             </React.Fragment>
@@ -102,4 +207,6 @@ class Form extends React.Component {
     }
 }
 
-export default Form;
+export default connect((state) => ({
+    mapSaved: state.main
+}))(Form);
