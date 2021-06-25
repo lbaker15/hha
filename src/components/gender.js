@@ -15,7 +15,7 @@ class Gender extends React.Component {
         })
     }
     render() {
-        const {handleGender, gender} = this.props;
+        const {handleGender, gender, noGenderWidth} = this.props;
         const {otherGender} = this.state;
         return (
             <React.Fragment>
@@ -29,7 +29,8 @@ class Gender extends React.Component {
                                 value={x} 
                                 id={`gender_${i}`} 
                                 onChange={handleGender}
-                                className="gender"></input>
+                                className="gender">
+                                </input>
                                 {x}
                             </label>
                             <br/>
@@ -48,8 +49,12 @@ class Gender extends React.Component {
                 }}
                 onChange={this.setGender}
                 placeholder="Your Gender" 
-                id="gender_5" 
-                className="genderwidth"></input>      
+                
+                id={!noGenderWidth ? "gender_5" : null}
+                className={!noGenderWidth ? "genderwidth" : null}
+                style={noGenderWidth ? {marginBottom: '30px'} : null}
+                
+                ></input>      
              
             </React.Fragment>
         )

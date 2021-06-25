@@ -28,7 +28,8 @@ class ListOfLanguages extends React.Component {
                 {languages.map((x, i) => {
                     let num = "languages_" + i;
                     return (
-                        <label key={x+i} style={{userSelect: 'none'}}>
+                        <label 
+                        key={x+i} style={i === languages.length-1 ? {userSelect: 'none', marginBottom: '50px'} : {userSelect: 'none'}}>
                             <input 
                             onChange={handlePreferredLang}
                             type="checkbox" name="preferredLanguage" 

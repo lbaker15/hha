@@ -1,0 +1,260 @@
+:root {
+    --colorDark: rgb(60, 0, 128);
+}
+
+.topSection {
+    height: 300px;
+    background: var(--colorDark);
+    width: 100%;
+    display: flex; justify-content: center;
+    align-items: center; flex-direction: column;
+}
+.topSection .padding {
+    width: 80%;
+}
+.topSection input {
+    width: 100%;
+    height: 75px;
+    border-radius: 5px;
+    border: none;
+    margin-top: 0px;
+    outline: none;
+    padding-left: 25px;
+    font-family: poppins;
+}
+.topSection input::placeholder {
+    font-family: poppins;
+    font-size: 20px;
+    font-weight: 200;
+}
+.topSection button {
+    background: transparent;
+    border: none; 
+    font-family: poppins;
+    font-size: 20px;
+    float: right;
+    user-select: none;
+    color: white;
+    width: 175px;
+    height: 50px;
+    margin-top: -20px;
+    display: flex;
+    justify-content: space-between;
+}
+.topSection button div {
+    font-weight: 600;
+    font-size: 40px;
+    margin-top: -16px;
+}
+.alphabet {
+    background: rgb(131, 131, 255);
+    width: 100%; height: 60px;
+    color: white; display: flex;
+    justify-content: center;
+}
+.alphabet button {
+    background: transparent; color: white;
+    border: none; font-family: poppins;
+    font-size: calc(20px + 1vw); font-weight: 200;
+    width: calc(100vw/26);
+}
+.listHeader {
+    width: 100%;
+    height: 75px;
+    background: rgb(60, 0, 128);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.listHeader .gen {
+    color: white;
+    font-family: poppins;
+    font-weight: 200;
+    font-size: 20px;
+    margin-right: 12%;
+}
+.list {
+    width: 100%;
+    display: flex; flex-direction: column;
+}
+.list .item {
+    width: 100%; height: 125px;
+    display: flex;
+    background: rgb(80, 1, 206);
+}
+.list .item:nth-child(odd) {
+    background: rgb(131, 131, 255);
+}
+.list .item div:nth-child(1) {
+    width: 10%;  
+    display: flex; justify-content: center; align-items: center;
+}
+.fa-pencil-alt {
+    font-size: 25px;
+    color: rgb(0, 0, 105);
+    pointer-events: none;
+}
+.list .item div:nth-child(1) button {
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    border: none; background: white;
+}
+.list .item div:nth-child(2) {
+    width: 70%; 
+}
+.list .item div:nth-child(2) h1 {
+    color: white;
+    font-size: 24px;
+    margin-bottom: 0px;
+    margin-top: 25px;
+    margin-left: 25px;
+}
+.list .item div:nth-child(2) h2 {
+    color: white;
+    font-size: 20px;
+    margin-top: 10px;
+    font-weight: 200;
+    font-family: poppins;
+    margin-left: 25px;
+}
+.list .item div:nth-child(3) {
+    width: 10%; 
+    display: flex; justify-content: center; align-items: center;
+}
+.list .item div:nth-child(3) h3 {
+    font-size: 40px;
+}
+.list .item div:nth-child(4) {
+    width: 10%; 
+    display: flex; justify-content: center; align-items: center;
+}
+.list .item div:nth-child(4) button {
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    border: none; background: white;
+}
+.fa-trash-alt {
+    font-size: 25px;
+    color: rgb(0, 0, 105);
+    pointer-events: none;
+}
+
+.editSection {
+    width: 80%; height: 80%; background: white;
+    position: fixed;
+    top: 10%; left: 10%;
+    display: flex; flex-direction: column; gap: 10px;
+    overflow-y: scroll;
+}
+.editSection .row {
+    width: 100%;
+    height: 80px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: space-between;
+}
+.editSection .row:nth-child(5) {
+    height: 200px;
+}
+.editSection .row textarea {
+    height: 170px;
+    width: 70%;
+    margin-top: 10px;
+    border-radius: 2px;
+    outline: none;
+    border: 1px solid rgb(175, 175, 175);
+    margin-right: 50px;
+}
+.editSection .topRow {
+    width: 100%;
+    height: 200px;
+    flex-shrink: 0;
+    background:aqua;
+}
+.editSection .row label {
+    min-width: 160px;
+    font-family: poppins;
+    font-weight: 200;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: grey;
+    padding-top: 10px;
+    flex-shrink: 0;
+    user-select: none;
+    font-size: 20px;
+}
+.editSection .row input {
+    width: 70%;
+    margin-top: 10px;
+    height: 40px;
+    border-radius: 2px;
+    outline: none;
+    border: 1px solid rgb(175, 175, 175);
+    margin-right: 50px;
+}
+.row .submit {
+    width: 90%;
+    margin-left: 5%;
+    height: 60px;
+    background: blue;
+    color: white; font-family: poppins; font-weight: 300;
+    border:none; border-radius: 3px; font-size: 22px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+#s_1_s button {
+    width: 70%;
+    border: 1px solid rgb(175, 175, 175);
+    height: 40px;
+    background: transparent;
+    margin-right: 50px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+    font-family: poppins; font-weight: 200;
+    padding-top: 5px;
+    padding-left: 15px;
+}
+#s_1_s button div {
+    font-size: 40px;
+    margin-top: -14px;
+}
+.editSection .myrow {
+    width: 100%;
+    height: auto;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: flex-end;
+}
+.openFlex {
+    display: flex; flex-direction: column;
+    width: 65%; 
+    margin-right: 50px;
+    position: relative;
+    margin-bottom: 60px;
+    padding-left: 5%;
+    background: rgb(221, 225, 235);
+}
+.openFlex label {
+    display: flex;
+    font-size: 22px;
+    width: auto;
+}
+.openFlex label:nth-child(1) {
+    padding-top: 30px;
+}
+.openFlex input {
+    width: auto;
+    max-width: 70%;
+}
+
+/* @media (max-width: 1100px) {
+    .openFlex {
+        display: flex; flex-direction: column;
+        width: 70%; height: 500px;
+        position: relative;
+        margin-bottom: 60px;
+        margin-left: 160px;
+        padding-left: 5%;
+    }
+} */

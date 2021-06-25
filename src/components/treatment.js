@@ -18,10 +18,10 @@ let values = [
 
 class Treatment extends React.Component {
     render() {
-        const {handleInputArray} = this.props;
+        const {handleInputArray, noHeader} = this.props;
         return (
             <React.Fragment>
-                <h2>What are you seeking support for?</h2>
+                <h2 style={noHeader ? {visibility: 'hidden', marginBottom: -50} : null}>What are you seeking support for?</h2>
                     {values.map((x,i) => {
                         return (
                             <React.Fragment key={x+i}>

@@ -9,7 +9,7 @@ import {
 import Checkin from './components/checkin';
 import Form from './components/form';
 import Login from './components/login';
-
+import AdminList from './components/adminList';
 
 class App extends React.Component {
   render() {
@@ -24,6 +24,9 @@ class App extends React.Component {
           </Route>
           <Route path="/login">
             <Login />
+          </Route>
+          <Route path="/admin-list">
+            <AdminList />
           </Route>
         </Switch>
       </Router>

@@ -137,7 +137,6 @@ class Form extends React.Component {
     }
     render() {
         const {languageHide, alert, preferredLanguage, coords, address, gender, age} = this.state;
-        console.log(this.state)
         return (
             <React.Fragment>
                 <div id="logorow"><img src="images/logo.png" width="320" height="320" alt="Hannah's Heart"/></div>
