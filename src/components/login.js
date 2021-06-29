@@ -4,7 +4,7 @@ import './login.css';
 
 class Login extends React.Component {
     state = {
-        name: '', password: ''
+        name: '', password: '', prop: ''
     }
     handleInput = (e) => {
         this.setState({
@@ -26,27 +26,43 @@ class Login extends React.Component {
         })
         .then(data => data.json())
         .then(data => {
-            let {Token} = data;
+            console.log(data)
+            let {Token, Priv} = data;
+            console.log(Priv)
             if (Token) {
-                document.cookie = Token;
+                this.setState({
+                    prop: data.Name
+                })
                 let now = new Date()
                 let time = now.getTime()
                 time += 1 * 3600 * 1000
                 now.setTime(time)
                 document.cookie = 'token' + "=" + Token + ";expires=" + now.toUTCString() +";path=/";
-                this.forceUpdate()
+                document.cookie = 'admin' + "=" + Priv + ";expires=" + now.toUTCString() +";path=/";
+                setTimeout(() => {
+                    this.forceUpdate()
+                }, 5000)
             }
         })
     }
     render() {
         let cookie = document.cookie.match(new RegExp('(^| )' + 'token' + '=([^;]+)'));
-        const {name, password} = this.state;
-        if (cookie) {
-            return (
-                <React.Fragment>
-                    <Redirect to="/admin-list" />
-                </React.Fragment>
-            )
+        let adminCookie = document.cookie.match(new RegExp('(^| )' + 'admin' + '=([^;]+)'));
+        const {name, password, prop} = this.state;
+        if (cookie && adminCookie) {
+            if (adminCookie[2] === 'true') {
+                return (
+                    <React.Fragment>
+                        <Redirect to={{pathname: "/admin-list", state: {prop: prop} }} />
+                    </React.Fragment>
+                )
+            } else if (adminCookie[2] === 'false') {
+                return (
+                    <React.Fragment>
+                        <Redirect to={{pathname: "/editor-list", state: {prop: prop} }} />
+                    </React.Fragment>
+                )
+            } 
         } else {
             return (
                 <React.Fragment>

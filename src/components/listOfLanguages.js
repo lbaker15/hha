@@ -1,10 +1,11 @@
 import React from 'react';
 
-const languages = ['Afrikaans', 'Albanian', 'Amharic', 'Arabic', 'Armenian',
+const languages = [
+'Afrikaans', 'Albanian', 'Amharic', 'Arabic', 'Armenian',
 'Azerbaijani', 'Basque', 'Belarusian', 'Bengali', 'Bosnian', 'Bulgarian',
 'Catalan', 'Cebuano', 'Chichewa', 'Chinese', 'Corsican', 'Croatian',
-'Czech', 'Danish', 'Dutch', 'Esperanto', 'Estonian', 'Filipino',
-'Finnish', 'Frisian', 'Galician', 'Georgian', 'German', 'Greek',
+'Czech', 'Danish', 'Dutch', 'English', 'Esperanto', 'Estonian', 'Filipino',
+'Finnish', 'French', 'Frisian', 'Galician', 'Georgian', 'German', 'Greek',
 'Gujarati', 'Haitian Creole', 'Hausa', 'Hawaiian', 'Hebrew',
 'Hindi', 'Hmong', 'Hungarian', 'Icelandic', 'Igbo', 'Indonesian',
 'Irish', 'Italian', 'Japanese', ' Javanese', 'Kannada', 'Kazakh',
@@ -22,19 +23,24 @@ const languages = ['Afrikaans', 'Albanian', 'Amharic', 'Arabic', 'Armenian',
 
 class ListOfLanguages extends React.Component {
     render() {
-        const {handlePreferredLang} = this.props;
+        const {handlePreferredLang, languagesPicked} = this.props;
         return (
             <React.Fragment>
                 {languages.map((x, i) => {
+                    let checker = languagesPicked.find(item => item === x.toLowerCase())
                     let num = "languages_" + i;
                     return (
                         <label 
                         key={x+i} style={i === languages.length-1 ? {userSelect: 'none', marginBottom: '50px'} : {userSelect: 'none'}}>
                             <input 
                             onChange={handlePreferredLang}
-                            type="checkbox" name="preferredLanguage" 
-                            value={x} 
-                            id={num}></input>
+                            type="checkbox" 
+                            name="preferredLanguage" 
+                            data-value="languages"
+                            checked={checker ? true : false}
+                            value={x.toLowerCase()} 
+                            id={num}>
+                            </input>
                             {x}
                             <br />
                         </label>

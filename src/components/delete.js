@@ -1,11 +1,25 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+import {TweenMax, TimelineMax} from 'gsap';
+import {gsap} from 'gsap';
 
 class Delete extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+    componentDidMount() {
+        setTimeout(() => {
+        if (this.props.refe()) {
+            let val = this.props.refe().current
+            this.animation = new TimelineMax({paused: true})
+            this.animation.to(val, 0.5, {x: '-100vw', opacity: 0.6})
+        }
+        }, 100)
+    
+    }
     handleDelete = (e) => {
         let obj = {id: e.target.id}
-        console.log(obj)
         let cookie = document.cookie.match(new RegExp('(^| )' + 'token' + '=([^;]+)'));
         fetch('https://hannahs-heart-2.herokuapp.com/login/delete', {
             method: 'POST',
@@ -17,10 +31,9 @@ class Delete extends React.Component {
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data)
-            //ADD ANIMATION HERE
-            //SET TIMEOUT TO REFRESH DATA
-            this.props.refreshData()
+            this.animation.play().then(() => {
+                this.props.refreshData()
+            })
         })
     }
     render() {

@@ -1,10 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 :root {
     --colorDark: rgb(60, 0, 128);
+    --fontGrey: rgb(165, 165, 165);
+    --iconColor: rgb(0, 0, 105);
+    --darkFont: rgb(70, 70, 70);
+    --btnColor: rgb(0, 0, 199);
+    --yellowColor: rgb(235, 235, 215);
+    --alphabet: rgb(163, 176, 231);
+    --red: rgb(255, 54, 54);
+    --bGradient2: linear-gradient(90deg, rgb(19, 40, 156) 0%, rgb(54, 102, 236)100%);;
+    --bGradient: linear-gradient(90deg, rgb(0, 15, 85) 0%, rgb(31, 65, 160) 100%);;
 }
 
+.navbar {
+    width: 100%;
+    height: 100px;
+    background:var(--red);
+    display: flex;
+    justify-content: space-between;
+}
+.navbar .left {
+    width: calc(50% + 20px); height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.navbar .left h2 {
+    color: white;
+    font-weight: 700;
+    padding-left: 20px;
+}
+.navbar .right {
+    width: 40%;
+    display: flex; 
+    justify-content: center;
+    align-items: flex-end;
+    flex-direction: column;
+    padding-right: 20px;
+}
+.navbar .right h3 {
+    color: white; font-size: 15px;
+    font-family: roboto;
+    font-weight: 200;
+    height: 20px;
+    margin-top: 0px;
+    text-align: center;
+    width: 62px;
+}
+.navbar .right img {
+    width: 60px; height: 60px;
+    margin-bottom: 0;
+    margin-top: 10px;
+}
 .topSection {
-    height: 300px;
-    background: var(--colorDark);
+    height: 250px;
+    background: var(--bGradient);
     width: 100%;
     display: flex; justify-content: center;
     align-items: center; flex-direction: column;
@@ -23,7 +73,7 @@
     font-family: poppins;
 }
 .topSection input::placeholder {
-    font-family: poppins;
+    font-family: roboto;
     font-size: 20px;
     font-weight: 200;
 }
@@ -47,31 +97,38 @@
     margin-top: -16px;
 }
 .alphabet {
-    background: rgb(131, 131, 255);
-    width: 100%; height: 60px;
-    color: white; display: flex;
+    background: var(--alphabet);
+    width: 100%; height: 40px;
+    color: white; 
+    display: flex;
+    justify-content: center;
+}
+.aInner {
+    width: 80%;
+    display: flex;
     justify-content: center;
 }
 .alphabet button {
     background: transparent; color: white;
-    border: none; font-family: poppins;
-    font-size: calc(20px + 1vw); font-weight: 200;
-    width: calc(100vw/26);
+    border: none; font-family: roboto;
+    font-size: calc(16px + 1vw); font-weight: 500;
+    width: calc(80vw/27);
+    text-align: center;
 }
 .listHeader {
     width: 100%;
     height: 75px;
-    background: rgb(60, 0, 128);
+    background: var(--bGradient);
     display: flex;
     justify-content: flex-end;
     align-items: center;
 }
 .listHeader .gen {
     color: white;
-    font-family: poppins;
+    font-family: roboto;
     font-weight: 200;
-    font-size: 20px;
-    margin-right: 12%;
+    font-size: 22px;
+    margin-right: 11%;
 }
 .list {
     width: 100%;
@@ -80,41 +137,54 @@
 .list .item {
     width: 100%; height: 125px;
     display: flex;
-    background: rgb(80, 1, 206);
+    background: var(--bGradient);
+    font-family: roboto;
 }
 .list .item:nth-child(odd) {
-    background: rgb(131, 131, 255);
+    background: var(--bGradient2);
 }
 .list .item div:nth-child(1) {
     width: 10%;  
+    flex-shrink: 0;
     display: flex; justify-content: center; align-items: center;
 }
 .fa-pencil-alt {
     font-size: 25px;
-    color: rgb(0, 0, 105);
+    color: var(--iconColor);
     pointer-events: none;
+}
+.fa-plus-circle {
+    color: var(--iconColor);
 }
 .list .item div:nth-child(1) button {
     width: 60px; height: 60px;
     border-radius: 50%;
+    margin-top: -6px;
     border: none; background: white;
+    flex-shrink: 0;
 }
 .list .item div:nth-child(2) {
     width: 70%; 
 }
 .list .item div:nth-child(2) h1 {
-    color: white;
-    font-size: 24px;
+    color: rgba(245, 245, 245, 0.7);
+    font-weight: 500;
+    font-family: roboto;
+    font-size: 22px;
     margin-bottom: 0px;
-    margin-top: 25px;
+    margin-top: 34px;
     margin-left: 25px;
 }
-.list .item div:nth-child(2) h2 {
+.list .item div:nth-child(2) h1 span {
     color: white;
+}
+.list .item div:nth-child(2) h2 {
+    color: rgba(245, 245, 245, 0.7);
+    font-family: roboto;
     font-size: 20px;
-    margin-top: 10px;
+    margin-top: 6px;
     font-weight: 200;
-    font-family: poppins;
+    font-family: roboto;
     margin-left: 25px;
 }
 .list .item div:nth-child(3) {
@@ -123,6 +193,9 @@
 }
 .list .item div:nth-child(3) h3 {
     font-size: 40px;
+    font-family: roboto;
+    margin-top: 30px;
+    font-weight: 300;
 }
 .list .item div:nth-child(4) {
     width: 10%; 
@@ -131,24 +204,27 @@
 .list .item div:nth-child(4) button {
     width: 60px; height: 60px;
     border-radius: 50%;
+    margin-top: -8px;
     border: none; background: white;
-}
-.fa-trash-alt {
-    font-size: 25px;
-    color: rgb(0, 0, 105);
-    pointer-events: none;
+    flex-shrink: 0;
 }
 
+.fa-trash-alt {
+    font-size: 25px;
+    color: var(--iconColor);
+    pointer-events: none;
+}
 .editSection {
     width: 80%; height: 80%; background: white;
     position: fixed;
     top: 10%; left: 10%;
     display: flex; flex-direction: column; gap: 10px;
     overflow-y: scroll;
+    z-index: 9000;
 }
 .editSection .row {
     width: 100%;
-    height: 80px;
+    height: 60px;
     flex-shrink: 0;
     display: flex;
     justify-content: space-between;
@@ -164,25 +240,35 @@
     outline: none;
     border: 1px solid rgb(175, 175, 175);
     margin-right: 50px;
+    padding-left: 10px;
+    color: var(--darkFont);
+    font-family: roboto;
 }
 .editSection .topRow {
     width: 100%;
-    height: 200px;
+    height: 150px;
     flex-shrink: 0;
-    background:aqua;
+    z-index: 9000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
 }
+
 .editSection .row label {
-    min-width: 160px;
-    font-family: poppins;
-    font-weight: 200;
-    padding-left: 20px;
+    max-width: 80px;
+    font-family: roboto;
+    font-weight: 400;
+    padding-left: 30px;
     padding-right: 20px;
-    color: grey;
+    color: var(--fontGrey);
+    flex-shrink: 0;
     padding-top: 10px;
     flex-shrink: 0;
     user-select: none;
-    font-size: 20px;
+    font-size: 18px;
 }
+
 .editSection .row input {
     width: 70%;
     margin-top: 10px;
@@ -191,13 +277,16 @@
     outline: none;
     border: 1px solid rgb(175, 175, 175);
     margin-right: 50px;
+    font-family: roboto;
+    color: var(--darkFont);
+    padding-left: 7px;
 }
 .row .submit {
     width: 90%;
     margin-left: 5%;
     height: 60px;
-    background: blue;
-    color: white; font-family: poppins; font-weight: 300;
+    background: var(--btnColor);
+    color: white; font-family: roboto; font-weight: 500;
     border:none; border-radius: 3px; font-size: 22px;
     margin-top: 20px;
     margin-bottom: 30px;
@@ -210,14 +299,17 @@
     margin-right: 50px;
     display: flex;
     justify-content: space-between;
-    font-size: 20px;
-    font-family: poppins; font-weight: 200;
-    padding-top: 5px;
+    font-size: 18px;
+    color: var(--darkFont);
+    font-family: roboto; font-weight: 300;
+    padding-top: 8px;
     padding-left: 15px;
 }
 #s_1_s button div {
-    font-size: 40px;
-    margin-top: -14px;
+    font-size: 30px;
+    pointer-events: none;
+    margin-top: -7.5px;
+    margin-right: 2px;
 }
 .editSection .myrow {
     width: 100%;
@@ -226,6 +318,7 @@
     display: flex;
     justify-content: flex-end;
 }
+
 .openFlex {
     display: flex; flex-direction: column;
     width: 65%; 
@@ -233,28 +326,219 @@
     position: relative;
     margin-bottom: 60px;
     padding-left: 5%;
-    background: rgb(221, 225, 235);
+    background: var(--yellowColor);
 }
 .openFlex label {
     display: flex;
-    font-size: 22px;
+    font-size: 18px;
     width: auto;
+    margin-bottom: 10px;
 }
 .openFlex label:nth-child(1) {
     padding-top: 30px;
 }
+.openFlex label input {
+    width: 20px; height: 20px;
+    margin-top: 0px;
+    margin-right: 10px;
+}
 .openFlex input {
     width: auto;
     max-width: 70%;
+    border: 1px solid var(--fontGrey);
+    padding: 10px;
+    font-family: roboto;
+}
+.justAddedAlert {
+    text-align: center;
+}
+.age3 div {
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between;
+}
+.age3 {
+    width: 70%;
+    margin-right: 50px;
+    display: flex;
+    justify-content: space-between;
+}
+#age3 {
+    height: 100px;
+    margin-bottom: 25px;
+}
+.age3 div:nth-child(1) {
+    width: 20%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+.age3 div:nth-child(2) {
+    width: 40%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+.age3 div:nth-child(3) {
+    width: 40%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+.age3 div:nth-child(1) input[type="checkbox"] {
+    cursor: pointer;
 }
 
-/* @media (max-width: 1100px) {
-    .openFlex {
-        display: flex; flex-direction: column;
-        width: 70%; height: 500px;
-        position: relative;
-        margin-bottom: 60px;
-        margin-left: 160px;
-        padding-left: 5%;
+.age3 div:nth-child(1) input {
+    width: 50%; margin: 0; height: 30px; margin-top: 5px;
+}
+.age3 div:nth-child(2) input {
+    width: 70%; margin: 0; height: 30px; margin-top: 5px;
+}
+.age3 div:nth-child(3) input {
+    width: 70%; margin: 0; height: 30px; margin-top: 5px;
+}
+.age3 div:nth-child(1) label {
+    font-size: 16px;
+}
+.age3 div:nth-child(2) label {
+    font-size: 16px;
+}
+.age3 div:nth-child(3) label {
+    font-size: 16px;
+}
+.closeBtnEdit {
+    width: 50px; height: 50px; background: black;
+    font-weight: 300;
+    color: white; font-family: roboto, sans-serif; font-size: 30px;
+    border-radius: 50%; border: 3px solid white;
+    display: flex; justify-content: center; align-items: center;
+    position: fixed;
+    right: 8vw;
+    top: 8vh;
+    z-index: 90000;
+}
+@media (max-width: 1000px) {
+    .age3 {
+        width: 60%;
     }
-} */
+}
+@media (max-width: 800px) {
+    .editSection .row input {
+        width: 60%;
+    }
+    #s_1_s button {
+        width: 60%;
+    }
+    #age3 {
+        height: 275px;
+    }
+    .age3 {
+        width: 60%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        text-align: center;
+    }
+    .age3 div label {
+        margin-left: -6px;
+    }
+}
+@media (max-width: 700px) {
+    .list .item div:nth-child(1) {
+        width: 15%;
+    }
+    .list .item div:nth-child(2) {
+        width: 55%;
+    }
+    .list .item div:nth-child(3) {
+        width: 15%;
+    }
+}
+@media (max-width: 600px) {
+    .editSection .row {
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+        height: 70px;
+    }
+    .editSection .row label {
+        width: 100%; margin: 0;
+        text-align: center;
+    }
+    .editSection .row input {
+        width: 80%; margin: 0;
+    }
+    .editSection .row textarea {
+        width: 80%; margin: 0;
+    }
+    .age3 {
+        margin: 0;
+        height: 325px;
+        justify-content: flex-start;
+        padding-top: 10px;
+        padding-left: 10px;
+    }
+    #age3 {
+        height: 300px;
+    }
+    #age3 div {
+        margin: 0;
+    }
+    .age3 div label {
+        margin-left: 0;
+    }
+    .age3 div:nth-child(1) label {
+        padding-left: 0; padding-right: 0;
+    }
+    .age3 div:nth-child(1) input {
+        margin-left: 0;
+        width: 50%;
+    }
+    .age3 div:nth-child(1) {
+        margin-left: 0;
+        width: 50%;
+    }
+    .age3 div:nth-child(2) label {
+        padding-left: 0; padding-right: 0;
+    }
+    .age3 div:nth-child(2) input {
+        margin-left: 0;
+        width: 60%;
+    }
+    .age3 div:nth-child(2) {
+        margin-left: 0;
+        width: 60%;
+    }
+    .age3 div:nth-child(3) label {
+        padding-left: 0; padding-right: 0;
+    }
+    .age3 div:nth-child(3) input {
+        margin-left: 0;
+        width: 60%;
+    }
+    .age3 div:nth-child(3) {
+        margin-left: 0;
+        width: 60%;
+    }
+    #s_1_s button {
+        width: 80%;
+        margin-right: 0;
+    }
+    .fa-plus-circle {
+        margin-left: 20px;
+    }   
+    .editSection .row:nth-child(6) {
+        height: 95px;
+    }
+    .row .submit {
+        width: 80%;
+        margin-left: 0px;
+        height: 60px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+    }
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 
-let genders = [
+let gendersList = [
     'Male', 'Female', 'Trans Female',
     'Trans Male', 'Non Binary', 'Other'
 ]
@@ -15,25 +15,30 @@ class Gender extends React.Component {
         })
     }
     render() {
-        const {handleGender, gender, noGenderWidth} = this.props;
+        const {handleChange, gender, genders, noGenderWidth, edit} = this.props;
         const {otherGender} = this.state;
+        //console.log(genders)
         return (
             <React.Fragment>
-                {genders.map((x, i) => {
+                {gendersList.map((x, i) => {
+                    let checker = genders.find(item => item === x.toLowerCase())
+                    console.log(checker, x, genders)
                     return (
                         <React.Fragment key={x+i}>
                             <label key={x+i}>
                                 <input 
-                                type="radio" 
+                                type={edit ? 'checkbox' : 'radio'}
                                 name="gender" 
-                                value={x} 
+                                value={x.toLowerCase()} 
                                 id={`gender_${i}`} 
-                                onChange={handleGender}
+                                onChange={handleChange}
+                                data-value="genders"
+                                checked={edit && checker ? true : false}
                                 className="gender">
                                 </input>
                                 {x}
                             </label>
-                            <br/>
+                     
                         </React.Fragment>
                     )
                 })}        
@@ -42,9 +47,10 @@ class Gender extends React.Component {
                 type="textfield" 
                 name="othergender" 
                 value={otherGender}
+                data-value="gender"
                 onBlur={(e) => {
                     if (gender === 'Other') {
-                        handleGender(e, 'gender')
+                        handleChange(e, 'gender')
                     }
                 }}
                 onChange={this.setGender}

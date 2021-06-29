@@ -23,9 +23,11 @@ class Map extends React.Component {
         const {coords} = this.props;
         return (
             <React.Fragment>
-                <div 
-                style={{width: 800, height: 400}}
-                id="map"></div>
+                <div class="mapContainer">
+                    <div 
+                    id="map">
+                    </div>
+                </div>
             </React.Fragment>
         )
     }

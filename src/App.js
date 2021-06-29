@@ -10,6 +10,7 @@ import Checkin from './components/checkin';
 import Form from './components/form';
 import Login from './components/login';
 import AdminList from './components/adminList';
+import EditorList from './components/editorList';
 
 class App extends React.Component {
   render() {
@@ -25,9 +26,10 @@ class App extends React.Component {
           <Route path="/login">
             <Login />
           </Route>
-          <Route path="/admin-list">
-            <AdminList />
-          </Route>
+          <Route path="/admin-list" render={(props) => <AdminList {...props} />} />
+          <Route path="/editor-list" render={(props) => <EditorList {...props} />} />
+            {/* <AdminList />
+          </Route> */}
         </Switch>
       </Router>
     )

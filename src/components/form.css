@@ -1,7 +1,18 @@
 @charset "UTF-8";
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 /* CSS Document */
-
+:root {
+    --colorDark: rgb(60, 0, 128);
+    --fontGrey: rgb(165, 165, 165);
+    --iconColor: rgb(0, 0, 105);
+    --darkFont: rgb(70, 70, 70);
+    --btnColor: rgb(0, 0, 199);
+    --yellowColor: rgb(235, 235, 215);
+    --alphabet: rgb(163, 176, 231);
+    --red: rgb(255, 54, 54);
+    --bGradient2: linear-gradient(90deg, rgb(19, 40, 156) 0%, rgb(54, 102, 236)100%);;
+    --bGradient: linear-gradient(90deg, rgb(0, 15, 85) 0%, rgb(31, 65, 160) 100%);;
+}
 /*--------------------------------------------------------------
 >>> TABLE OF CONTENTS:
 ----------------------------------------------------------------
@@ -27,16 +38,29 @@ a {
 a:hover {
     text-decoration: none;
 }
-#logorow img{
+#logorow img {
     max-width: 50%;
     height: auto;
 }
 #logorow {
     text-align: center;
-    padding-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--red);
+    color: white;
+    height: 100px;
 }
-.white {
-    color: #fff;
+#logorow .right button {
+    border: none; background: transparent;
+    color: white;
+    font-family: roboto; font-size: 20px;
+    font-weight: 300;
+    width: 100px;
+    margin-right: 3vw;
+}
+#logorow .left {
+    padding-left: 5vw;
 }
 .hide {
     display: none;
@@ -57,18 +81,18 @@ a:hover {
     display: block;
     margin: auto;
 }
+body {
+    background: var(--bGradient);
+}
 #ratingfeeling {
     background-size: 90.2% 8px;
     background-repeat: no-repeat;
     background-position: 4vw 2px;
 }
-#maincontent {
-    text-align: center;
-}
+
 #maincontentinner {
     text-align: left;
-    display: inline-block;
-    margin: auto;
+    width: 85%;
 }
 #feeling {
     padding-left: calc(4vw - 9px);
@@ -141,10 +165,12 @@ a:hover {
     cursor: pointer;
 }
 #languagepreference, #gender, #dob, #whattreatment, #address, #travelradius {
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.8);
     color: #000;
+    border-radius: 3px;
     font-size: calc(11px + 1vw);
-    padding: 2vw;
+    padding: 3vw;
+    font-family: roboto;
 }
 iframe {
     width: 100%;
@@ -152,9 +178,10 @@ iframe {
 #languagepreference h2, #gender h2, #dob h2, #whattreatment h2, #address h2, #travelradius h2 {   
     font-size: calc(13px + 1vw);
     margin: 0;
+    margin-bottom: 10px;
 }
 #languagepreference input, #gender input, #whattreatment input, #travelradius input {
-   height: calc(20px + 0.5vw);
+    height: calc(20px + 0.5vw);
     width: calc(20px + 0.5vw);
     position: relative;
     top: 2px;
@@ -174,7 +201,7 @@ iframe {
     margin-top: calc(20px + 1vw);
 }
 #morelang {
-    border:1px solid #bcbec0;
+    border:1px solid #030303;
     padding: 5px;
     margin: calc(5px + 1vw) 5px 5px;
 }
@@ -193,6 +220,19 @@ iframe {
 }
 .onepad {
     padding: 20px 0.5vw;
+    color: white;
+    font-family: roboto;
+    font-weight: 300;
+}
+.onepad h2 {
+    font-weight: 300;
+    margin-bottom: 0;
+    font-size: 22px;
+}
+.onepad h3 {
+    margin-top: 10px;
+    font-weight: 300;
+    font-size: 20px;
 }
 .mediumfont {
     font-size: calc(11px + 1vw);
@@ -205,9 +245,11 @@ iframe {
 }
 
 .btnFlex {
-    width: 98%; 
+    width: 100vw;
+    position: relative;
     display: flex;
     height: 200px;
+    margin-left: -10%;
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -221,13 +263,78 @@ iframe {
     margin-bottom: 25px;
 }
 .btnFlex button {
-    width: 160px;
-    height: 50px;
+    width: 250px;
+    height: 60px;
     border: none;
-    background: var(--btnColor);
+    background: black;
     color: white; 
-    font-family: poppins;
+    font-family: roboto;
+    text-transform: uppercase;
     font-weight: 200;
     font-size: 22px;
-    border-radius: 5px;
+    border-radius: 3px;
+}
+.flexCol {
+    flex-direction: column;
+    display: flex;
+}
+.flexCol input {
+    padding: 1vw;
+    font-family: roboto;
+    outline: none;
+}
+#dob input {
+    padding: 1vw;
+    font-family: roboto;
+    outline: none;
+}
+#address input {
+    padding: 1vw;
+    font-family: roboto;
+    outline: none;
+    margin-top: 10px;
+    height: 100px;
+    box-shadow: none;
+    border: 1px solid #6e6e6e;
+}
+#maincontent {
+    text-align: center;
+    position: absolute;
+    display: flex; justify-content: center;
+    width: 100%;
+    height: 3200px;
+}
+
+.mapContainer {
+    width: 90%; height: 90vh;
+    position: fixed;
+    top: 5vh; left: 5%;
+    bottom: 0;
+    z-index: 1;
+}
+#map {
+    width: 100%; height: 100%;
+    visibility: hidden;
+    z-index: 1;
+}
+.btnFlex {
+    z-index: 9000;
+}
+#address {
+    position: relative;
+    z-index: 1000;
+    width: 93.5%;
+}
+#travelradius {
+    position: relative;
+    z-index: 1000;
+}
+#whattreatment {
+    position: relative;
+    z-index: 1000;
+}
+@media (max-width: 1000px) {
+    #maincontent {
+        height: 2800px;
+    }
 }

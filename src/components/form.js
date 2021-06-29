@@ -7,6 +7,9 @@ import KmBtns from './kmBtns';
 import Map from './map';
 import Treatment from './treatment';
 import './form.css';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+gsap.registerPlugin(ScrollTrigger);
 
 let markersArr = new Array;
 const handleMarkers = (state, props) => {
@@ -55,7 +58,25 @@ class Form extends React.Component {
         coords: [],
         travelradius: '',
         treatment: [],
-        alert: ''
+        alert: '',
+        refOne: React.createRef()
+    }
+    componentDidMount() {
+        console.log('here', this.state.refOne.current)
+        gsap.fromTo('#map', {opacity: 0}, {opacity: 1, duration: 0.5, visibility: 'visible', 
+            scrollTrigger: {
+                trigger: this.state.refOne.current,
+                start: 'top 50%',
+                toggleActions: 'restart none none reverse'
+            }
+        })
+        // gsap.fromTo('.mapContainer', {zIndex: 0}, {zIndex: 1, 
+        //     scrollTrigger: {
+        //         trigger: '.btnFlex',
+        //         start: 'bottom 0%',
+        //         toggleActions: 'restart none none reverse'
+        //     }
+        // })
     }
     handleLanguageClick = () => {
         this.setState((prev) => ({
@@ -139,10 +160,18 @@ class Form extends React.Component {
         const {languageHide, alert, preferredLanguage, coords, address, gender, age} = this.state;
         return (
             <React.Fragment>
-                <div id="logorow"><img src="images/logo.png" width="320" height="320" alt="Hannah's Heart"/></div>
+                <div id="logorow">
+                    <div class="left">
+                        <h2>Find A Professional</h2>
+                    </div>
+                    <div class="right">
+                        <button>Member Login</button>
+                    </div>
+                </div>
+                <Map coords={coords} />
                     <div id="maincontent" className="white">
                         <div id="maincontentinner" className="padthat">
-                        <div className="onepad mediumfont">Please fill in your information below to find a mental health professional in your area.<br/><br/><small>None of this information is stored or tracked by the APP, mental health professionals, or any associated parties.</small></div>
+                        <div className="onepad mediumfont"><h2>Please fill in your information below to find a mental health professional in your area.</h2><h3>None of this information is stored or tracked by the APP, mental health professionals, or any associated parties.</h3></div>
                         <div id="languagepreference">
                             <h2>Preferred Language(s)</h2>
                             <label style={{userSelect: 'none'}}>
@@ -160,13 +189,19 @@ class Form extends React.Component {
                             onClick={this.handleLanguageClick}
                             id="morelang">Select</div>
                                 <div id="otherlanguages" className={languageHide ? "hide" : null}>
-                                    <ListOfLanguages handlePreferredLang={this.handleInputArray} />
+                                    <ListOfLanguages 
+                                    languagesPicked={[]}
+                                    handlePreferredLang={this.handleInputArray} />
                                 </div>
                         </div>
                         
                         <div id="gender">
                             <h2>Your Gender</h2>
-                            <Gender gender={gender} handleGender={this.handleInputField} />
+                            <div className="flexCol">
+                                <Gender 
+                                genders={[]}
+                                gender={gender} handleGender={this.handleInputField} />
+                            </div>
                         </div>
 
                         <div id="dob">
@@ -174,10 +209,12 @@ class Form extends React.Component {
                         </div>
 
                         <div id="whattreatment">
-                            <Treatment handleInputArray={this.handleInputArray} handleInput={this.handleInputField} />    
+                            <div className="flexCol">
+                                <Treatment treatment={[]} handleInputArray={this.handleInputArray} handleInput={this.handleInputField} />    
+                            </div>
                         </div>
                             
-                        <div id="address">
+                        <div ref={this.state.refOne} id="address">
                             <GeneralInput stateValue={address} handleInput={this.handleInputField} type="textfield" value="address" />    
                         </div>
                             
@@ -197,7 +234,7 @@ class Form extends React.Component {
                             </div>
                         </div>
 
-                        <Map coords={coords} />
+                       
 
                         </div>
                     </div>
