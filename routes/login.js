@@ -13,7 +13,7 @@ const saltRounds = 10;
 router.post('/signup', async (req, res, next) => {
     let {name, password, admin} = req.body;
     bcrypt.hash(password, saltRounds, function(err, hash) {
-        let obj = {name, password: hash}
+        let obj = {name, password: hash, admin}
         Users.create(obj).then(result => {
             if (result) {
                 res.json({'Success': 'User created'})
