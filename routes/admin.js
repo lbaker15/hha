@@ -5,6 +5,7 @@ const Provider = require('../models/providers');
 const router = express.Router();
 const axios = require('axios');
 const Employee = require('../models/employee');
+const Users = require('../models/users');
 let key = 'AIzaSyCNxlh-79Og3dQ_tYpV_Vzlkx3kAPyZ6HI';
 
 var rad = function(x) {
@@ -94,6 +95,13 @@ router.post('/get-providers', async (req, res, next) => {
         }
     })
 });
+
+router.post('/get-profile', async (req, res, next) => {
+    let {id} = req.body;
+    Users.find({_id: id}, async (err, result) => {
+        console.log(result)
+    })
+})
 
 router.post('/add-employee', async (req, res, next) => {
     let {
