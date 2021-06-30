@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const Provider = new Schema({
-    name: String,
+    firstname: String,
+    lastname: String,
     discipline: String,
     gender: String,
     businessAddress: String,
