@@ -100,7 +100,7 @@ router.post('/add-employee', async (req, res, next) => {
         username, password, name, discipline,
         businessAddress, email, author
     } = req.body;
-    let obj = {username: String(username).toLowerCase(), password: String(password).toLowerCase(), name: String(name).toLowerCase(), discipline: String(discipline).toLowerCase(), businessAddress: String(businessAddress).toLowerCase(), email, author}
+    let obj = {username: String(username).toLowerCase(), password: String(password).toLowerCase(), name: String(name).toLowerCase(), discipline, businessAddress: String(businessAddress).toLowerCase(), email, author}
     let add = new Employee(obj)
     await add.save().then(data => {
         return res.json({'Data': data})
