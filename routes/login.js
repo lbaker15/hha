@@ -47,18 +47,23 @@ router.post('/login', async (req, res, next) => {
 })
 
 router.post('/provider-list', middleware.verifyToken, async (req, res, next) => {
-    console.log(req.body)
+    const {id} = req.body;
+    if (id) {
     jwt.verify(req.token, 'secret', function(err, decoded) {
         if (!err) {
-            Providers.find({}, async (error, result) => {
+            Providers.find({author: id}, async (error, result) => {
                 if (!error) {
+                    console.log('RES',result)
                     res.json({'Data': result})
                 }
             })
         } else {
             res.json({'Failure': err})
         }
-    });
+    })
+    } else {
+        res.json({'Failure': 'No id sent.'})
+    }
 })
 
 router.post('/delete', middleware.verifyToken, async (req, res, next) => {

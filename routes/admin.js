@@ -99,7 +99,6 @@ router.post('/add-provider', async (req, res, next) => {
         businessAddress, languages, services, 
         minAge, maxAge, age, telephone, author
     } = req.body;
-    console.log('AUTHOR', author)
     let newGen = await genders.map(x => String(x).toLowerCase())
     let newLang = await languages.map(g => String(g).toLowerCase())
     let newServices = await services.map(g => String(g).toLowerCase())
