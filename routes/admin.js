@@ -98,6 +98,7 @@ router.post('/get-providers', async (req, res, next) => {
 
 router.post('/get-profile', async (req, res, next) => {
     let {id} = req.body;
+    console.log('ID', id)
     Users.find({_id: id}, async (err, result) => {
         console.log(result)
         res.json({'res': result})
