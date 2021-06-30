@@ -139,9 +139,8 @@ router.post('/edit-employee', middleware.verifyToken, async (req, res, next) => 
         if (!err) {
             Employee.updateOne({_id: obj.id}, obj, 
                 (err, result) => {
-                    console.log(result)
+                    console.log('RESULT', result)
                     if (!err) {
-                        console.log(result)
                         res.json({'Success': 'user changed'})
                     }
             })
