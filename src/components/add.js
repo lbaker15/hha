@@ -16,13 +16,14 @@ class Add extends React.Component {
     }
     render() {
         const {name} = this.state;
-        const {handleAdd} = this.props;
+        const {handleAdd, employee} = this.props;
         return (
             <React.Fragment>
                 <button
-                onClick={handleAdd}
+                style={employee ? {width: 200} : null}
+                onClick={handleAdd} 
                 >
-                    Add Provider 
+                    {employee ? 'Add Employee' : 'Add Provider'}
                     <div>+</div>
                 </button>
                 <input

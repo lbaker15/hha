@@ -7,7 +7,7 @@ class Edit extends React.Component {
     render() {
         const {id} = this.props;
         return (
-            <React.Fragment>
+            <React.Fragment key={Math.random()}>
                 <button id={id} onClick={this.props.handleEdit} key={Math.random()} className="edit">
                     <FontAwesomeIcon icon={faPencilAlt} />
                 </button>

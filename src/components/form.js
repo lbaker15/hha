@@ -5,6 +5,7 @@ import GeneralInput from './generalInput';
 import {connect} from 'react-redux';
 import KmBtns from './kmBtns';
 import Map from './map';
+import { Link } from 'react-router-dom';
 import Treatment from './treatment';
 import './form.css';
 import gsap from 'gsap';
@@ -165,7 +166,11 @@ class Form extends React.Component {
                         <h2>Find A Professional</h2>
                     </div>
                     <div class="right">
-                        <button>Member Login</button>
+                 
+                            <Link to="/login">
+                                Member Login
+                            </Link>
+                      
                     </div>
                 </div>
                 <Map coords={coords} />

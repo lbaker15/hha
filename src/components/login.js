@@ -1,6 +1,7 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import './login.css';
+import logo from './assets/Hannahs-Heart-Logo_with-halo.png'
 
 class Login extends React.Component {
     state = {
@@ -39,9 +40,12 @@ class Login extends React.Component {
                 now.setTime(time)
                 document.cookie = 'token' + "=" + Token + ";expires=" + now.toUTCString() +";path=/";
                 document.cookie = 'admin' + "=" + Priv + ";expires=" + now.toUTCString() +";path=/";
+                document.cookie = 'name' + "=" + data.Name + ";expires=" + now.toUTCString() +";path=/";
+                document.cookie = 'id' + "=" + data.Id + ";expires=" + now.toUTCString() +";path=/";
+                console.log('prior to timeout')
                 setTimeout(() => {
                     this.forceUpdate()
-                }, 5000)
+                }, 100)
             }
         })
     }
@@ -53,35 +57,51 @@ class Login extends React.Component {
             if (adminCookie[2] === 'true') {
                 return (
                     <React.Fragment>
-                        <Redirect to={{pathname: "/admin-list", state: {prop: prop} }} />
+                        <Redirect to={{pathname: "/admin-landing", state: {prop: prop} }} />
                     </React.Fragment>
                 )
             } else if (adminCookie[2] === 'false') {
                 return (
                     <React.Fragment>
-                        <Redirect to={{pathname: "/editor-list", state: {prop: prop} }} />
+                        <Redirect to={{pathname: "/editor-landing", state: {prop: prop} }} />
                     </React.Fragment>
                 )
             } 
         } else {
             return (
                 <React.Fragment>
+                    <div className="loginCenter">
+                    <div className="loginImage">
+                        <img src={logo} />
+                    </div>
+                    <div className="loginInfo">
+                        <h3>Non members please return to</h3>
+                        <h4>
+                            <Link to="/form">
+                            Find a Professional
+                            </Link>
+                        </h4>
+                    </div>
                     <div className="loginForm">
-                        <label>Name</label>
                         <input
                         name="name"
                         onChange={this.handleInput}
+                        placeholder="Username"
                         value={name}
                         ></input>
-                        <label>Password</label>
                         <input
                         value={password}
                         onChange={this.handleInput}
                         name="password"
+                        placeholder="Password"
                         ></input>
-                        <button
-                        onClick={this.handleSubmit}
-                        >Login</button>
+                    </div>
+                    <div className="forgotPswd">
+                        <h5>Forgot your password?</h5>
+                    </div>
+                    <button
+                    onClick={this.handleSubmit}
+                    >Login</button>
                     </div>
                 </React.Fragment>
             )

@@ -37,6 +37,8 @@
     align-items: flex-end;
     flex-direction: column;
     padding-right: 20px;
+    border: none;
+    background: transparent;
 }
 .navbar .right h3 {
     color: white; font-size: 15px;
@@ -129,6 +131,13 @@
     font-weight: 200;
     font-size: 22px;
     margin-right: 11%;
+}
+.listHeader .genTwo {
+    color: white;
+    font-family: roboto;
+    font-weight: 200;
+    font-size: 22px;
+    margin-right: calc(5vw + 50px);
 }
 .list {
     width: 100%;
@@ -229,7 +238,7 @@
     display: flex;
     justify-content: space-between;
 }
-.editSection .row:nth-child(5) {
+.editSection .row:nth-child(6) {
     height: 200px;
 }
 .editSection .row textarea {
@@ -463,7 +472,7 @@
         flex-direction: column;
         width: 100%;
         align-items: center;
-        height: 70px;
+        height: 90px;
     }
     .editSection .row label {
         width: 100%; margin: 0;

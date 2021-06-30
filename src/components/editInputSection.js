@@ -8,7 +8,8 @@ import { faPencilAlt, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
 class EditInputSection extends React.Component {
     state = {
-        name: '',
+        firstname: '',
+        lastname: '',
         discipline: '',
         gender: '',
         address: '',
@@ -27,7 +28,8 @@ class EditInputSection extends React.Component {
         const {edit, editItem} = this.props;
         if (editItem) {
             this.setState({
-                name: editItem.name,
+                firstname: editItem.firstname,
+                lastname: editItem.lastname,
                 discipline: editItem.discipline, 
                 gender: editItem.gender, 
                 genders: editItem.genders, 
@@ -88,54 +90,55 @@ class EditInputSection extends React.Component {
                 .then(res => res.json())
                 .then(data => {
                     if (data.Success) {
-                        this.forceUpdate()
+                        console.log(data)
+                        // this.forceUpdate()
                         this.props.refreshData()
                     }
                 })
             }, 1000)
         } else {
-            const {gendersOpen, telephone, servicesOpen, languagesOpen, minAge, maxAge, age, name, discipline, gender, genders, services, languages, address} = this.state;
-            let secondName = name.split(" ")[1]
-            if (secondName !== undefined) {
-                if (name.length > 0 && telephone.length > 0 && minAge && maxAge && discipline.length > 0 && gender.length > 0 && genders.length > 0 && services.length > 0 && languages.length > 0 && address.length > 0) {
-                    let obj = {...this.state, businessAddress: address}
-                    delete obj.languagesOpen;
-                    delete obj.servicesOpen;
-                    delete obj.gendersOpen;
-                    delete obj.address;
-                    console.log(obj)
-                    fetch('https://hannahs-heart-2.herokuapp.com/data/add-provider', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(obj)
-                    })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.Data) {
-                            this.setState({
-                                alert: 'Provider Added'
-                            })
-                            this.props.refreshData()
-                            //ANIMATION HERE?
-                            setTimeout(() => {
+            const {gendersOpen, firstname, lastname, telephone, servicesOpen, languagesOpen, minAge, maxAge, age, name, discipline, gender, genders, services, languages, address} = this.state;
+                if (firstname.length > 0 && lastname.length > 0 && telephone.length > 0 && minAge && maxAge && discipline.length > 0 && gender.length > 0 && genders.length > 0 && services.length > 0 && languages.length > 0 && address.length > 0) {
+                    let cookieId = document.cookie.match(new RegExp('(^| )' + 'id' + '=([^;]+)'));
+                    if (cookieId) {
+                        let obj = {...this.state, author: cookieId[2], businessAddress: address}
+                        delete obj.languagesOpen;
+                        delete obj.servicesOpen;
+                        delete obj.gendersOpen;
+                        delete obj.address;
+                        console.log(obj)
+                        fetch('https://hannahs-heart-2.herokuapp.com/data/add-provider', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(obj)
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.Data) {
                                 this.setState({
-                                    alert: ''
+                                    alert: 'Provider Added'
                                 })
-                            }, 5000)
-                        }
-                    })
+                                this.props.refreshData()
+                                //ANIMATION HERE?
+                                setTimeout(() => {
+                                    this.setState({
+                                        alert: ''
+                                    })
+                                }, 5000)
+                            }
+                        })
+                    } else {
+                        this.setState({
+                            alert: 'Please ensure you are correctly logged in.'
+                        })
+                    }
                 } else {
                     this.setState({
                         alert: 'Please ensure all fields are filled in correctly.'
                     })
                 }
-            } else {
-                this.setState({
-                    alert: 'Please ensure first and last name are seperated by a space.'
-                })
-            }
         }
     }
     openList = (e) => {
@@ -164,7 +167,7 @@ class EditInputSection extends React.Component {
     }
     render() {
         const {edit, editItem, handleAdd, handleEdit} = this.props;
-        const {gendersOpen, telephone, ageSet, minAge, maxAge, servicesOpen, languagesOpen, name, discipline, gender, genders, services, languages, address} = this.state;
+        const {gendersOpen, telephone, ageSet, minAge, maxAge, servicesOpen, languagesOpen, firstname, lastname, discipline, gender, genders, services, languages, address} = this.state;
         return (
             <React.Fragment>
             <button
@@ -178,11 +181,19 @@ class EditInputSection extends React.Component {
                     }
                 </div>
                 <div className="row">
-                    <label>Name</label>
+                    <label>First Name</label>
                     <input
-                    id="name"
+                    id="firstname"
                     onChange={this.handleChange}
-                    value={name}
+                    value={firstname}
+                    ></input>
+                </div>
+                <div className="row">
+                    <label>Last Name</label>
+                    <input
+                    id="lastname"
+                    onChange={this.handleChange}
+                    value={lastname}
                     ></input>
                 </div>
                 <div className="row">
@@ -193,7 +204,7 @@ class EditInputSection extends React.Component {
                     value={discipline}
                     ></input>
                 </div>
-                <div className="row">
+                <div  className="row">
                     <label>Gender</label>
                     <input
                     id="gender2"
@@ -201,7 +212,7 @@ class EditInputSection extends React.Component {
                     value={gender}
                     ></input>
                 </div>
-                <div className="row">
+                <div style={{height: 200}} className="row">
                     <label>Business Address</label>
                     <textarea
                     id="address2"

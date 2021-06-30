@@ -39,7 +39,7 @@ class Delete extends React.Component {
     render() {
         const {data, id} = this.props;
         return (
-            <React.Fragment>
+            <React.Fragment key={Math.random()}>
                 <button 
                 key={id}
                 id={id}

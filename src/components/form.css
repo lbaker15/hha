@@ -51,14 +51,23 @@ a:hover {
     color: white;
     height: 100px;
 }
-#logorow .right button {
+#logorow .right  {
     border: none; background: transparent;
     color: white;
     font-family: roboto; font-size: 20px;
     font-weight: 300;
     width: 100px;
     margin-right: 3vw;
+    z-index: 100;
 }
+#logorow .right a {
+    text-decoration: none;
+    color: white;
+    z-index: 1000;
+    height: 100px;
+    width: 100%;
+    cursor: pointer;
+} 
 #logorow .left {
     padding-left: 5vw;
 }

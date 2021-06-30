@@ -1,13 +1,14 @@
 import React from 'react';
 import './hcList.css';
 import ListItem from './listItem';
-import EditInputSection from './editInputSection';
+import EditInputSectionEmployee from './editInputSectionEmployee';
 import Add from './add';
+import {Link} from 'react-router-dom';
 import AdminIcon from './assets/Admin_Icon_White.png';
 let alphabet = 'abcdefghijklmnopqrstuvwxyz'.split("");
 
 
-class AdminList extends React.Component {
+class EmployeeList extends React.Component {
     state = {
         validated: false,
         data: [],
@@ -41,19 +42,21 @@ class AdminList extends React.Component {
         let cookieName = document.cookie.match(new RegExp('(^| )' + 'name' + '=([^;]+)'));
         let adminCookie = document.cookie.match(new RegExp('(^| )' + 'admin' + '=([^;]+)'));
         if (cookie && adminCookie) {
+            // if (adminCookie[2] === 'true') {
                 if (cookieName) {
                     this.setState({
                         adminName: cookieName[2]
                     })
                 }
                 this.refreshData()
+            // }
         }
     }
     refreshData = () => {
         let cookieId = document.cookie.match(new RegExp('(^| )' + 'id' + '=([^;]+)'));
         let cookie = document.cookie.match(new RegExp('(^| )' + 'token' + '=([^;]+)'));
         if (cookie) {
-            fetch('https://hannahs-heart-2.herokuapp.com/login/provider-list', {
+            fetch('https://hannahs-heart-2.herokuapp.com/login/employee-list', {
                 method: 'POST',
                 headers: {
                     'authorization': cookie[0].split('=')[1],
@@ -122,6 +125,7 @@ class AdminList extends React.Component {
         })
     }
     render() {
+        let adminCookie = document.cookie.match(new RegExp('(^| )' + 'admin' + '=([^;]+)'));
         const {validated, adminName, letter, filteredRes, filter, add, data, edit, editItem} = this.state;
         if (!validated) {
             return (
@@ -136,16 +140,19 @@ class AdminList extends React.Component {
                 <React.Fragment>
                     <div className="navbar">
                         <div className="left">
-                            <h2>Update HC Providers</h2>
+                            <h2>Update Employees</h2>
                         </div>
-                        <div className="right">
+                        <button 
+                        className="right">
+                            <Link to="/my-profile">
                             <img src={AdminIcon} />
                             <h3>{adminName}</h3>
-                        </div>
+                            </Link>
+                        </button>
                     </div>
                     <div className="topSection">
                         <div className="padding">
-                            <Add searchFilter={this.searchFilter} handleAdd={this.handleAdd} />
+                            <Add employee={true} searchFilter={this.searchFilter} handleAdd={this.handleAdd} />
                         </div>
                     </div>
                     <div className="alphabet">
@@ -157,24 +164,26 @@ class AdminList extends React.Component {
                                     value={l}
                                     onClick={this.filterResults}
                                     key={l}>{l.toUpperCase()}</button>
-                                )
-                            })
+                                    )
+                                })
                             }
                         </div>
                     </div>
                     <div className="listHeader">
-                        <div className="gen">Gender</div>
                     </div>
                     {edit && editItem && (
-                        <EditInputSection 
+                        <EditInputSectionEmployee 
+                        employee={true}
                         handleEdit={this.handleEditClose} 
                         handleAdd={this.handleAdd}
-                        refreshData={this.refreshData} edit={edit} 
+                        refreshData={this.refreshData} 
+                        edit={edit} 
                         editItem={editItem} />
                     )
                     }
                     {add && (
-                        <EditInputSection 
+                        <EditInputSectionEmployee
+                        employee={true}
                         handleEdit={this.handleEditClose} 
                         handleAdd={this.handleAdd}
                         refreshData={this.refreshData} />
@@ -182,13 +191,13 @@ class AdminList extends React.Component {
                     <div className="list">
                         {!filter && data && (
                             data.map(x => {
-                                return <ListItem key={String(data.id) + Math.random()} edit={edit} handleEdit={this.handleEdit} refreshData={this.refreshData} data={x} />
+                                return <ListItem key={String(data.id) + Math.random()} employee={true} edit={edit} handleEdit={this.handleEdit} refreshData={this.refreshData} data={x} />
                             })
                         )
                         }
                         {filter && (
                             filteredRes.map(x => {
-                                return <ListItem key={String(data.id) + Math.random()} edit={edit} handleEdit={this.handleEdit} refreshData={this.refreshData} data={x} />
+                                return <ListItem key={String(data.id) + Math.random()} employee={true} edit={edit} handleEdit={this.handleEdit} refreshData={this.refreshData} data={x} />
                             })
                         )
                         }
@@ -199,4 +208,4 @@ class AdminList extends React.Component {
     }
 }
 
-export default AdminList;
+export default EmployeeList;

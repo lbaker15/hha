@@ -1,0 +1,67 @@
+:root {
+    --gold: rgb(146, 119, 0);
+}
+.adminLanding {
+    width: 500px;
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+.adminImg {
+    width: 200px;
+    height: 200px;
+    background: white; 
+    border-radius: 50%;
+    display: flex; justify-content: center;
+    align-items: center;
+}
+.adminImg img {
+    width: 70%; height: 70%; border-radius: 50%;
+}
+.adminLanding h2 {
+    font-family: roboto;
+    color: white;
+    font-size: 32px;
+    font-weight: 500;
+}
+.adminLanding .box {
+    width: 400px;
+    height: 300px;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 15px;
+}
+.adminLanding .box .dots {
+    width: 100%; height: 10px; display: flex;
+    align-items: center; justify-content: center;
+    gap: 10px;
+}
+.adminLanding .box .dots span {
+    background: var(--gold);
+    width: 10px; height: 10px;
+    border-radius: 50%;
+}
+.adminLanding .box button {
+    width: 80%;
+    height: 50px;
+    background: var(--red);
+    color: white;
+    font-family: roboto;
+    font-weight: 600;
+    border: none;
+    font-size: 22px;
+}
+.adminLanding .box button a {
+    color: white; text-decoration: none;
+}
+.adminLanding .box button:last-child {
+    background: blue;
+}
+
+.employeeName span {
+    opacity: 1; color: white;
+}
