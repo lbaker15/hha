@@ -132,13 +132,13 @@ router.post('/edit', middleware.verifyToken, async (req, res, next) => {
 
 
 router.post('/edit-employee', middleware.verifyToken, async (req, res, next) => {
-    const {name, username, password, discipline, email, businessAddress} = req.body;
+    const {name, id, username, password, discipline, email, businessAddress} = req.body;
     let obj = {name: name, username: username, password: password, discipline: discipline, email, businessAddress}
     console.log('obj', obj)
-    if (obj.id) {
+    if (id) {
     jwt.verify(req.token, 'secret', function(err, decoded) {
         if (!err) {
-            Employee.updateOne({_id: obj.id}, obj, 
+            Employee.updateOne({_id: id}, obj, 
                 (err, result) => {
                     console.log('RESULT', result)
                     if (!err) {
