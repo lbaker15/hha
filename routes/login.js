@@ -132,15 +132,16 @@ router.post('/edit', middleware.verifyToken, async (req, res, next) => {
 
 
 router.post('/edit-employee', middleware.verifyToken, async (req, res, next) => {
-    const {name, id, username, password, discipline, email, businessAddress} = req.body;
-    let obj = {name: name, username: username, password: password, discipline: discipline, email, businessAddress}
-    console.log('Name', name)
-    if (id) {
+    const {firstname, lastname, id, username, password, discipline, email, businessAddress} = req.body;
+    let obj = {firstname, lastname, username: username, password: password, discipline: discipline, email, businessAddress}
+    console.log('Name', username)
+    if (name) {
     jwt.verify(req.token, 'secret', function(err, decoded) {
         if (!err) {
-            Employee.updateOne({username: name}, {$set: obj}, 
+            Employee.updateOne({username: username}, {$set: obj}, 
                 (err, result) => {
                     console.log('RESULT', result)
+                    //COMES BACK AS SUCCESSFUL EVEN WHEN FILTER NOT WORKED
                     if (!err) {
                         res.json({'Success': 'user changed'})
                     }
