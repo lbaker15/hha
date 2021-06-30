@@ -130,4 +130,28 @@ router.post('/edit', middleware.verifyToken, async (req, res, next) => {
     }
 })
 
+
+router.post('/edit', middleware.verifyToken, async (req, res, next) => {
+    const obj = req.body;
+    console.log('obj', obj)
+    if (obj.id) {
+    jwt.verify(req.token, 'secret', function(err, decoded) {
+        if (!err) {
+            Employee.updateOne({_id: obj.id}, obj, 
+                (err, result) => {
+                    console.log(result)
+                    if (!err) {
+                        console.log(result)
+                        res.json({'Success': 'user changed'})
+                    }
+            })
+        } else {
+            res.json({'Failure': err})
+        }
+    })
+    } else {
+        res.json({'Failure': 'No data sent'})
+    }
+})
+
 exports.routes = router;
