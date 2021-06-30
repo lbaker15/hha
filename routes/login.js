@@ -132,7 +132,8 @@ router.post('/edit', middleware.verifyToken, async (req, res, next) => {
 
 
 router.post('/edit-employee', middleware.verifyToken, async (req, res, next) => {
-    const obj = req.body;
+    const {name, username, password, discipline, email, businessAddress} = req.body;
+    let obj = {name: name, username: username, password: password, discipline: discipline, email, businessAddress}
     console.log('obj', obj)
     if (obj.id) {
     jwt.verify(req.token, 'secret', function(err, decoded) {
