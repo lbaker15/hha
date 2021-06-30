@@ -131,7 +131,7 @@ router.post('/edit', middleware.verifyToken, async (req, res, next) => {
 })
 
 
-router.post('/edit', middleware.verifyToken, async (req, res, next) => {
+router.post('/edit-employee', middleware.verifyToken, async (req, res, next) => {
     const obj = req.body;
     console.log('obj', obj)
     if (obj.id) {
