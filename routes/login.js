@@ -47,6 +47,7 @@ router.post('/login', async (req, res, next) => {
 })
 
 router.post('/provider-list', middleware.verifyToken, async (req, res, next) => {
+    console.log(req.body)
     jwt.verify(req.token, 'secret', function(err, decoded) {
         if (!err) {
             Providers.find({}, async (error, result) => {
