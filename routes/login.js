@@ -7,6 +7,7 @@ const bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 const middleware = require('../middleware/auth');
 const Providers = require('../models/providers');
+const Employee = require('../models/employee');
 const saltRounds = 10;
 
 router.post('/signup', async (req, res, next) => {
@@ -83,6 +84,26 @@ router.post('/delete', middleware.verifyToken, async (req, res, next) => {
     })
     } else {
         res.json({'Failure': 'No data sent'})
+    }
+})
+
+router.post('/employee-list', middleware.verifyToken, async (req, res, next) => {
+    const {id} = req.body;
+    if (id) {
+    jwt.verify(req.token, 'secret', function(err, decoded) {
+        if (!err) {
+            Employee.find({author: id}, async (error, result) => {
+                if (!error) {
+                    console.log('RES',result)
+                    res.json({'Data': result})
+                }
+            })
+        } else {
+            res.json({'Failure': err})
+        }
+    })
+    } else {
+        res.json({'Failure': 'No id sent.'})
     }
 })
 
