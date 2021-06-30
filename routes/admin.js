@@ -100,7 +100,8 @@ router.post('/get-profile', async (req, res, next) => {
     let {id} = req.body;
     console.log('ID', id)
     Users.find({_id: id}, async (err, result) => {
-        let user = result[0].username;
+        let user = result[0].name;
+        console.log('user', user)
         Employee.find({username: user}, async (err, result) => {
             console.log(result)
             res.json({'Data': result})
