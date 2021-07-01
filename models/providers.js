@@ -8,7 +8,8 @@ const Provider = new Schema({
     gender: String,
     businessAddress: String,
     lat: String, lng: String,
-    minAge: Number, maxAge: Number, genders: Array,
+    minAge: Number, maxAge: Number, genders: Array, 
+    age: Number,
     languages: Array, services: Array, 
     telephone: Number,
     author: String
