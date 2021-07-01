@@ -67,6 +67,26 @@ router.post('/provider-list', middleware.verifyToken, async (req, res, next) => 
     }
 })
 
+router.post('/delete-employee', middleware.verifyToken, async (req, res, next) => {
+    const {id} = req.body;
+    if (id) {
+    jwt.verify(req.token, 'secret', function(err, decoded) {
+        if (!err) {
+            Employee.deleteOne({_id: id}, (err, result) => {
+                if (!err) {
+                    console.log(result)
+                    res.json({'Success': 'user deleted'})
+                }
+            })
+        } else {
+            res.json({'Failure': err})
+        }
+    })
+    } else {
+        res.json({'Failure': 'No data sent'})
+    }
+})
+
 router.post('/delete', middleware.verifyToken, async (req, res, next) => {
     const {id} = req.body;
     if (id) {
