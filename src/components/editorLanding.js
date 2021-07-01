@@ -41,7 +41,7 @@ class EditorLanding extends React.Component {
                     <div className="box">
                         <button>
                             <Link to="/admin-list">
-                            Update HC Providers
+                                Update HC Providers
                             </Link>
                         </button>
                         <div className="dots">
@@ -49,7 +49,11 @@ class EditorLanding extends React.Component {
                             <span></span>
                             <span></span>
                         </div>
-                        <button>My Profile</button>
+                        <button>
+                            <Link to="/my-profile" >
+                                My Profile
+                            </Link>  
+                        </button>
                     </div>
                 </div>
             </React.Fragment>

@@ -58,6 +58,7 @@ a:hover {
     font-weight: 300;
     width: 100px;
     margin-right: 3vw;
+    padding-top: 50px;
     z-index: 100;
 }
 #logorow .right a {

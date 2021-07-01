@@ -55,7 +55,11 @@ class AdminLanding extends React.Component {
                             <span></span>
                             <span></span>
                         </div>
-                        <button>My Profile</button>
+                        <button>
+                            <Link to="/my-profile" >
+                            My Profile
+                            </Link>    
+                        </button>
                     </div>
                 </div>
             </React.Fragment>

@@ -77,6 +77,8 @@ class EditInputSection extends React.Component {
                 ...this.state,
                 id: this.props.editItem._id
             };
+            obj.firstname = obj.firstname.toLowerCase()
+            obj.lastname = obj.lastname.toLowerCase()
             let cookie = document.cookie.match(new RegExp('(^| )' + 'token' + '=([^;]+)'))[0].split('=')[1];
             setTimeout(() => {
                 fetch('https://hannahs-heart-2.herokuapp.com/login/edit', {
@@ -91,7 +93,9 @@ class EditInputSection extends React.Component {
                 .then(data => {
                     if (data.Success) {
                         console.log(data)
-                        // this.forceUpdate()
+                        this.setState({
+                            alert: 'User changed.'
+                        })
                         this.props.refreshData()
                     }
                 })
@@ -102,11 +106,12 @@ class EditInputSection extends React.Component {
                     let cookieId = document.cookie.match(new RegExp('(^| )' + 'id' + '=([^;]+)'));
                     if (cookieId) {
                         let obj = {...this.state, author: cookieId[2], businessAddress: address}
+                        obj.firstname = obj.firstname.toLowerCase()
+                        obj.lastname = obj.lastname.toLowerCase()
                         delete obj.languagesOpen;
                         delete obj.servicesOpen;
                         delete obj.gendersOpen;
                         delete obj.address;
-                        console.log(obj)
                         fetch('https://hannahs-heart-2.herokuapp.com/data/add-provider', {
                             method: 'POST',
                             headers: {
@@ -167,7 +172,7 @@ class EditInputSection extends React.Component {
     }
     render() {
         const {edit, editItem, handleAdd, handleEdit} = this.props;
-        const {gendersOpen, telephone, ageSet, minAge, maxAge, servicesOpen, languagesOpen, firstname, lastname, discipline, gender, genders, services, languages, address} = this.state;
+        const {gendersOpen, age, telephone, ageSet, minAge, maxAge, servicesOpen, languagesOpen, firstname, lastname, discipline, gender, genders, services, languages, address} = this.state;
         return (
             <React.Fragment>
             <button
@@ -197,6 +202,14 @@ class EditInputSection extends React.Component {
                     ></input>
                 </div>
                 <div className="row">
+                    <label>Age</label>
+                    <input
+                    id="age"
+                    onChange={this.handleChange}
+                    value={age}
+                    ></input>
+                </div>
+                <div className="row">
                     <label>Discipline</label>
                     <input
                     id="discipline"
@@ -204,7 +217,7 @@ class EditInputSection extends React.Component {
                     value={discipline}
                     ></input>
                 </div>
-                <div  className="row">
+                <div style={{height: 70}} className="row">
                     <label>Gender</label>
                     <input
                     id="gender2"
@@ -317,7 +330,7 @@ class EditInputSection extends React.Component {
                         </div>
                     </div>
                 )}
-                {!this.props.editItem && this.state.alert && (
+                {this.state.alert && (
                     <div className="justAddedAlert">
                         {this.state.alert}
                     </div>

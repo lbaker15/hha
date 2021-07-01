@@ -14,7 +14,7 @@ class Login extends React.Component {
     }   
     handleSubmit = () => {
         let {name, password} = this.state;
-        console.log('working', name, password)
+        //IMPLEMENT LOADER
         fetch('https://hannahs-heart-2.herokuapp.com/login/login', {
             method: 'POST',
             headers: {
@@ -42,7 +42,6 @@ class Login extends React.Component {
                 document.cookie = 'admin' + "=" + Priv + ";expires=" + now.toUTCString() +";path=/";
                 document.cookie = 'name' + "=" + data.Name + ";expires=" + now.toUTCString() +";path=/";
                 document.cookie = 'id' + "=" + data.Id + ";expires=" + now.toUTCString() +";path=/";
-                console.log('prior to timeout')
                 setTimeout(() => {
                     this.forceUpdate()
                 }, 100)
