@@ -43,7 +43,11 @@ router.post('/reset', async(req, res, next) => {
 router.post('/change', async (req, res, next) => {
     const {id, password} = req.body;
     Users.updateOne({_id: id}, {password}, (err, result) => {
-        console.log(err, result)
+        if (!err) {
+            res.json({'Success': 'Password changed'})
+        } else {
+            res.json({'Failure': err})
+        }
     })
 })
 
