@@ -3,8 +3,9 @@ var nodeoutlook = require('nodejs-nodemailer-outlook')
 
 const sendEmail = async (email, subject, text) => {
     try {
+        console.log(email, subject, text)
         //let testAccount = await nodemailer.createTestAccount();
-        nodeoutlook.sendEmail({
+        return nodeoutlook.sendEmail({
             auth: {
                 user: 'laelbaker@hotmail.co.uk',
                 password: '4rtghlae'
