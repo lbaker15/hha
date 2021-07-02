@@ -18,19 +18,21 @@ router.post('/reset', async(req, res, next) => {
     const {id} = req.body;
     Users.find({_id: id}, async (err, result) => {
         if (!err) {
-            console.log(result)
-            // transporter.sendMail({
-            //     to: 'laelbaker@hotmail.co.uk',
-            //     from: 'lbaker@bws.digital',
-            //     subject: 'Signup',
-            //     html: `
-            //     <h1>
-            //     test
-            //     </h1>
-            //     `
-            // }, (err, res) => {
-            //     console.log(res)
-            // })
+            let email = result[0].email | 'laelbaker@hotmail.co.uk';
+            let password = result[0].password;
+            let link = `/reset-link/${id}`
+            transporter.sendMail({
+                to: email,
+                from: 'lbaker@bws.digital',
+                subject: 'Signup',
+                html: `
+                <h1>
+                Link: ${link}
+                </h1>
+                `
+            }, (err, res) => {
+                console.log(res)
+            })
             res.send('response')
         }
     })
