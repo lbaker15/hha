@@ -2,7 +2,7 @@ const  path = require('path');
 const express = require('express');
 const Users = require('../models/users');
 const router = express.Router();
-const sendEmail = require("../utils/sendEmail");
+const sendEmail = require("../util/sendEmail");
 
 router.post('/reset', async(req, res, next) => {
     const {id} = req.body;
