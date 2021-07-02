@@ -23,6 +23,7 @@
     "mongoose": "^5.12.14",
     "nodejs-nodemailer-outlook": "^1.2.4",
     "nodemailer": "^6.6.2",
+    "nodemailer-sendgrid-transport": "^0.2.0",
     "nodemon": "^2.0.6",
     "pug": "^3.0.0"
   }
