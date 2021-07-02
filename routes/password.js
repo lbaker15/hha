@@ -30,11 +30,19 @@ router.post('/reset', async(req, res, next) => {
                 Link: ${link}
                 </h1>
                 `
-            }, (err, res) => {
-                console.log(res)
+            }, (err, resp) => {
+                if (!err) {
+                    res.send('response')
+                }
             })
-            res.send('response')
         }
+    })
+})
+
+router.post('/change', async (req, res, next) => {
+    const {id, password} = req.body;
+    Users.updateOne({_id: id}, {password}, (err, result) => {
+        console.log(result)
     })
 })
 
