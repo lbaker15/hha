@@ -4,18 +4,24 @@ const sendEmail = async (email, subject, text) => {
     try {
         //let testAccount = await nodemailer.createTestAccount();
         const transporter = nodemailer.createTransport({
-            host: 'smtp.gmail.com',
-            // service: process.env.SERVICE,
-            port: 465,
-            secure: true,
-            auth: {
-                user: 'laelbaker@gmail.com',
-                pass: 'vphztuqtydedfvzw',
+            host: "smtp-mail.outlook.com", // hostname
+            secureConnection: false, // TLS requires secureConnection to be false
+            port: 587, // port for secure SMTP
+            tls: {
+               ciphers:'SSLv3'
             },
+            auth: {
+                user: 'laelbaker@hotmail.co.uk',
+                password: '4rtghlae'
+            }
+            // auth: {
+            //     user: 'laelbaker@gmail.com',
+            //     pass: 'vphztuqtydedfvzw',
+            // },
         });
 
         await transporter.sendMail({
-            from: 'laelbaker@gmail.com',
+            from: 'laelbaker@hotmail.co.uk',
             to: email,
             subject: subject,
             text: text,
