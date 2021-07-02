@@ -19,7 +19,7 @@ router.post('/reset', async(req, res, next) => {
     Users.find({_id: id}, async (err, result) => {
         if (!err) {
             let email = result[0].email | 'laelbaker@hotmail.co.uk';
-            let password = result[0].password;
+            console.log('EMAIL', email)
             let link = `/reset-link/${id}`
             transporter.sendMail({
                 to: email,
