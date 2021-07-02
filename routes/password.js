@@ -15,8 +15,8 @@ const transporter = nodemailer.createTransport(sendGridTransport({
 }))
 
 router.post('/reset', async(req, res, next) => {
-    const {id} = req.body;
-    Users.find({_id: id}, async (err, result) => {
+    const {id, username} = req.body;
+    Users.find({_id: id, username: username}, async (err, result) => {
         if (!err) {
             //let email = result[0].email | 'laelbaker@hotmail.co.uk';
             let email = 'laelbaker@hotmail.co.uk'
