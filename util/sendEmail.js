@@ -4,7 +4,7 @@ const sendEmail = async (email, subject, text) => {
     try {
         let testAccount = await nodemailer.createTestAccount();
         const transporter = nodemailer.createTransport({
-            host: process.env.HOST,
+            host: 'smtp.ethereal.email',
             // service: process.env.SERVICE,
             port: 587,
             secure: true,
