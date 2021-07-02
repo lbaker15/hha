@@ -22,16 +22,15 @@ router.post('/reset', async(req, res, next) => {
         if (!err) {
             //let email = result[0].email | 'laelbaker@hotmail.co.uk';
             let email = 'laelbaker@hotmail.co.uk'
-            console.log('EMAIL', email)
             let link = `/reset-link/${id}`
             transporter.sendMail({
                 to: email,
                 from: 'lbaker@bws.digital',
                 subject: 'Signup',
                 html: `
-                <h1>
-                Link: 
-                </h1>
+                <h3>
+                Please visit this link to reset your password: 
+                </h3>
                 <a href="${rootUrl + link}">${rootUrl + link}</a>
                 
                 `
