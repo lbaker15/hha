@@ -5,12 +5,14 @@ const sendEmail = async (email, subject, text) => {
         return nodeoutlook.sendEmail({
             auth: {
                 user: 'laelbaker@hotmail.co.uk',
-                password: '4rtghlae'
+                pass: '4rtghlae'
             },
             from: 'laelbaker@hotmail.co.uk',
             to: email,
             subject: subject,
-            text: text
+            text: text,
+            onError: (e) => console.log(e),
+            onSuccess: (i) => console.log(i)
             // auth: {
             //     user: 'laelbaker@gmail.com',
             //     pass: 'vphztuqtydedfvzw',
