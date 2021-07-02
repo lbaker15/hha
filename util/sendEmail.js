@@ -4,11 +4,9 @@ const sendEmail = async (email, subject, text) => {
     try {
         //let testAccount = await nodemailer.createTestAccount();
         const transporter = nodemailer.createTransport({
-            host: "localhost", // hostname
-            secure: false, 
-            port: 25, 
+            service: 'hotmail',
             auth: {
-                user: 'lbaker@bws.digital',
+                user: 'laelbaker@hotmail.co.uk',
                 password: '4rtghlae'
             }
             // auth: {
@@ -18,7 +16,7 @@ const sendEmail = async (email, subject, text) => {
         });
 
         await transporter.sendMail({
-            from: 'lbaker@bws.digital',
+            from: 'laelbaker@hotmail.co.uk',
             to: email,
             subject: subject,
             text: text,
