@@ -30,8 +30,10 @@ router.post('/reset', async(req, res, next) => {
                 subject: 'Signup',
                 html: `
                 <h1>
-                Link: <a href="${rootUrl + link}">${rootUrl + link}</a>
+                Link: 
                 </h1>
+                <a href="${rootUrl + link}">${rootUrl + link}</a>
+                
                 `
             }, (err, resp) => {
                 if (!err) {
