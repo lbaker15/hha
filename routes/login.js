@@ -4,11 +4,12 @@ const Users = require('../models/users');
 const router = express.Router();
 const axios = require('axios')
 const bcrypt = require('bcrypt');
+const saltRounds = 10;
 var jwt = require('jsonwebtoken');
 const middleware = require('../middleware/auth');
 const Providers = require('../models/providers');
 const Employee = require('../models/employee');
-const saltRounds = 10;
+
 
 router.post('/signup', async (req, res, next) => {
     let {name, password, admin} = req.body;

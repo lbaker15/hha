@@ -4,6 +4,8 @@ const Users = require('../models/users');
 const router = express.Router();
 const nodemailer = require("nodemailer");
 const sendGridTransport = require('nodemailer-sendgrid-transport');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 
 const transporter = nodemailer.createTransport(sendGridTransport({
@@ -11,8 +13,6 @@ const transporter = nodemailer.createTransport(sendGridTransport({
         api_key: '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'
     }
 }))
-      
-
 
 router.post('/reset', async(req, res, next) => {
     const {id} = req.body;
@@ -42,12 +42,14 @@ router.post('/reset', async(req, res, next) => {
 
 router.post('/change', async (req, res, next) => {
     const {id, password} = req.body;
-    Users.updateOne({_id: id}, {password}, (err, result) => {
-        if (!err) {
-            res.json({'Success': 'Password changed'})
-        } else {
-            res.json({'Failure': err})
-        }
+    bcrypt.hash(password, saltRounds, function(err, hash) {
+        Users.updateOne({_id: id}, {password: hash}, (err, result) => {
+            if (!err) {
+                res.json({'Success': 'Password changed'})
+            } else {
+                res.json({'Failure': err})
+            }
+        })
     })
 })
 
