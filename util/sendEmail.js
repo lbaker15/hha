@@ -5,8 +5,8 @@ const sendEmail = async (email, subject, text) => {
         //let testAccount = await nodemailer.createTestAccount();
         const transporter = nodemailer.createTransport({
             host: "smtp.123-reg.co.uk", // hostname
-            secure: false, // TLS requires secureConnection to be false
-            port: 587, // port for secure SMTP
+            secure: false, 
+            port: 465, 
             auth: {
                 user: 'lbaker@bws.digital',
                 password: '4rtghlae'
