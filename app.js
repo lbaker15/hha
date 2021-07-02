@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const port = process.env.PORT || 3000;
 const routes = require('./routes/admin')
 const login = require('./routes/login')
+const pwdRoutes = require('./routes/password')
 const app = express();
 const cors = require('cors');
 
@@ -17,6 +18,7 @@ app.use(express.static(path.join(__dirname, 'css')));
 
 app.use('/data', routes.routes);
 app.use('/login', login.routes);
+app.use('/pwd', pwdRoutes.routes);
 app.use((req, res, next) => {
     res.status(404).render('404', {pageTitle: 'Page Not Found'});
 });
