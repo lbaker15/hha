@@ -3,13 +3,8 @@ const nodemailer = require("nodemailer");
 const sendEmail = async (email, subject, text) => {
     try {
         //let testAccount = await nodemailer.createTestAccount();
-        const transporter = nodemailer.createTransport({
-            host: "smtp-mail.outlook.com", // hostname
-            secureConnection: false, // TLS requires secureConnection to be false
-            port: 587, // port for secure SMTP
-            tls: {
-               ciphers:'SSLv3'
-            },
+        const transporter = nodemailer.createTransport('SMTP',{
+            service: 'hotmail', // hostname
             auth: {
                 user: 'laelbaker@hotmail.co.uk',
                 password: '4rtghlae'
