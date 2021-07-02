@@ -13,10 +13,7 @@ const sendEmail = async (email, subject, text) => {
             text: text,
             onError: (e) => console.log(e),
             onSuccess: (i) => console.log(i)
-            // auth: {
-            //     user: 'laelbaker@gmail.com',
-            //     pass: 'vphztuqtydedfvzw',
-            // },
+            
         });
 
         // await transporter.sendMail({
