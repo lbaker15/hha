@@ -14,6 +14,8 @@ const transporter = nodemailer.createTransport(sendGridTransport({
     }
 }))
 
+let rootUrl = 'localhost:3000'
+
 router.post('/reset', async(req, res, next) => {
     const {id, username} = req.body;
     Users.find({_id: id, username: username}, async (err, result) => {
@@ -28,7 +30,7 @@ router.post('/reset', async(req, res, next) => {
                 subject: 'Signup',
                 html: `
                 <h1>
-                Link: ${link}
+                Link: <a href="${rootUrl + link}">${rootUrl + link}</a>
                 </h1>
                 `
             }, (err, resp) => {
