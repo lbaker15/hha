@@ -34,6 +34,21 @@ const stringReplace = (string) => {
     }
 }
 
+router.post('/get-center', async (req, res, next) => {
+    let {address} = req.body;
+    let addressEdit = await stringReplace(address)
+    let clientAddress; 
+    try {
+        const {data} = await axios.post(`
+            https://maps.googleapis.com/maps/api/geocode/json?address=${addressEdit}&key=${key}
+        `)
+        clientAddress = data.results[0].geometry.location;
+    } catch(err) {
+        console.log(err)
+    }
+    res.json({'Client address': clientAddress})
+}) 
+
 router.post('/get-providers', async (req, res, next) => {
     let {address, distanceLimit, treatment, age, gender, language} = req.body; //IF NOT PROVIDED SET THESE TO DEFAULT
     //SET DEFAULT ADDRESS? DISTANCE LIMIT?
