@@ -12,8 +12,7 @@ class KmBtns extends React.Component {
         return (
             <React.Fragment>
                 <h2>Travel Radius</h2>
-                {
-                btnValues.map((x, i) => {
+                {btnValues.map((x, i) => {
                     return (
                         <React.Fragment key={x+i}>
                             <label key={x+i}>

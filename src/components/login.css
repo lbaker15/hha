@@ -1,7 +1,7 @@
 .loginForm {
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
-    width: 500px; height: 215px;
+    width: 500px; height: 225px;
     margin: 0 auto; gap: 40px;
     background: white;
     color: white; font-family: roboto;
@@ -10,15 +10,28 @@
     font-size: 20px; font-weight: 200;
     color: black; font-family: roboto;
 }
-.loginForm input {
-    width: 80%;
+.loginForm div input {
+    width: calc(83% - 55px);
     margin-top: 0px;
     padding: 10px;
+    padding-left: 55px;
     border-radius: 2px;
     border: none;
     border-bottom: 2px solid rgb(3, 17, 211);
     outline: none;
     background: rgba(255, 255, 255, 0.8);
+}
+.loginForm div {
+    display: flex; height: 40px; width: 450px;
+    margin-left: 50px;
+}
+.loginForm div:nth-child(1) {
+    margin-top: -20px;
+}
+.loginForm div img {
+    width: 50px; position: absolute;
+    height: 50px;
+    margin-top: -7px;
 }
 .loginForm input:nth-child(1) {
     margin-top: -10px;
@@ -59,7 +72,7 @@
     margin-top: -12px;
 }
 .loginInfo h4 a {
-    color: rgb(195, 209, 255); font-size: 22px;
+    color: var(--paleBlue); font-size: 22px;
     font-family: roboto;
     font-weight: 300;
 }
@@ -78,4 +91,19 @@
 .forgotPswd h5 {
     font-weight: 400;
     font-size: 18px;
+}
+.forgotPswd h5 a {
+    text-decoration: none;
+    color: white;
+}
+.alertNew {
+    width: 400px; height: 130px;
+    background: white;
+    position: absolute;
+    z-index: 90000;
+    text-align: center;
+    font-family: roboto;
+    font-weight: 300;
+    padding-top: 20px;
+    margin-top: 400px;
 }

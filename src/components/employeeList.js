@@ -5,7 +5,9 @@ import EditInputSectionEmployee from './editInputSectionEmployee';
 import Add from './add';
 import {Link} from 'react-router-dom';
 import AdminIcon from './assets/Admin_Icon_White.png';
+import Loader from './loader';
 let alphabet = 'abcdefghijklmnopqrstuvwxyz'.split("");
+
 
 
 class EmployeeList extends React.Component {
@@ -56,7 +58,7 @@ class EmployeeList extends React.Component {
         let cookieId = document.cookie.match(new RegExp('(^| )' + 'id' + '=([^;]+)'));
         let cookie = document.cookie.match(new RegExp('(^| )' + 'token' + '=([^;]+)'));
         if (cookie) {
-            fetch('https://hannahs-heart-2.herokuapp.com/login/employee-list', {
+            fetch('https://hannahs-heart-2.herokuapp.com/employee/employee-list', {
                 method: 'POST',
                 headers: {
                     'authorization': cookie[0].split('=')[1],
@@ -131,7 +133,7 @@ class EmployeeList extends React.Component {
             return (
                 <React.Fragment>
                     <div>
-                        LOADER
+                        <Loader />
                     </div>
                 </React.Fragment>
             )
@@ -145,8 +147,8 @@ class EmployeeList extends React.Component {
                         <button 
                         className="right">
                             <Link to="/my-profile">
-                            <img src={AdminIcon} />
-                            <h3>{adminName}</h3>
+                                <img src={AdminIcon} />
+                                <h3>{adminName}</h3>
                             </Link>
                         </button>
                     </div>

@@ -13,6 +13,8 @@ import AdminList from './components/adminList';
 import EmployeeList from './components/employeeList';
 import AdminLanding from './components/adminLanding';
 import EditorLanding from './components/editorLanding';
+import ResetPassword from './components/resetPassword';
+import ResetLink from './components/resetLink';
 import Profile from './components/profile';
 
 
@@ -21,7 +23,7 @@ class App extends React.Component {
     return (
       <Router>
         <Switch>
-          <Route exact path="/">
+          <Route path="/wellbeing">
             <Checkin />
           </Route>
           <Route path="/form">
@@ -35,6 +37,8 @@ class App extends React.Component {
           <Route path="/admin-list" render={(props) => <AdminList {...props} />} />
           <Route path="/employee-list" render={(props) => <EmployeeList {...props} />} />
           <Route path="/my-profile" render={(props) => <Profile {...props} />} />
+          <Route path="/reset-password" render={(props) => <ResetPassword {...props} />} />
+          <Route path="/reset-link/:id" component={ResetLink} />
             {/* <AdminList />
           </Route> */}
         </Switch>

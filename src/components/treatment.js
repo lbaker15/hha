@@ -32,7 +32,7 @@ class Treatment extends React.Component {
                                     name="treatment" 
                                     value={x.value} 
                                     data-value='services'
-                                    checked={checker ? true : false}
+                                    checked={checker}
                                     onChange={handleInputArray}
                                     id="treatment_a"></input>
                                     {x.value}

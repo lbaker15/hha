@@ -16,12 +16,13 @@ class Alert extends React.Component {
                         phone 911 or call a number below.
                         </h3>
                         <div className="hotline">
-                            <h4>Hotline Name</h4>
-                            <h5>4322 432 4321</h5>
+                            <h4>Crisis Services Canada</h4>
+                            <h5>Call: <span>1 833 456 4566</span></h5>
+                            <h5>Text: <span>45645</span> (4pm - midnight) </h5>
                         </div>
                         <div className="hotline">
-                            <h4>Hotline Name</h4>
-                            <h5>4322 432 4321</h5>
+                            <h4>Crisis Line</h4>
+                            <h5>Call: <span>1 866 996 0991</span></h5>
                         </div>
                     </div>
                 </div>

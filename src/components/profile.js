@@ -20,13 +20,13 @@ class Profile extends React.Component {
         let adminCookie = document.cookie.match(new RegExp('(^| )' + 'admin' + '=([^;]+)'));
         let idCookie = document.cookie.match(new RegExp('(^| )' + 'id' + '=([^;]+)'));
         if (cookie && adminCookie) {
-                if (cookieName) {
-                    this.setState({
-                        adminName: cookieName[2],
-                        cookie,
-                        admin: adminCookie
-                    })
-                }
+            if (cookieName) {
+                this.setState({
+                    adminName: cookieName[2],
+                    cookie,
+                    admin: adminCookie
+                })
+            }
         }
         fetch('https://hannahs-heart-2.herokuapp.com/data/get-profile', {
             method: 'POST',

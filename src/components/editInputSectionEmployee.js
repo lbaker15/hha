@@ -43,7 +43,7 @@ class EditInputSectionEmployee extends React.Component {
             };
             let cookie = document.cookie.match(new RegExp('(^| )' + 'token' + '=([^;]+)'))[0].split('=')[1];
             setTimeout(() => {
-                fetch('https://hannahs-heart-2.herokuapp.com/login/edit-employee', {
+                fetch('https://hannahs-heart-2.herokuapp.com/employee/edit-employee', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -76,7 +76,7 @@ class EditInputSectionEmployee extends React.Component {
                         .then(res => res.json())
                         .then(data => console.log(data))
 
-                        fetch('https://hannahs-heart-2.herokuapp.com/data/add-employee', {
+                        fetch('https://hannahs-heart-2.herokuapp.com/employee/add-employee', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'

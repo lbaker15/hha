@@ -37,7 +37,7 @@ class ListOfLanguages extends React.Component {
                             type="checkbox" 
                             name="preferredLanguage" 
                             data-value="languages"
-                            checked={checker ? true : false}
+                            checked={checker}
                             value={x.toLowerCase()} 
                             id={num}>
                             </input>

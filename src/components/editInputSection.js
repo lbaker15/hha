@@ -112,7 +112,7 @@ class EditInputSection extends React.Component {
                         delete obj.servicesOpen;
                         delete obj.gendersOpen;
                         delete obj.address;
-                        fetch('https://hannahs-heart-2.herokuapp.com/data/add-provider', {
+                        fetch('https://hannahs-heart-2.herokuapp.com/provider/add-provider', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'

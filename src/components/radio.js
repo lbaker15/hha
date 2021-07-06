@@ -8,7 +8,6 @@ class Radio extends React.Component {
         redirect: false
     }
     onChangeValue = (e) => {
-        console.log(e.target.value)
         this.setState({
             selected: e.target.value
         })

@@ -22,7 +22,6 @@ class Gender extends React.Component {
             <React.Fragment>
                 {gendersList.map((x, i) => {
                     let checker = genders.find(item => item === x.toLowerCase())
-                    console.log(checker, x, genders)
                     return (
                         <React.Fragment key={x+i}>
                             <label key={x+i}>
@@ -33,7 +32,7 @@ class Gender extends React.Component {
                                 id={`gender_${i}`} 
                                 onChange={handleChange}
                                 data-value="genders"
-                                checked={edit && checker ? true : false}
+                                checked={edit && checker}
                                 className="gender">
                                 </input>
                                 {x}

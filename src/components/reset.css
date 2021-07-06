@@ -1,0 +1,89 @@
+:root {
+    --colorDark: rgb(60, 0, 128);
+    --fontGrey: rgb(165, 165, 165);
+    --iconColor: rgb(0, 0, 105);
+    --darkFont: rgb(70, 70, 70);
+    --btnColor: rgb(0, 0, 199);
+    --yellowColor: rgb(235, 235, 215);
+    --alphabet: rgb(163, 176, 231);
+    --red: rgb(255, 54, 54);
+    --bGradient2: linear-gradient(90deg, rgb(19, 40, 156) 0%, rgb(54, 102, 236)100%);;
+    --bGradient: linear-gradient(90deg, rgb(0, 15, 85) 0%, rgb(31, 65, 160) 100%);;
+}
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+.reset {
+    background: var(--bGradient);
+    width: 100%; height: 100vh;
+    display: flex; justify-content: center;
+    align-items: center;
+}
+.reset .form {
+    width: 400px;
+    height: 300px;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex; flex-direction: column;
+    align-items: center;
+}
+.reset .form input {
+    width: 70%;
+    height: 30px;
+    outline: none;
+}
+.reset .form button {
+    width: 180px;
+    height: 40px;
+    background: black;
+    color: white;
+    font-family: roboto; font-size: 14px; font-weight: 300;
+    border: none;
+    margin-top: 35px;
+}
+.reset .form h2 {
+    margin-top: 30px;
+    font-family: roboto;
+    font-weight: 300;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    padding: 20px;
+}
+.resetVS {
+    display: flex; justify-content: center; 
+    align-items: center; 
+    width: 100vw; height: 90vh;
+}
+.resetForm {
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    width: 500px; height: 350px;
+    gap: 20px;
+    background: rgba(255, 255, 255, 0.205);
+}
+.resetForm h1 {
+    font-size: 28px;
+    font-family: roboto;
+    font-weight: 300;
+}
+.resetForm input {
+    width: 330px;
+    height: 35px;
+    border: none;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 3px;
+}
+.resetForm button {
+    background: black;
+    color: white;
+    padding: 12px 40px;
+    border: none;
+    margin-top: 20px;
+    font-family: roboto;
+    font-size: 16px; font-weight: 300;
+}
+.al {
+    color: black;
+    margin-top: 10px;
+    font-family: roboto; font-weight: 500;
+    margin-bottom: -12.5px;
+}

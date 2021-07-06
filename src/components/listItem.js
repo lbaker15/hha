@@ -51,7 +51,7 @@ class ListItem extends React.Component {
         if (deleteAlert && employee) {
             let obj = {id: this.state.id}
             let cookie = document.cookie.match(new RegExp('(^| )' + 'token' + '=([^;]+)'));
-            fetch('https://hannahs-heart-2.herokuapp.com/login/delete-employee', {
+            fetch('https://hannahs-heart-2.herokuapp.com/employee/delete-employee', {
                 method: 'POST',
                 headers: {
                     'authorization': cookie[0].split('=')[1],
@@ -66,6 +66,11 @@ class ListItem extends React.Component {
                 })
             })
         }
+    }
+    closeDelete = () => {
+        this.setState({
+            deleteAlert: false
+        })
     }
     render() {
         const {data, handleEdit, employee} = this.props;
@@ -82,7 +87,9 @@ class ListItem extends React.Component {
                         </h2>
                         <h3>This cannot be undone!</h3>
                         <div className="btFlex">
-                            <button>Cancel</button>
+                            <button
+                            onClick={this.closeDelete}
+                            >Cancel</button>
                             <button
                             onClick={this.deleteMsg}
                             >Delete</button>
@@ -96,12 +103,12 @@ class ListItem extends React.Component {
                     <div style={employee ? {width: '60%'} : null}>
                         {!employee && (
                             <React.Fragment>
-                            <h1>
-                                {(data.discipline === 'psychiatrist') ? 'Dr ' : null} 
-                                <span>{String(data.lastname)[0].toUpperCase() + String(data.lastname).slice(1) + " "}</span>
-                                {String(data.firstname)[0].toUpperCase() + String(data.firstname).slice(1)}
-                            </h1>
-                            <h2>{data.discipline[0].toUpperCase() + data.discipline.slice(1)}</h2>
+                                <h1>
+                                    <span>{(data.discipline === 'psychiatrist') ? 'Dr ' : null} 
+                                    {String(data.lastname)[0].toUpperCase() + String(data.lastname).slice(1) + " "}</span>
+                                    {String(data.firstname)[0].toUpperCase() + String(data.firstname).slice(1)}
+                                </h1>
+                                <h2>{data.discipline[0].toUpperCase() + data.discipline.slice(1)}</h2>
                             </React.Fragment>
                         )}
                         {employee && (
@@ -126,7 +133,8 @@ class ListItem extends React.Component {
                         refe={this.getElem} 
                         refreshData={this.props.refreshData} 
                         data={data} 
-                        id={data._id} />
+                        id={data._id} 
+                        />
                     </div>
                 </div>
             </React.Fragment>
