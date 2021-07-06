@@ -32,10 +32,14 @@ router.post('/provider-list', middleware.verifyToken, async (req, res, next) => 
 
 router.post('/add-provider', async (req, res, next) => {
     let { firstname, lastname, discipline, gender, genders, 
-        businessAddress, languages, services, 
-        minAge, maxAge, age, telephone, author } = req.body;
-        console.log(firstname, lastname, discipline, gender, genders, businessAddress,
-            languages, services, minAge, maxAge, age, telephone, author)
+    businessAddress, languages, services, 
+    minAge, maxAge, age, telephone, author } = req.body;
+        console.log(
+            firstname, lastname, discipline, 
+            gender, genders, businessAddress,
+            languages, services, minAge, maxAge,
+            age, telephone, author
+            )
     if (firstname && lastname && discipline && gender && 
         genders && businessAddress && languages && services && 
         minAge && maxAge && age && telephone && author) {
