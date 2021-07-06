@@ -27,7 +27,6 @@ router.post('/signup', async (req, res, next) => {
 router.post('/login', async (req, res, next) => {
     let {name, password} = req.body;
     Users.find({name: name}, (err, result) => {
-        console.log('LOOK', result)
         let val = result;
         if (result.length > 0) {
             bcrypt.compare(password, result[0].password, function(err, result) {
@@ -37,11 +36,11 @@ router.post('/login', async (req, res, next) => {
                     let obj = {'Token': token, 'Id': val[0]._id, 'Name': val[0].name, 'Priv': val[0].admin }
                     res.json(obj)
                 } else {
-                    res.json({'Failure': 'Password incorrect'})
+                    res.json({'Failure': 'Password incorrect, please ensure password is spelled correctly.'})
                 }
             });
         } else {
-            res.json({'Failure': 'User incorrect'})
+            res.json({'Failure': 'User not found, please ensure username is spelled correctly.'})
         }
     })
 })
