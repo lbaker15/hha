@@ -34,12 +34,6 @@ router.post('/add-provider', async (req, res, next) => {
     let { firstname, lastname, discipline, gender, genders, 
     businessAddress, languages, services, 
     minAge, maxAge, age, telephone, author } = req.body;
-        console.log(
-            firstname, lastname, discipline, 
-            gender, genders, businessAddress,
-            languages, services, minAge, maxAge,
-            age, telephone, author
-            )
     if (services, genders, languages, age && minAge !== null | undefined && maxAge && firstname && lastname && discipline && gender && businessAddress) {
             let newGen = await genders.map(x => String(x).toLowerCase())
             let newLang = await languages.map(g => String(g).toLowerCase())
@@ -58,6 +52,7 @@ router.post('/add-provider', async (req, res, next) => {
                 author: author
             }
             let address = await helpers.stringReplace(obj.businessAddress)
+            console.log('HERE LOOK', address)
             let providerCoords;
             try {
                 const {data} = await axios.post(`
