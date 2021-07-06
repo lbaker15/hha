@@ -27,6 +27,7 @@ router.post('/signup', async (req, res, next) => {
 router.post('/login', async (req, res, next) => {
     let {name, password} = req.body;
     Users.find({name: name}, (err, result) => {
+        console.log('LOOK', result)
         let val = result;
         if (result) {
             bcrypt.compare(password, result[0].password, function(err, result) {
