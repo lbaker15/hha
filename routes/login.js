@@ -45,52 +45,12 @@ router.post('/login', async (req, res, next) => {
     })
 })
 
-router.post('/provider-list', middleware.verifyToken, async (req, res, next) => {
-    const {id} = req.body;
-    if (id) {
-    jwt.verify(req.token, 'secret', function(err, decoded) {
-        if (!err) {
-            Providers.find({author: id}, async (error, result) => {
-                if (!error) {
-                    console.log('RES',result)
-                    res.json({'Data': result})
-                }
-            })
-        } else {
-            res.json({'Failure': err})
-        }
-    })
-    } else {
-        res.json({'Failure': 'No id sent.'})
-    }
-})
-
 router.post('/delete-employee', middleware.verifyToken, async (req, res, next) => {
     const {id} = req.body;
     if (id) {
     jwt.verify(req.token, 'secret', function(err, decoded) {
         if (!err) {
             Employee.deleteOne({_id: id}, (err, result) => {
-                if (!err) {
-                    console.log(result)
-                    res.json({'Success': 'user deleted'})
-                }
-            })
-        } else {
-            res.json({'Failure': err})
-        }
-    })
-    } else {
-        res.json({'Failure': 'No data sent'})
-    }
-})
-
-router.post('/delete', middleware.verifyToken, async (req, res, next) => {
-    const {id} = req.body;
-    if (id) {
-    jwt.verify(req.token, 'secret', function(err, decoded) {
-        if (!err) {
-            Providers.deleteOne({_id: id}, (err, result) => {
                 if (!err) {
                     console.log(result)
                     res.json({'Success': 'user deleted'})
@@ -124,30 +84,6 @@ router.post('/employee-list', middleware.verifyToken, async (req, res, next) => 
         res.json({'Failure': 'No id sent.'})
     }
 })
-
-router.post('/edit', middleware.verifyToken, async (req, res, next) => {
-    const obj = req.body;
-    console.log('obj', obj)
-    if (obj.id) {
-    jwt.verify(req.token, 'secret', function(err, decoded) {
-        if (!err) {
-            Providers.updateOne({_id: obj.id}, obj, 
-                (err, result) => {
-                    console.log(result)
-                    if (!err) {
-                        console.log(result)
-                        res.json({'Success': 'user changed'})
-                    }
-            })
-        } else {
-            res.json({'Failure': err})
-        }
-    })
-    } else {
-        res.json({'Failure': 'No data sent'})
-    }
-})
-
 
 router.post('/edit-employee', middleware.verifyToken, async (req, res, next) => {
     const {firstname, lastname, id, username, password, discipline, email, businessAddress} = req.body;
