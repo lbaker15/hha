@@ -1,12 +1,11 @@
 const helpers = require('./functionHelpers');
-const  path = require('path');
 const express = require('express');
-const rootDir = require('../util/path');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+var jwt = require('jsonwebtoken');
 const Provider = require('../models/providers');
 const router = express.Router();
 const axios = require('axios');
-const Employee = require('../models/employee');
-const Users = require('../models/users');
 const middleware = require('../middleware/auth');
 let key = 'AIzaSyCNxlh-79Og3dQ_tYpV_Vzlkx3kAPyZ6HI';
 
