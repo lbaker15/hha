@@ -34,44 +34,50 @@ router.post('/add-provider', async (req, res, next) => {
     let { firstname, lastname, discipline, gender, genders, 
         businessAddress, languages, services, 
         minAge, maxAge, age, telephone, author } = req.body;
-    let newGen = await genders.map(x => String(x).toLowerCase())
-    let newLang = await languages.map(g => String(g).toLowerCase())
-    let newServices = await services.map(g => String(g).toLowerCase())
-    let obj = {
-        firstname: String(firstname).toLowerCase(),
-        lastname: String(lastname).toLowerCase(),
-        discipline: String(discipline).toLowerCase(),
-        gender: String(gender).toLowerCase(),
-        telephone: Number(telephone),
-        businessAddress: String(businessAddress).toLowerCase(),
-        minAge: (minAge) ? Number(minAge) : 0, maxAge: (maxAge) ? Number(maxAge) : 1000, age: age,
-        genders: newGen,
-        languages: newLang, 
-        services: newServices, 
-        author: author
-    }
-    let address = await helpers.stringReplace(obj.businessAddress)
-    let providerCoords;
-    try {
-        const {data} = await axios.post(`
-            https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${key}
-        `)
-        providerCoords = await data.results[0].geometry.location;
-            // setTimeout(async () => {
-                if (providerCoords) {
-                    obj.lat = providerCoords.lat;
-                    obj.lng = providerCoords.lng;
-                    let add = new Provider(obj)
-                    await add.save().then(data => {
-                        return res.json({'Data': data})
-                    })
-                } else {
-                    return res.json({'Address Fail': 'No provider coords'})
-                }
-            // }, 100)
-    } catch(err) {
-        console.log(err)
-    }
+    if (firstname && lastname && discipline && gender && 
+        genders && businessAddress && languages && services && 
+        minAge && maxAge && age && telephone && author) {
+            let newGen = await genders.map(x => String(x).toLowerCase())
+            let newLang = await languages.map(g => String(g).toLowerCase())
+            let newServices = await services.map(g => String(g).toLowerCase())
+            let obj = {
+                firstname: String(firstname).toLowerCase(),
+                lastname: String(lastname).toLowerCase(),
+                discipline: String(discipline).toLowerCase(),
+                gender: String(gender).toLowerCase(),
+                telephone: Number(telephone),
+                businessAddress: String(businessAddress).toLowerCase(),
+                minAge: (minAge) ? Number(minAge) : 0, maxAge: (maxAge) ? Number(maxAge) : 1000, age: age,
+                genders: newGen,
+                languages: newLang, 
+                services: newServices, 
+                author: author
+            }
+            let address = await helpers.stringReplace(obj.businessAddress)
+            let providerCoords;
+            try {
+                const {data} = await axios.post(`
+                    https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${key}
+                `)
+                providerCoords = await data.results[0].geometry.location;
+                    // setTimeout(async () => {
+                        if (providerCoords) {
+                            obj.lat = providerCoords.lat;
+                            obj.lng = providerCoords.lng;
+                            let add = new Provider(obj)
+                            await add.save().then(data => {
+                                return res.json({'Data': data})
+                            })
+                        } else {
+                            return res.json({'Failure': 'Address fail, no provider coords.'})
+                        }
+                    // }, 100)
+            } catch(err) {
+                return res.json({'Failure': 'Address fail, address cannot be converted.'})
+            }
+        } else {
+            return res.json({'Failure': 'Incomplete information form.'})
+        }
 })
 
 //CLIENT SIDE
