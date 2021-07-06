@@ -40,7 +40,7 @@ router.post('/add-provider', async (req, res, next) => {
             languages, services, minAge, maxAge,
             age, telephone, author
             )
-    if (age  && maxAge && firstname && lastname && discipline && gender && businessAddress) {
+    if (age && minAge !== null && maxAge && firstname && lastname && discipline && gender && businessAddress) {
             let newGen = await genders.map(x => String(x).toLowerCase())
             let newLang = await languages.map(g => String(g).toLowerCase())
             let newServices = await services.map(g => String(g).toLowerCase())
