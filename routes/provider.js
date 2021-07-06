@@ -64,8 +64,9 @@ router.post('/add-provider', async (req, res, next) => {
                 `)
                 providerCoords = await data.results[0].geometry.location;
                     // setTimeout(async () => {
-                        if (providerCoords) {
-                            obj.lat = providerCoords.lt;
+                        providerCoords.lat = null;
+                        if (providerCoords.lat && providerCoords.lng) {
+                            obj.lat = providerCoords.lat;
                             obj.lng = providerCoords.lng;
                             try {
                                 let add = new Provider(obj)
