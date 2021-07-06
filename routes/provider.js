@@ -57,6 +57,7 @@ router.post('/add-provider', async (req, res, next) => {
                 address = await helpers.stringReplace(obj.businessAddress)
             } catch(err) {
                 new HttpError('Could not convert address to lowercase', 500)
+                return next(error);
             }
             let providerCoords;
             try {
@@ -75,16 +76,20 @@ router.post('/add-provider', async (req, res, next) => {
                                 })
                             } catch(err) {
                                 new HttpError('Could not save provider.', 500)
+                                return next(error);
                             }
                         } else {
                             new HttpError('Address fail, no provider coords.', 500)
+                            return next(error);
                         }
                     // }, 100)
             } catch(err) {
                 new HttpError('Address fail, address cannot be converted.', 500)
+                return next(error);
             }
         } else {
             new HttpError('Incomplete information form.', 422)
+            return next(error);
         }
 })
 
