@@ -7,6 +7,7 @@ const routes = require('./routes/admin')
 const login = require('./routes/login')
 const pwdRoutes = require('./routes/password')
 const provider = require('./routes/provider')
+const employee = require('./routes/employee')
 const app = express();
 const cors = require('cors');
 
@@ -21,6 +22,7 @@ app.use('/data', routes.routes);
 app.use('/login', login.routes);
 app.use('/pwd', pwdRoutes.routes);
 app.use('/provider', provider.routes);
+app.use('/employee', employee.routes);
 app.use((req, res, next) => {
     res.status(404).render('404', {pageTitle: 'Page Not Found'});
 });

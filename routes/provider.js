@@ -11,7 +11,6 @@ let key = 'AIzaSyCNxlh-79Og3dQ_tYpV_Vzlkx3kAPyZ6HI';
 
 router.post('/provider-list', middleware.verifyToken, async (req, res, next) => {
     const {id} = req.body;
-    console.log('fired')
     if (id) {
     jwt.verify(req.token, 'secret', function(err, decoded) {
         if (!err) {
