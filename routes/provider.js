@@ -179,3 +179,4 @@ router.post('/edit', middleware.verifyToken, async (req, res, next) => {
     }
 })
 
+exports.routes = router;
