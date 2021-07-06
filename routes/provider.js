@@ -51,8 +51,12 @@ router.post('/add-provider', async (req, res, next) => {
                 services: newServices, 
                 author: author
             }
-            let address = await helpers.stringReplace(obj.businessAddress)
-            console.log('HERE LOOK', address)
+            let address;
+            try {
+                address = await helpers.stringReplace(obj.businessAddress)
+            } catch(err) {
+                return res.json({'Failure': 'Could not convert address to lowercase'})
+            }
             let providerCoords;
             try {
                 const {data} = await axios.post(`
@@ -63,10 +67,14 @@ router.post('/add-provider', async (req, res, next) => {
                         if (providerCoords) {
                             obj.lat = providerCoords.lat;
                             obj.lng = providerCoords.lng;
-                            let add = new Provider(obj)
-                            await add.save().then(data => {
-                                return res.json({'Data': data})
-                            })
+                            try {
+                                let add = new Provider(obj)
+                                await add.save().then(data => {
+                                    return res.json({'Data': data})
+                                })
+                            } catch(err) {
+                                return res.json({'Failure': 'Could not save provider.'})
+                            }
                         } else {
                             return res.json({'Failure': 'Address fail, no provider coords.'})
                         }
