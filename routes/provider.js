@@ -7,6 +7,7 @@ const router = express.Router();
 const axios = require('axios');
 const Employee = require('../models/employee');
 const Users = require('../models/users');
+const middleware = require('../middleware/auth');
 let key = 'AIzaSyCNxlh-79Og3dQ_tYpV_Vzlkx3kAPyZ6HI';
 
 router.post('/provider-list', middleware.verifyToken, async (req, res, next) => {
