@@ -88,7 +88,7 @@ router.post('/add-provider', async (req, res, next) => {
                 return next(error);
             }
         } else {
-            new HttpError('Incomplete information form.', 422)
+            let error = new HttpError('Incomplete information form.', 422)
             return next(error);
         }
 })
