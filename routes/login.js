@@ -29,21 +29,18 @@ router.post('/login', async (req, res, next) => {
     Users.find({name: name}, (err, result) => {
         console.log('LOOK', result)
         let val = result;
-        if (result) {
+        if (result.length > 0) {
             bcrypt.compare(password, result[0].password, function(err, result) {
                 if (result) {
-                    //SEND TOKEN
                     console.log('HERE', val)
                     let token = jwt.sign({ data: 'bar' }, 'secret', { expiresIn: '1h' });
                     let obj = {'Token': token, 'Id': val[0]._id, 'Name': val[0].name, 'Priv': val[0].admin }
                     res.json(obj)
                 } else {
-                    //PASSWORD DOESNT MATCH
                     res.json({'Failure': 'Password incorrect'})
                 }
             });
         } else {
-            //CANNOT FIND USER
             res.json({'Failure': 'User incorrect'})
         }
     })
