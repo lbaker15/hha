@@ -8,6 +8,7 @@ const Provider = require('../models/providers');
 const router = express.Router();
 const axios = require('axios');
 const middleware = require('../middleware/auth');
+const HttpError = require('../models/http-error');
 let key = 'AIzaSyCNxlh-79Og3dQ_tYpV_Vzlkx3kAPyZ6HI';
 
 router.post('/provider-list', middleware.verifyToken, async (req, res, next) => {
@@ -55,7 +56,7 @@ router.post('/add-provider', async (req, res, next) => {
             try {
                 address = await helpers.stringReplace(obj.businessAddress)
             } catch(err) {
-                return res.json({'Failure': 'Could not convert address to lowercase'})
+                new HttpError('Could not convert address to lowercase', 500)
             }
             let providerCoords;
             try {
@@ -64,7 +65,6 @@ router.post('/add-provider', async (req, res, next) => {
                 `)
                 providerCoords = await data.results[0].geometry.location;
                     // setTimeout(async () => {
-                        providerCoords.lat = null;
                         if (providerCoords.lat && providerCoords.lng) {
                             obj.lat = providerCoords.lat;
                             obj.lng = providerCoords.lng;
@@ -74,17 +74,17 @@ router.post('/add-provider', async (req, res, next) => {
                                     return res.json({'Data': data})
                                 })
                             } catch(err) {
-                                return res.json({'Failure': 'Could not save provider.'})
+                                new HttpError('Could not save provider.', 500)
                             }
                         } else {
-                            return res.json({'Failure': 'Address fail, no provider coords.'})
+                            new HttpError('Address fail, no provider coords.', 500)
                         }
                     // }, 100)
             } catch(err) {
-                return res.json({'Failure': 'Address fail, address cannot be converted.'})
+                new HttpError('Address fail, address cannot be converted.', 500)
             }
         } else {
-            return res.json({'Failure': 'Incomplete information form.'})
+            new HttpError('Incomplete information form.', 422)
         }
 })
 
