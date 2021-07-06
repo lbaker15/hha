@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 var jwt = require('jsonwebtoken');
 const Providers = require('../models/providers');
+const Provider = require('../models/providers');
 const router = express.Router();
 const axios = require('axios');
 const middleware = require('../middleware/auth');
