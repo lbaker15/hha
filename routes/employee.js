@@ -69,10 +69,12 @@ router.post('/edit-employee', middleware.verifyToken, async (req, res, next) => 
                     Employee.find({_id: id}, (err, result) => {
                         let userId = result[0].userId;
                         //PASSWORD NEEDS TO BE HASHED
-                        Users.updateOne({_id: userId}, {password}, (err, result) => {
-                            if (!err) {
-                                res.json({'Success': 'user changed'})
-                            }
+                        bcrypt.hash(password, saltRounds, function(err, hash) {
+                            Users.updateOne({_id: userId}, {password: hash}, (err, result) => {
+                                if (!err) {
+                                    res.json({'Success': 'user changed'})
+                                }
+                            })
                         })
                 })
             })
