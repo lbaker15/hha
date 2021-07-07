@@ -92,7 +92,7 @@ router.post('/add-provider', async (req, res, next) => {
                         }
                     // }, 100)
             } catch(err) {
-                console.log('ERR', err)
+                console.log('ERR', err.response.request._response)
                 let error = new HttpError('Address fail, address cannot be converted.', 500)
                 return next(error);
             }
