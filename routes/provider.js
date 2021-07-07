@@ -213,7 +213,7 @@ router.post('/edit-provider', middleware.verifyToken, async (req, res, next) => 
     if (obj.id) {
     jwt.verify(req.token, 'secret', function(err, decoded) {
         if (!err) {
-            Providers.updateOne({userId: obj.id}, obj, 
+            Providers.updateOne({_id: obj.id}, obj, 
                 (err, result) => {
                     if (!err) {
                         res.json({'Success': 'user changed'})
