@@ -192,7 +192,7 @@ router.post('/edit', middleware.verifyToken, async (req, res, next) => {
     if (obj.id) {
     jwt.verify(req.token, 'secret', function(err, decoded) {
         if (!err) {
-            Providers.updateOne({_id: obj.id}, obj, 
+            Providers.updateOne({userId: obj.id}, obj, 
                 (err, result) => {
                     console.log(result)
                     if (!err) {
