@@ -66,19 +66,17 @@ router.post('/add-provider', async (req, res, next) => {
             }
             let providerCoords;
             try {
-                console.log('ADDRESS', address)
                 const {data} = await axios.post(`
                     https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${key}
                 `)
-                console.log('DATA', data)
-                providerCoords = await data.results[0].geometry.location;
-                console.log('PROV COORDS', providerCoords)    
+                providerCoords = await data.results[0].geometry.location; 
                 // setTimeout(async () => {
-                        if (providerCoords) {
+                        if (providerCoords.lat && providerCoords.lng) {
                             obj.lat = providerCoords.lat;
                             obj.lng = providerCoords.lng;
                             try {
                                 let add = new Provider(obj)
+                                console.log('OBJ', obj, 'ADD', add)
                                 await add.save().then(data => {
                                     return res.json({'Data': data})
                                 })
