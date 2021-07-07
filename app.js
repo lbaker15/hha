@@ -25,6 +25,7 @@ app.use('/pwd', pwdRoutes.routes);
 app.use('/provider', provider.routes);
 app.use('/employee', employee.routes);
 app.use((error, req, res, next) => {
+    console.log(error.message)
     res.status(error.code || 500);
     res.json({ message: error.message || 'An unknown error occurred!' });
 });
