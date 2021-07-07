@@ -59,13 +59,12 @@ router.post('/employee-list', middleware.verifyToken, async (req, res, next) => 
 })
 
 router.post('/edit-employee', middleware.verifyToken, async (req, res, next) => {
-    const {firstname, lastname, id, username, password, discipline, email, businessAddress} = req.body;
-    let obj = {firstname, lastname, username: username, password: password, discipline: discipline, email, businessAddress}
-    console.log('Name', username)
-    if (username) {
+    const {firstname, lastname, id, discipline, email, businessAddress} = req.body;
+    let obj = {firstname, lastname, discipline: discipline, email, businessAddress}
+    console.log('ID', id)
     jwt.verify(req.token, 'secret', function(err, decoded) {
         if (!err) {
-            Employee.updateOne({username: username}, {$set: obj}, 
+            Employee.updateOne({_id: id}, {$set: obj}, 
                 (err, result) => {
                     console.log('RESULT', result)
                     //COMES BACK AS SUCCESSFUL EVEN WHEN FILTER NOT WORKED
@@ -77,9 +76,7 @@ router.post('/edit-employee', middleware.verifyToken, async (req, res, next) => 
             res.json({'Failure': err})
         }
     })
-    } else {
-        res.json({'Failure': 'No data sent'})
-    }
+
 })
 
 router.post('/add-employee', async (req, res, next) => {
