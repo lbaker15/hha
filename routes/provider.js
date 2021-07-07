@@ -185,8 +185,29 @@ router.post('/delete', middleware.verifyToken, async (req, res, next) => {
         res.json({'Failure': 'No data sent'})
     }
 })
-
+//EDIT SELF
 router.post('/edit', middleware.verifyToken, async (req, res, next) => {
+    const obj = req.body;
+    console.log('obj', obj.id)
+    if (obj.id) {
+    jwt.verify(req.token, 'secret', function(err, decoded) {
+        if (!err) {
+            Providers.updateOne({userId: obj.id}, obj, 
+                (err, result) => {
+                    if (!err) {
+                        res.json({'Success': 'user changed'})
+                    }
+            })
+        } else {
+            res.json({'Failure': err})
+        }
+    })
+    } else {
+        res.json({'Failure': 'No data sent'})
+    }
+})
+//EDIT PROVIDER AUTHOR OF
+router.post('/edit-provider', middleware.verifyToken, async (req, res, next) => {
     const obj = req.body;
     console.log('obj', obj.id)
     if (obj.id) {
