@@ -18,6 +18,7 @@ router.post('/signup', async (req, res, next) => {
         let obj = {username, password: hash, admin, hcProvider}
         Users.create(obj).then(result => {
             if (result) {
+                console.log(result)
                 res.json({'Success': result[0]._id})
             }
         })
