@@ -194,9 +194,7 @@ router.post('/edit', middleware.verifyToken, async (req, res, next) => {
         if (!err) {
             Providers.updateOne({userId: obj.id}, obj, 
                 (err, result) => {
-                    console.log(result)
                     if (!err) {
-                        console.log(result)
                         res.json({'Success': 'user changed'})
                     }
             })
