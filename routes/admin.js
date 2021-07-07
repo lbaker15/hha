@@ -8,6 +8,8 @@ const Employee = require('../models/employee');
 const Users = require('../models/users');
 let key = 'AIzaSyCNxlh-79Og3dQ_tYpV_Vzlkx3kAPyZ6HI';
 const helpers = require('./functionHelpers');
+const providers = require('../models/providers');
+const employee = require('../models/employee');
 
 
 router.post('/get-center', async (req, res, next) => {
@@ -28,18 +30,17 @@ router.post('/get-center', async (req, res, next) => {
 router.post('/get-profile', async (req, res, next) => {
     let {id} = req.body;
     console.log('ID', id)
-    Users.find({_id: id}, async (err, result) => {
+    providers.find({userId: id}, async (err, result) => {
         if (result) {
-            let user = result[0].name;
-            if (user) {
-                Employee.find({username: user}, async (err, result) => {
-                    res.json({'Data': result})
-                })
-            } else {
-                res.json({'Error': 'User not found'})
-            }
+            res.json({'Data': result, 'Type': 'Provider'})
         } else {
-            res.json({'Error': err})
+            employee.find({userId: id}, async (err, result) => {
+                if (result) {
+                    res.json({'Data': result, 'Type': 'Employee'})
+                } else {
+                    res.json({'Error': 'User not found'})
+                }
+            })
         }
     })
 })
