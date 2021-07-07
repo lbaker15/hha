@@ -77,7 +77,8 @@ router.post('/add-provider', async (req, res, next) => {
                             try {
                                 let add = new Provider(obj)
                                 console.log('OBJ', obj, 'ADD', add)
-                                await add.save().then(data => {
+                                add.save().then((data, err) => {
+                                    console.log('D', data, 'E', err)
                                     return res.json({'Data': data})
                                 })
                             } catch(err) {
