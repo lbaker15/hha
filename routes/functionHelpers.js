@@ -23,6 +23,9 @@ const stringReplace = (string) => {
     } else if (string.includes(',')) {
         let newString = string.replace(',', '%2C')
         return stringReplace(newString)
+    } else if (string.includes('é')) {
+        let newString = string.replace('é', 'e')
+        return stringReplace(newString)
     } else {
         return string;
     }
