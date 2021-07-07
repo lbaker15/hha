@@ -14,7 +14,7 @@ const Employee = require('../models/employee');
 router.post('/signup', async (req, res, next) => {
     let {username, password, admin, hcProvider} = req.body;
     bcrypt.hash(password, saltRounds, function(err, hash) {
-        let obj = {name, password: hash, admin, hcProvider}
+        let obj = {username, password: hash, admin, hcProvider}
         Users.create(obj).then(result => {
             if (result) {
                 res.json({'Success': 'User created'})
