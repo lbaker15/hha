@@ -38,7 +38,6 @@ router.post('/employee-list', middleware.verifyToken, async (req, res, next) => 
             Employee.find({author: id}, async (error, result) => {
                 if (!error) {
                     console.log('RES',result)
-                    let toReturn = result;
                     let userId = result[0].userId;
                     Users.find({_id: userId}, (err, resul) => {
                         let newObj = {
@@ -85,11 +84,11 @@ router.post('/edit-employee', middleware.verifyToken, async (req, res, next) => 
 
 router.post('/add-employee', async (req, res, next) => {
     let {
-        username, password, firstname, 
+        firstname, 
         lastname, discipline, userId,
         businessAddress, email, author
     } = req.body;
-    let obj = {userId, username: String(username).toLowerCase(), password: String(password).toLowerCase(), lastname: String(lastname).toLowerCase(), firstname: String(firstname).toLowerCase(), discipline, businessAddress: String(businessAddress).toLowerCase(), email, author}
+    let obj = {userId, lastname: String(lastname).toLowerCase(), firstname: String(firstname).toLowerCase(), discipline, businessAddress: String(businessAddress).toLowerCase(), email, author}
     let add = new Employee(obj)
     await add.save().then(data => {
         return res.json({'Data': data})
