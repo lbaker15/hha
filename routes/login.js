@@ -19,7 +19,7 @@ router.post('/signup', async (req, res, next) => {
         Users.create(obj).then(result => {
             if (result) {
                 console.log(result)
-                res.json({'Success': result[0]._id})
+                res.json({'Success': result._id})
             }
         })
     });
