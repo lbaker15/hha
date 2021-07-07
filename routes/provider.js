@@ -71,7 +71,8 @@ router.post('/add-provider', async (req, res, next) => {
                     https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${key}
                 `)
                 providerCoords = await data.results[0].geometry.location;
-                    // setTimeout(async () => {
+                console.log('PROV COORDS', providerCoords)    
+                // setTimeout(async () => {
                         if (providerCoords.lat && providerCoords.lng) {
                             obj.lat = providerCoords.lat;
                             obj.lng = providerCoords.lng;
