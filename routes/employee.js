@@ -77,10 +77,10 @@ router.post('/edit-employee', middleware.verifyToken, async (req, res, next) => 
 router.post('/add-employee', async (req, res, next) => {
     let {
         username, password, firstname, 
-        lastname, discipline,
+        lastname, discipline, userId,
         businessAddress, email, author
     } = req.body;
-    let obj = {username: String(username).toLowerCase(), password: String(password).toLowerCase(), lastname: String(lastname).toLowerCase(), firstname: String(firstname).toLowerCase(), discipline, businessAddress: String(businessAddress).toLowerCase(), email, author}
+    let obj = {userId, username: String(username).toLowerCase(), password: String(password).toLowerCase(), lastname: String(lastname).toLowerCase(), firstname: String(firstname).toLowerCase(), discipline, businessAddress: String(businessAddress).toLowerCase(), email, author}
     let add = new Employee(obj)
     await add.save().then(data => {
         return res.json({'Data': data})

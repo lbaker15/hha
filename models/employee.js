@@ -9,7 +9,8 @@ const Employee = new Schema({
     discipline: String,
     businessAddress: String,
     email: String,
-    author: String
+    author: String,
+    userId: String
 })
 
 module.exports = mongoose.model('Employee', Employee)
