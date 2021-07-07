@@ -3,9 +3,10 @@ const Schema = mongoose.Schema;
 
 //If not admin then editor
 const Provider = new Schema({
-    name: String,
+    username: String,
     password: String,
-    admin: Boolean
+    admin: Boolean,
+    hcProvider: Boolean
 })
 
 module.exports = mongoose.model('User', Provider)
