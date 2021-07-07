@@ -188,7 +188,7 @@ router.post('/delete', middleware.verifyToken, async (req, res, next) => {
 
 router.post('/edit', middleware.verifyToken, async (req, res, next) => {
     const obj = req.body;
-    console.log('obj', obj)
+    console.log('obj', obj.id)
     if (obj.id) {
     jwt.verify(req.token, 'secret', function(err, decoded) {
         if (!err) {
