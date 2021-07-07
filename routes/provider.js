@@ -37,7 +37,7 @@ router.post('/provider-list', middleware.verifyToken, async (req, res, next) => 
 
 router.post('/add-provider', async (req, res, next) => {
     let { firstname, lastname, discipline, gender, genders, 
-    businessAddress, languages, services, 
+    businessAddress, userId, languages, services, 
     minAge, maxAge, age, telephone, author } = req.body;
     if (services, genders, languages, age && minAge !== null | undefined && maxAge && firstname && lastname && discipline && gender && businessAddress) {
             let newGen = await genders.map(x => String(x).toLowerCase())
@@ -54,7 +54,8 @@ router.post('/add-provider', async (req, res, next) => {
                 genders: newGen,
                 languages: newLang, 
                 services: newServices, 
-                author: author
+                author: author,
+                userId: userId
             }
             let address;
             try {

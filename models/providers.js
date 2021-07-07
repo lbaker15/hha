@@ -12,7 +12,8 @@ const Provider = new Schema({
     age: Number,
     languages: Array, services: Array, 
     telephone: Number,
-    author: String
+    author: String,
+    userId: String
 })
 
 module.exports = mongoose.model('HC Providers', Provider)
