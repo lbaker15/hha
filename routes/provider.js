@@ -185,7 +185,7 @@ router.post('/delete', middleware.verifyToken, async (req, res, next) => {
         res.json({'Failure': 'No data sent'})
     }
 })
-//EDIT SELF
+//EDIT SELF VIA MY PROFILE
 router.post('/edit', middleware.verifyToken, async (req, res, next) => {
     const obj = req.body;
     console.log('obj', obj.id)
@@ -206,7 +206,7 @@ router.post('/edit', middleware.verifyToken, async (req, res, next) => {
         res.json({'Failure': 'No data sent'})
     }
 })
-//EDIT PROVIDER AUTHOR OF
+//EDIT PROVIDER THE USER IS A AUTHOR OF
 router.post('/edit-provider', middleware.verifyToken, async (req, res, next) => {
     const obj = req.body;
     console.log('obj', obj.id)

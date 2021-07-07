@@ -38,7 +38,16 @@ router.post('/employee-list', middleware.verifyToken, async (req, res, next) => 
             Employee.find({author: id}, async (error, result) => {
                 if (!error) {
                     console.log('RES',result)
-                    res.json({'Data': result})
+                    let toReturn = result;
+                    let userId = result[0].userId;
+                    Users.find({_id: userId}, (err, resul) => {
+                        let newObj = {
+                            username: resul[0].username, 
+                            password: resul[0].password
+                        }
+                        res.json({'Data': result, 'Login': newObj})
+                    })
+                    
                 }
             })
         } else {
