@@ -20,6 +20,21 @@ const stringReplace = (string) => {
     if (string.includes(' ')) {
         let newString = string.replace(' ', '+')
         return stringReplace(newString)
+    } else if (string.includes('"')) {
+        let newString = string.replace('"', '%22')
+        return stringReplace(newString)
+    } else if (string.includes('#')) {
+        let newString = string.replace('#', '%23')
+        return stringReplace(newString)
+    } else if (string.includes('%')) {
+        let newString = string.replace('"', '%25')
+        return stringReplace(newString)
+    } else if (string.includes('|')) {
+        let newString = string.replace('|', '%7C')
+        return stringReplace(newString)
+    } else if (string.includes(',')) {
+        let newString = string.replace(',', '%2C')
+        return stringReplace(newString)
     } else {
         return string;
     }
