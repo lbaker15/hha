@@ -66,6 +66,7 @@ router.post('/add-provider', async (req, res, next) => {
             }
             let providerCoords;
             try {
+                console.log('ADDRESS', address)
                 const {data} = await axios.post(`
                     https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${key}
                 `)
