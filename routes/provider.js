@@ -76,7 +76,7 @@ router.post('/add-provider', async (req, res, next) => {
                             obj.lng = providerCoords.lng;
                             try {
                                 let add = new Provider(obj)
-                                console.log('OBJ', obj, 'ADD', add)
+                                console.log('OBJ', obj.telephone, 'ADD', add)
                                 add.save().then((data, err) => {
                                     console.log('D', data, 'E', err)
                                     return res.json({'Data': data})
