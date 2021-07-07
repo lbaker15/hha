@@ -34,7 +34,7 @@ router.post('/login', async (req, res, next) => {
                 if (result) {
                     console.log('HERE', val)
                     let token = jwt.sign({ data: 'bar' }, 'secret', { expiresIn: '1h' });
-                    let obj = {'Token': token, 'Id': val[0]._id, 'Name': val[0].name, 'Priv': val[0].admin }
+                    let obj = {'Token': token, 'Id': val[0]._id, 'Name': val[0].username, 'Priv': val[0].admin }
                     res.json(obj)
                 } else {
                     res.json({'Failure': 'Password incorrect, please ensure password is spelled correctly.'})
