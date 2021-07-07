@@ -66,7 +66,9 @@ router.post('/edit-employee', middleware.verifyToken, async (req, res, next) => 
             Employee.updateOne({_id: id}, {$set: obj}, 
                 (err, result) => {
                     //COMES BACK AS SUCCESSFUL EVEN WHEN FILTER NOT WORKED
+                    console.log('LOOK HERE', result)
                     let userId = result[0].userId;
+                    //PASSWORD NEEDS TO BE HASHED
                     Users.updateOne({_id: userId}, {password}, (err, result) => {
                         if (!err) {
                             res.json({'Success': 'user changed'})
