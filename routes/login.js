@@ -13,11 +13,12 @@ const Employee = require('../models/employee');
 
 router.post('/signup', async (req, res, next) => {
     let {username, password, admin, hcProvider} = req.body;
+    //ADD VALIDATION - check whether user exists etc
     bcrypt.hash(password, saltRounds, function(err, hash) {
         let obj = {username, password: hash, admin, hcProvider}
         Users.create(obj).then(result => {
             if (result) {
-                res.json({'Success': 'User created'})
+                res.json({'Success': result[0]._id})
             }
         })
     });
