@@ -73,6 +73,7 @@ class EditInputSection extends React.Component {
     }
     handleClick = () => {
         if (this.props.editItem) {
+            //CHECK FOR ID
             let obj = {
                 ...this.state,
                 id: this.props.editItem._id
@@ -81,7 +82,7 @@ class EditInputSection extends React.Component {
             obj.lastname = obj.lastname.toLowerCase()
             let cookie = document.cookie.match(new RegExp('(^| )' + 'token' + '=([^;]+)'))[0].split('=')[1];
             setTimeout(() => {
-                fetch('https://hannahs-heart-2.herokuapp.com/login/edit', {
+                fetch('https://hannahs-heart-2.herokuapp.com/provider/edit-provider', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -105,35 +106,55 @@ class EditInputSection extends React.Component {
                 if (firstname.length > 0 && lastname.length > 0 && telephone.length > 0 && minAge && maxAge && discipline.length > 0 && gender.length > 0 && genders.length > 0 && services.length > 0 && languages.length > 0 && address.length > 0) {
                     let cookieId = document.cookie.match(new RegExp('(^| )' + 'id' + '=([^;]+)'));
                     if (cookieId) {
-                        let obj = {...this.state, author: cookieId[2], businessAddress: address}
-                        obj.firstname = obj.firstname.toLowerCase()
-                        obj.lastname = obj.lastname.toLowerCase()
-                        delete obj.languagesOpen;
-                        delete obj.servicesOpen;
-                        delete obj.gendersOpen;
-                        delete obj.address;
-                        fetch('https://hannahs-heart-2.herokuapp.com/provider/add-provider', {
+                        let username = firstname + lastname;
+                        let password = "1234";
+                        let obj2 = {username: username, password, admin: true, hcProvider: true}
+                        //ADD USER AS WELL??
+                        fetch('https://hannahs-heart-2.herokuapp.com/login/signup', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
                             },
-                            body: JSON.stringify(obj)
+                            body: JSON.stringify(obj2)
                         })
                         .then(res => res.json())
                         .then(data => {
-                            if (data.Data) {
-                                this.setState({
-                                    alert: 'Provider Added'
+                            if (data.Success) {
+                                let userId = data.Success;
+                                let obj = {...this.state, userId, author: cookieId[2], businessAddress: address}
+                                obj.firstname = obj.firstname.toLowerCase()
+                                obj.lastname = obj.lastname.toLowerCase()
+                                delete obj.languagesOpen;
+                                delete obj.servicesOpen;
+                                delete obj.gendersOpen;
+                                delete obj.address;
+                                fetch('https://hannahs-heart-2.herokuapp.com/provider/add-provider', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify(obj)
                                 })
-                                this.props.refreshData()
-                                //ANIMATION HERE?
-                                setTimeout(() => {
-                                    this.setState({
-                                        alert: ''
-                                    })
-                                }, 5000)
+                                .then(res => res.json())
+                                .then(data => {
+                                    if (data.Data) {
+                                        this.setState({
+                                            alert: 'Provider Added'
+                                        })
+                                        this.props.refreshData()
+                                        //ANIMATION HERE?
+                                        setTimeout(() => {
+                                            this.setState({
+                                                alert: ''
+                                            })
+                                        }, 5000)
+                                    }
+                                })
                             }
                         })
+
+
+                
                     } else {
                         this.setState({
                             alert: 'Please ensure you are correctly logged in.'

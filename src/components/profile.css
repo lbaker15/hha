@@ -17,13 +17,13 @@ body {
 }
 .myProfile {
     background: var(--bGradient);
-    width: 100%; height: 100vh;
+    width: 100%; height: auto;
     display: flex; justify-content: center; align-items: center; 
     flex-direction: column;
 }
 .myProfile .inner {
     width: 400px;
-    height: 550px;
+    height: auto;
     display: flex; flex-direction: column;
     gap: 10px;
     margin-top: 120px;
@@ -32,8 +32,14 @@ body {
     display: flex; justify-content: space-between;
     width: 100%; height: 35px;
 }
-.myProfile .inner .row:nth-child(6) {
-    height: 125px;
+.myProfile .inner .rowSelect {
+    display: flex; justify-content: space-between;
+    width: 100%; height: auto;
+}
+.myProfile .inner .rowSelect label {
+    /* width: 100px; */
+    color: white; font-family: roboto;
+    font-weight: 500; font-size: 17px;
 }
 .myProfile .inner .row label {
     width: 100px;
@@ -53,10 +59,12 @@ body {
     border: none;
     color: white; font-family: roboto;
     font-weight: 500; font-size: 20px;
-    margin-top: 20px;
+    margin-top: 35px;
+    position: relative;
+    margin-bottom: 60px;
 }
 .topSectionP {
-    width: 100%; height: 80px;
+    width: 100%; height: 100px;
     background: rgb(32, 32, 255);
     top: 0; position: absolute;
     display: flex; justify-content: space-between;
@@ -94,15 +102,44 @@ body {
 .profileAlert {
     color: white; font-family: roboto;
     font-weight: 300;
-    margin-top: -110px;
+    position: relative;
 }
 .closeProfile {
-    position: absolute;
+
     background: black; width: 40px; 
     height: 40px; border-radius: 50%;
     display: flex; justify-content: center;
     align-items: center; color: white;
-    border: 3px solid white; position: fixed; top: 90px;
+    border: 3px solid white; position: absolute; top:125px;
     right: 4vw; font-size: 22px; font-weight: 300;
     font-family: roboto;
+}
+.genderRow {
+    display: flex; flex-direction: column;
+    height: auto; padding: 0px 0px;
+    margin-bottom: 30px;
+}
+.genderRow label {
+    width: 250px;
+    font-weight: 200;
+}
+.innerB {
+    width: 250px;
+}
+.innerB button {
+    width: 100%;
+    background: transparent;
+    border: 1px solid white;
+    margin-bottom: 10px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    font-size: 18px;
+    font-weight: 300;
+    font-family: roboto;
+    padding: 7px;
+}
+.innerB button div {
+    margin-top: 0px;
 }

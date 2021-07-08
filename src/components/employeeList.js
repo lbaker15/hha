@@ -6,6 +6,7 @@ import Add from './add';
 import {Link} from 'react-router-dom';
 import AdminIcon from './assets/Admin_Icon_White.png';
 import Loader from './loader';
+import Header from './header';
 let alphabet = 'abcdefghijklmnopqrstuvwxyz'.split("");
 
 
@@ -14,6 +15,7 @@ class EmployeeList extends React.Component {
     state = {
         validated: false,
         data: [],
+        editItemTwo: [],
         edit: false,
         editItem: [],
         add: false,
@@ -44,14 +46,12 @@ class EmployeeList extends React.Component {
         let cookieName = document.cookie.match(new RegExp('(^| )' + 'name' + '=([^;]+)'));
         let adminCookie = document.cookie.match(new RegExp('(^| )' + 'admin' + '=([^;]+)'));
         if (cookie && adminCookie) {
-            // if (adminCookie[2] === 'true') {
-                if (cookieName) {
-                    this.setState({
-                        adminName: cookieName[2]
-                    })
-                }
-                this.refreshData()
-            // }
+            if (cookieName) {
+                this.setState({
+                    adminName: cookieName[2]
+                })
+            }
+            this.refreshData()
         }
     }
     refreshData = () => {
@@ -68,10 +68,10 @@ class EmployeeList extends React.Component {
             })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 this.setState({
                     validated: true,
-                    data: data.Data
+                    data: data.Data,
+                    editItemTwo: data.Login
                 })
             })
         }
@@ -128,7 +128,8 @@ class EmployeeList extends React.Component {
     }
     render() {
         let adminCookie = document.cookie.match(new RegExp('(^| )' + 'admin' + '=([^;]+)'));
-        const {validated, adminName, letter, filteredRes, filter, add, data, edit, editItem} = this.state;
+        const {validated, adminName, letter, filteredRes, filter, add, data, edit, editItem, editItemTwo} = this.state;
+        console.log(editItemTwo)
         if (!validated) {
             return (
                 <React.Fragment>
@@ -140,18 +141,7 @@ class EmployeeList extends React.Component {
         } else {
             return (
                 <React.Fragment>
-                    <div className="navbar">
-                        <div className="left">
-                            <h2>Update Employees</h2>
-                        </div>
-                        <button 
-                        className="right">
-                            <Link to="/my-profile">
-                                <img src={AdminIcon} />
-                                <h3>{adminName}</h3>
-                            </Link>
-                        </button>
-                    </div>
+                    <Header title={'Update Employees'} />
                     <div className="topSection">
                         <div className="padding">
                             <Add employee={true} searchFilter={this.searchFilter} handleAdd={this.handleAdd} />
@@ -180,6 +170,7 @@ class EmployeeList extends React.Component {
                         handleAdd={this.handleAdd}
                         refreshData={this.refreshData} 
                         edit={edit} 
+                        editItemTwo={editItemTwo}
                         editItem={editItem} />
                     )
                     }

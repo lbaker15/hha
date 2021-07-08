@@ -6,6 +6,7 @@ import Add from './add';
 import AdminIcon from './assets/Admin_Icon_White.png';
 import Loader from './loader';
 import {Link} from 'react-router-dom';
+import Header from './header';
 let alphabet = 'abcdefghijklmnopqrstuvwxyz'.split("");
 
 
@@ -52,6 +53,7 @@ class AdminList extends React.Component {
         }
     }
     refreshData = () => {
+        console.log('refresh data fired')
         let cookieId = document.cookie.match(new RegExp('(^| )' + 'id' + '=([^;]+)'));
         let cookie = document.cookie.match(new RegExp('(^| )' + 'token' + '=([^;]+)'));
         if (cookie) {
@@ -136,17 +138,7 @@ class AdminList extends React.Component {
         } else {
             return (
                 <React.Fragment>
-                    <div className="navbar">
-                        <div className="left">
-                            <h2>Update HC Providers</h2>
-                        </div>
-                        <div className="right">
-                            <Link to="/my-profile">
-                                <img src={AdminIcon} />
-                                <h3>{adminName}</h3>
-                            </Link>
-                        </div>
-                    </div>
+                    <Header title={'Update HC Providers'} />
                     <div className="topSection">
                         <div className="padding">
                             <Add searchFilter={this.searchFilter} handleAdd={this.handleAdd} />

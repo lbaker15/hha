@@ -15,14 +15,14 @@ class EditInputSectionEmployee extends React.Component {
         businessAddress: ''
     }
     componentDidMount() {
-        const {edit, editItem} = this.props;
+        const {edit, editItem, editItemTwo} = this.props;
         if (editItem) {
             this.setState({
                 firstname: editItem.firstname,
                 lastname: editItem.lastname,
                 discipline: editItem.discipline, 
-                username: editItem.username,
-                password: editItem.password,
+                username: editItemTwo.username,
+                password: editItemTwo.password,
                 email: editItem.email,
                 businessAddress: editItem.businessAddress
             })
@@ -54,6 +54,9 @@ class EditInputSectionEmployee extends React.Component {
                 .then(res => res.json())
                 .then(data => {
                     if (data.Success) {
+                        this.setState({
+                            alert: 'Employee successfully changed.'
+                        })
                         this.props.refreshData()
                     }
                 })
@@ -63,8 +66,7 @@ class EditInputSectionEmployee extends React.Component {
                 if (username.length > 0 && password.length > 0 && firstname.length > 0  && lastname.length > 0 && discipline.length > 0 && email.length > 0 && businessAddress.length > 0) {
                     let cookieId = document.cookie.match(new RegExp('(^| )' + 'id' + '=([^;]+)'));
                     if (cookieId) {
-                        let obj = {...this.state, author: cookieId[2]}
-                        let obj2 = {name: username, password, admin: false}
+                        let obj2 = {username: username, password, admin: false, hcProvider: false}
                         //ADD USER AS WELL??
                         fetch('https://hannahs-heart-2.herokuapp.com/login/signup', {
                             method: 'POST',
@@ -74,30 +76,30 @@ class EditInputSectionEmployee extends React.Component {
                             body: JSON.stringify(obj2)
                         })
                         .then(res => res.json())
-                        .then(data => console.log(data))
-
-                        fetch('https://hannahs-heart-2.herokuapp.com/employee/add-employee', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(obj)
-                        })
-                        .then(res => res.json())
                         .then(data => {
-                            if (data.Data) {
-                                this.setState({
-                                    alert: 'Employee Added'
+                            if (data.Success) {
+                                let userId = data.Success;
+                                let obj = {...this.state, userId, author: cookieId[2]}
+                                fetch('https://hannahs-heart-2.herokuapp.com/employee/add-employee', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify(obj)
                                 })
-                                this.props.refreshData()
-                                //ANIMATION HERE? THIS IS CAUSING MEMORY LEAK
-                                setTimeout(() => {
-                                    this.setState({
-                                        alert: ''
-                                    })
-                                }, 5000)
+                                .then(res => res.json())
+                                .then(data => {
+                                    if (data.Data) {
+                                        this.setState({
+                                            alert: 'Employee Added'
+                                        })
+                                        this.props.refreshData()
+                                        
+                                    }
+                                })
                             }
                         })
+
                     } else {
                         this.setState({
                             alert: 'Please ensure you are correctly logged in.'
@@ -112,7 +114,7 @@ class EditInputSectionEmployee extends React.Component {
     }
     render() {
         const {edit, editItem, handleAdd, handleEdit} = this.props;
-        const {username, firstname, lastname, password, name, discipline, email, businessAddress} = this.state;
+        const {username, firstname, lastname, password, name, discipline, email, businessAddress, alert} = this.state;
         return (
             <React.Fragment>
                 <button
@@ -158,7 +160,7 @@ class EditInputSectionEmployee extends React.Component {
                         value={lastname}
                         ></input>
                     </div>
-                    <div className="row">
+                    <div style={{height: 65}} className="row">
                         <label>Discipline</label>
                         <input
                         id="discipline"
@@ -185,6 +187,11 @@ class EditInputSectionEmployee extends React.Component {
                     {!this.props.editItem && this.state.alert && (
                         <div className="justAddedAlert">
                             {this.state.alert}
+                        </div>
+                    )}
+                    {alert && (
+                        <div style={{justifyContent: 'center'}} className="row">
+                            <h4>{alert}</h4>
                         </div>
                     )}
                     <div style={{marginBottom: 80}} className="row">
