@@ -4,7 +4,7 @@ const rootDir = require('../util/path');
 const Provider = require('../models/providers');
 const router = express.Router();
 const {Client} = require("@googlemaps/google-maps-services-js");
-let key = 'AIzaSyCNxlh-79Og3dQ_tYpV_Vzlkx3kAPyZ6HI';
+let key = process.env.GOOGLE_API;
 
 const googleMapsClient = new Client({});
 var rad = function(x) {

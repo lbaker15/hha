@@ -9,7 +9,7 @@ const router = express.Router();
 const axios = require('axios');
 const middleware = require('../middleware/auth');
 const HttpError = require('../models/http-error');
-let key = 'AIzaSyCNxlh-79Og3dQ_tYpV_Vzlkx3kAPyZ6HI';
+let key = process.env.GOOGLE_API;
 
 router.post('/provider-list', middleware.verifyToken, async (req, res, next) => {
     const {id} = req.body;
