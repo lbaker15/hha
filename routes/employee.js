@@ -65,10 +65,8 @@ router.post('/edit-employee', middleware.verifyToken, async (req, res, next) => 
         if (!err) {
             Employee.updateOne({_id: id}, {$set: obj}, 
                 (err, result) => {
-                    //COMES BACK AS SUCCESSFUL EVEN WHEN FILTER NOT WORKED
                     Employee.find({_id: id}, (err, result) => {
                         let userId = result[0].userId;
-                        //PASSWORD NEEDS TO BE HASHED
                         bcrypt.hash(password, saltRounds, function(err, hash) {
                             Users.updateOne({_id: userId}, {password: hash}, (err, result) => {
                                 if (!err) {
