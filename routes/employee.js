@@ -15,12 +15,16 @@ router.post('/delete-employee', middleware.verifyToken, async (req, res, next) =
     if (id) {
     jwt.verify(req.token, 'secret', function(err, decoded) {
         if (!err) {
-            Employee.deleteOne({_id: id}, (err, result) => {
-                if (!err) {
-                    console.log(result)
-                    res.json({'Success': 'user deleted'})
-                }
+            Employee.find({_id: id}, (err, result) => {
+                let {userId} = result[0];
+                console.log(userId)
             })
+            // Employee.deleteOne({_id: id}, (err, result) => {
+            //     if (!err) {
+            //         console.log(result)
+            //         res.json({'Success': 'user deleted'})
+            //     }
+            // })
         } else {
             res.json({'Failure': err})
         }
