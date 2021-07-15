@@ -10,7 +10,7 @@ const middleware = require('../middleware/auth');
 const Providers = require('../models/providers');
 const Employee = require('../models/employee');
 
-const deleteFunc = (req, res, next) => {
+const deleteFunc = async (req, res, next) => {
     const {id} = req.body;
     if (id) {
     jwt.verify(req.token, 'secret', function(err, decoded) {

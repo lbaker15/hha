@@ -11,9 +11,7 @@ const Providers = require('../models/providers');
 const Employee = require('../models/employee');
 const controller = require('../controllers/employee');
 
-router.post('/delete-employee', middleware.verifyToken, async (req, res, next) => {
-    controller.deleteFunc()
-})
+router.post('/delete-employee', middleware.verifyToken, controller.deleteFunc)
 
 router.post('/employee-list', middleware.verifyToken, async (req, res, next) => {
     const {id} = req.body;
