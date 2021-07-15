@@ -9,7 +9,7 @@ var jwt = require('jsonwebtoken');
 const middleware = require('../middleware/auth');
 const Providers = require('../models/providers');
 const Employee = require('../models/employee');
-const 2wqrror = require('../models/http-error');
+const HttpError = require('../models/http-error');
 const helpers = require('./helpers/file');
 
 const deleteFunc = async (req, res, next) => {
