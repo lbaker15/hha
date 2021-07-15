@@ -12,9 +12,9 @@ const Employee = require('../models/employee');
 const HttpError = require('../models/http-error');
 
 const deleteFunc = async (req, res, next) => {
+    jwt.verify(req.token, 'secret', function(err, decoded) {
     const {id} = req.body;
     if (id) {
-    jwt.verify(req.token, 'secret', function(err, decoded) {
         if (!err) {
             let promise1 = new Promise((resolve, rej) => {
                 Employee.find({_id: id}, (err, result) => {
@@ -45,11 +45,10 @@ const deleteFunc = async (req, res, next) => {
             let error = new HttpError('Could not delete user.', 403)
             return next(error)
         }
-    })
     } else {
         let error = new HttpError('Invalid token.', 401)
         return next(error)
-    }
+    }})
 }
 
 exports.deleteFunc = deleteFunc;
