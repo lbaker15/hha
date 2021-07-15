@@ -37,16 +37,18 @@ router.post('/employee-list', middleware.verifyToken, async (req, res, next) => 
         if (!err) {
             Employee.find({author: id}, async (error, result) => {
                 if (!error) {
-                    console.log('RES',result)
-                    let userId = result[0].userId;
-                    Users.find({_id: userId}, (err, resul) => {
-                        let newObj = {
-                            username: resul[0].username, 
-                            password: resul[0].password
-                        }
-                        res.json({'Data': result, 'Login': newObj})
-                    })
-                    
+                    if (result.length > 0) {
+                        let userId = result[0].userId;
+                        Users.find({_id: userId}, (err, resul) => {
+                            let newObj = {
+                                username: resul[0].username, 
+                                password: resul[0].password
+                            }
+                            res.json({'Data': result, 'Login': newObj})
+                        })
+                    } else {
+                        res.json({'Data': null})
+                    }
                 }
             })
         } else {
