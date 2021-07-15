@@ -32,7 +32,7 @@ router.post('/get-profile', async (req, res, next) => {
     console.log('ID', id)
     providers.find({userId: id}, async (err, result) => {
         if (result.length > 0) {
-            console.log('result', result)
+            console.log('HERE', result)
             res.json({'Data': result, 'Type': 'Provider'})
         } else {
             employee.find({userId: id}, async (err, result2) => {
