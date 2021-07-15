@@ -29,7 +29,6 @@ router.post('/get-center', async (req, res, next) => {
 
 router.post('/get-profile', async (req, res, next) => {
     let {id} = req.body;
-    console.log('ID', id)
     providers.find({userId: id}, async (err, result) => {
         if (result.length > 0) {
             console.log('HERE', result)
