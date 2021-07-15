@@ -32,11 +32,12 @@ router.post('/get-profile', async (req, res, next) => {
     console.log('ID', id)
     providers.find({userId: id}, async (err, result) => {
         if (result) {
+            console.log('result', result)
             res.json({'Data': result, 'Type': 'Provider'})
         } else {
-            employee.find({userId: id}, async (err, result) => {
-                if (result) {
-                    res.json({'Data': result, 'Type': 'Employee'})
+            employee.find({userId: id}, async (err, result2) => {
+                if (result2) {
+                    res.json({'Data': result2, 'Type': 'Employee'})
                 } else {
                     res.json({'Error': 'User not found'})
                 }
