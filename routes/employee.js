@@ -67,7 +67,9 @@ router.post('/edit-employee', middleware.verifyToken, async (req, res, next) => 
         if (!err) {
             Employee.updateOne({_id: id}, {$set: obj}, 
                 (err, result) => {
+                    console.log('one', err, result)
                     Employee.find({_id: id}, (err, result) => {
+                        console.log('two', err, result)
                         let userId = result[0].userId;
                         bcrypt.hash(password, saltRounds, function(err, hash) {
                             Users.updateOne({_id: userId}, {password: hash}, (err, result) => {
