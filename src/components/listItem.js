@@ -61,6 +61,7 @@ class ListItem extends React.Component {
             })
             .then(res => res.json())
             .then(data => {
+                console.log(data)
                 this.animation.play().then(() => {
                     this.props.refreshData()
                 })
@@ -79,6 +80,7 @@ class ListItem extends React.Component {
         return (
             <React.Fragment key={data._id} >
                 {deleteAlert && (
+                    <React.Fragment>
                     <div className="deleteMsg">
                         <img src={trash} />
                         <h2>Are you sure you wish to delete
@@ -95,6 +97,8 @@ class ListItem extends React.Component {
                             >Delete</button>
                         </div>
                     </div>
+                    <div></div>
+                    </React.Fragment>
                 )}
                 <div ref={this.refe} key={data._id} id={data._id} className="item">
                     <div>

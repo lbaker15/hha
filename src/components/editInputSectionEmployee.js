@@ -97,7 +97,14 @@ class EditInputSectionEmployee extends React.Component {
                                         
                                     }
                                 })
+                            } else {
+                                if (data.message) {
+                                    this.setState({
+                                        alert: data.message
+                                    })
+                                }
                             }
+                            //
                         })
 
                     } else {
@@ -184,11 +191,7 @@ class EditInputSectionEmployee extends React.Component {
                         value={businessAddress}
                         ></input>
                     </div>
-                    {!this.props.editItem && this.state.alert && (
-                        <div className="justAddedAlert">
-                            {this.state.alert}
-                        </div>
-                    )}
+                  
                     {alert && (
                         <div style={{justifyContent: 'center'}} className="row">
                             <h4>{alert}</h4>

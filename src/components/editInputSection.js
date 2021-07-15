@@ -4,24 +4,15 @@ import ListOfLanguages from './listOfLanguages';
 import Treatment from './treatment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencilAlt, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import InputMask from 'react-input-mask';
 
 
 class EditInputSection extends React.Component {
     state = {
-        firstname: '',
-        lastname: '',
-        discipline: '',
-        gender: '',
-        address: '',
-        minAge: '', 
-        maxAge: '',
-        age: '',
-        genders: [],
-        ageSet: false,
-        services: [],
-        languages: [],
-        gendersOpen: false,
-        telephone: '',
+        firstname: '', lastname: '', discipline: '',
+        gender: '', address: '', minAge: '', maxAge: '',
+        age: '', genders: [], ageSet: false, services: [], 
+        languages: [], gendersOpen: false, telephone: '', 
         alert: ''
     }
     componentDidMount() {
@@ -42,6 +33,56 @@ class EditInputSection extends React.Component {
                 telephone: editItem.telephone
             })
         }
+    }
+    addProvider = (obj2, cookieId, address) => {
+        fetch('https://hannahs-heart-2.herokuapp.com/login/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(obj2)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.Success) {
+                let userId = data.Success;
+                let obj = {...this.state, userId, author: cookieId[2], businessAddress: address}
+                obj.firstname = obj.firstname.toLowerCase()
+                obj.lastname = obj.lastname.toLowerCase()
+                delete obj.languagesOpen;
+                delete obj.servicesOpen;
+                delete obj.gendersOpen;
+                delete obj.address;
+                fetch('https://hannahs-heart-2.herokuapp.com/provider/add-provider', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(obj)
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.Data) {
+                        this.setState({
+                            alert: 'Provider Added'
+                        })
+                        this.props.refreshData()
+                        //ANIMATION HERE?
+                        setTimeout(() => {
+                            this.setState({
+                                alert: ''
+                            })
+                        }, 5000)
+                    }
+                })
+            } else {
+                if (data.message) {
+                    this.setState({
+                        alert: data.message
+                    })
+                }
+            }
+        })
     }
     handleChange = (e) => {
         let id;
@@ -107,54 +148,30 @@ class EditInputSection extends React.Component {
                     let cookieId = document.cookie.match(new RegExp('(^| )' + 'id' + '=([^;]+)'));
                     if (cookieId) {
                         let username = firstname + lastname;
-                        let password = "1234";
-                        let obj2 = {username: username, password, admin: true, hcProvider: true}
-                        //ADD USER AS WELL??
-                        fetch('https://hannahs-heart-2.herokuapp.com/login/signup', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(obj2)
-                        })
-                        .then(res => res.json())
-                        .then(data => {
-                            if (data.Success) {
-                                let userId = data.Success;
-                                let obj = {...this.state, userId, author: cookieId[2], businessAddress: address}
-                                obj.firstname = obj.firstname.toLowerCase()
-                                obj.lastname = obj.lastname.toLowerCase()
-                                delete obj.languagesOpen;
-                                delete obj.servicesOpen;
-                                delete obj.gendersOpen;
-                                delete obj.address;
-                                fetch('https://hannahs-heart-2.herokuapp.com/provider/add-provider', {
+                        let object = {username}
+                        
+                        let newUserName = (object) => {
+                                fetch('https://hannahs-heart-2.herokuapp.com/login/user-check', {
                                     method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json'
                                     },
-                                    body: JSON.stringify(obj)
+                                    body: JSON.stringify(object)
                                 })
                                 .then(res => res.json())
                                 .then(data => {
-                                    if (data.Data) {
-                                        this.setState({
-                                            alert: 'Provider Added'
-                                        })
-                                        this.props.refreshData()
-                                        //ANIMATION HERE?
-                                        setTimeout(() => {
-                                            this.setState({
-                                                alert: ''
-                                            })
-                                        }, 5000)
+                                    if (data.Failure) {
+                                        username = username + "1"
+                                        let object = {username}
+                                        newUserName(object)
+                                    } else if (data.Success) {
+                                        let password = "1234";
+                                        let obj2 = {username: username, password, admin: true, hcProvider: true}
+                                        this.addProvider(obj2, cookieId, address)
                                     }
-                                })
-                            }
-                        })
-
-
-                
+                                })        
+                        }
+                        newUserName(object)  
                     } else {
                         this.setState({
                             alert: 'Please ensure you are correctly logged in.'
@@ -256,11 +273,12 @@ class EditInputSection extends React.Component {
                 </div>
                 <div className="row">
                     <label>Telephone Number</label>
-                    <input
+                    <InputMask 
                     id="telephone"
                     onChange={this.handleChange}
                     value={telephone}
-                    ></input>
+                    mask='(+44) 999 999 9999'
+                    />
                 </div>
                 <div id="age3" className="row">
                     <label>Age</label>

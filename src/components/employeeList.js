@@ -68,6 +68,7 @@ class EmployeeList extends React.Component {
             })
             .then(res => res.json())
             .then(data => {
+                console.log(data)
                 this.setState({
                     validated: true,
                     data: data.Data,
@@ -129,13 +130,10 @@ class EmployeeList extends React.Component {
     render() {
         let adminCookie = document.cookie.match(new RegExp('(^| )' + 'admin' + '=([^;]+)'));
         const {validated, adminName, letter, filteredRes, filter, add, data, edit, editItem, editItemTwo} = this.state;
-        console.log(editItemTwo)
         if (!validated) {
             return (
                 <React.Fragment>
-                    <div>
-                        <Loader />
-                    </div>
+                    <Loader />
                 </React.Fragment>
             )
         } else {
@@ -186,14 +184,12 @@ class EmployeeList extends React.Component {
                             data.map(x => {
                                 return <ListItem key={String(data.id) + Math.random()} employee={true} edit={edit} handleEdit={this.handleEdit} refreshData={this.refreshData} data={x} />
                             })
-                        )
-                        }
+                        )}
                         {filter && (
                             filteredRes.map(x => {
                                 return <ListItem key={String(data.id) + Math.random()} employee={true} edit={edit} handleEdit={this.handleEdit} refreshData={this.refreshData} data={x} />
                             })
-                        )
-                        }
+                        )}
                     </div>
                 </React.Fragment>
             )

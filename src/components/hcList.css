@@ -368,6 +368,7 @@
 }
 .justAddedAlert {
     text-align: center;
+    margin-top: 20px;
 }
 .age3 div {
     display: flex; 
@@ -562,7 +563,7 @@
 .deleteMsg {
     width: 400px; height: 350px;
     background: white;
-    position: absolute;
+    position: fixed;
     margin-top: -300px;
     margin-left: calc(50vw - 200px);
     padding: 0px 20px;

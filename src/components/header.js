@@ -1,6 +1,7 @@
 import React from 'react';
 import AdminIcon from './assets/Admin_Icon_White.png';
 import './header.css';
+import {Link} from 'react-router-dom';
 
 class Header extends React.Component {
     state = {
@@ -30,8 +31,10 @@ class Header extends React.Component {
                         <h2>{title}</h2>
                     </div>
                     <div className="right">
-                        <img src={AdminIcon} />
-                        <h3>{adminName}</h3>
+                        <Link to="/my-profile">
+                            <img src={AdminIcon} />
+                            <h3>{adminName}</h3>
+                        </Link>
                     </div>
                 </div>
             </React.Fragment>

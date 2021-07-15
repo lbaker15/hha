@@ -44,7 +44,8 @@ class Profile extends React.Component {
         })
         .then(res => res.json())
         .then(data => {
-            if (data) {
+            console.log(data)
+            if (data.Data) {
                 let {username, firstname, lastname, password, discipline, email, businessAddress} = data.Data[0];
                 this.setState({
                     type: data.Type,
@@ -54,6 +55,11 @@ class Profile extends React.Component {
                     let {genders, languages, services} = data.Data[0];
                     this.setState({
                         genders, languages, services
+                    })
+                } else if (data.Type === 'Employee') {
+                    let {username, password} = data;
+                    this.setState({
+                        username, password
                     })
                 }
             }
@@ -72,30 +78,30 @@ class Profile extends React.Component {
             delete obj.adminName;
             obj.firstname = obj.firstname.toLowerCase()
             obj.lastname = obj.lastname.toLowerCase()
-            obj.username = obj.username.toLowerCase()
+            console.log(obj)
             if (cookie) {
-            setTimeout(() => {
-            fetch('https://hannahs-heart-2.herokuapp.com/login/edit-employee', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'authorization': cookie[2]
-                },
-                body: JSON.stringify(obj)
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.Success) {
-                    this.setState({
-                        alert: 'Changes successful.'
+                setTimeout(() => {
+                    fetch('https://hannahs-heart-2.herokuapp.com/employee/edit-employee-profile', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'authorization': cookie[2]
+                        },
+                        body: JSON.stringify(obj)
                     })
-                } else {
-                    this.setState({
-                        alert: 'Changes unsuccessful, please try again.'
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.Success) {
+                            this.setState({
+                                alert: 'Changes successful.'
+                            })
+                        } else {
+                            this.setState({
+                                alert: 'Changes unsuccessful, please try again.'
+                            })
+                        }
                     })
-                }
-            })
-            }, 500)
+                }, 500)
             } else {
                 this.setState({
                     alert: 'Please ensure you are logged in before making any changes.'
@@ -177,7 +183,6 @@ class Profile extends React.Component {
     }
     render() {
         const {redirect, type, genders, services, languagesOpen, servicesOpen, gendersOpen, languages, admin, alert, adminName, firstname, lastname, username, password, discipline, email, businessAddress} = this.state;
-        console.log(this.state)
         return (
             <React.Fragment>
                 {redirect && admin && (
@@ -187,8 +192,7 @@ class Profile extends React.Component {
                     <Redirect to="/editor-landing" />
                 )}
                 <div className="myProfile">
-                   <Header title={'My Profile'} />
-
+                    <Header title={'My Profile'} />
                     <button 
                     onClick={this.closeProfile}
                     className="closeProfile">X</button>
@@ -199,7 +203,6 @@ class Profile extends React.Component {
                             <label>Username</label>
                             <input
                             id="username"
-                            onChange={this.handleChange}
                             value={username}
                             ></input>
                         </div>
@@ -320,11 +323,13 @@ class Profile extends React.Component {
                         </React.Fragment>
                         }
                     </div>
-                    <div className="profileAlert">
+                    <div 
+                    style={type === 'Employee' ? {marginTop: 120} : null}
+                    className="profileAlert">
                         {alert}
                     </div>
                     <button
-                   
+                    style={type === 'Employee' ? {marginTop: 25} : null}
                     className="profileSave"
                     onClick={this.handleClick}
                     >Save</button>
