@@ -15,19 +15,23 @@ router.post('/delete-employee', middleware.verifyToken, async (req, res, next) =
     if (id) {
     jwt.verify(req.token, 'secret', function(err, decoded) {
         if (!err) {
-            Employee.find({_id: id}, (err, result) => {
-                let {userId} = result[0];
-                //console.log(userId)
-                Users.deleteOne({_id: userId}, (err, result2) => {
-                    console.log(result2)
+            let promise1 = new Promise((resolve, rej) => {
+                Employee.find({_id: id}, (err, result) => {
+                    let {userId} = result[0];
+                    Users.deleteOne({_id: userId}, (err, result2) => {
+                        resolve()
+                    })
                 })
             })
-            // Employee.deleteOne({_id: id}, (err, result) => {
-            //     if (!err) {
-            //         console.log(result)
-            //         res.json({'Success': 'user deleted'})
-            //     }
-            // })
+            let promise2 = new Promise((resolve, rej) => {
+                Employee.deleteOne({_id: id}, (err, result) => {
+                    if (!err) {
+                        resolve()
+                    }
+                })
+            })
+            Promise.all(promise1, promise2)
+            .then(() => res.json({'Success': 'user deleted'}))
         } else {
             res.json({'Failure': err})
         }
