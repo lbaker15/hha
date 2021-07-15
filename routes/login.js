@@ -5,6 +5,7 @@ const router = express.Router();
 const axios = require('axios')
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+const HttpError = require('../models/http-error');
 var jwt = require('jsonwebtoken');
 const middleware = require('../middleware/auth');
 const Providers = require('../models/providers');
@@ -13,7 +14,6 @@ const Employee = require('../models/employee');
 
 router.post('/signup', async (req, res, next) => {
     let {username, password, admin, hcProvider} = req.body;
-    //ADD VALIDATION - check whether user exists etc
     Users.find({username: username}, async(err, result) => {
         if (result.length === 0) {
             bcrypt.hash(password, saltRounds, function(err, hash) {
