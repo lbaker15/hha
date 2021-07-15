@@ -65,31 +65,57 @@ router.post('/edit-employee', middleware.verifyToken, async (req, res, next) => 
     let obj = {firstname, lastname, discipline: discipline, email, businessAddress}
     jwt.verify(req.token, 'secret', function(err, decoded) {
         if (!err) {
-            console.log('id', id)
             Employee.updateOne({_id: id}, {$set: obj}, 
                 (err, result) => {
-                    console.log('one', err, result)
                     Employee.find({_id: id}, (err, result) => {
                         if (result.length > 0) {
-                        let userId = result[0].userId;
-                        bcrypt.hash(password, saltRounds, function(err, hash) {
-                            Users.updateOne({_id: userId}, {password: hash}, (err, result) => {
-                                if (!err) {
-                                    res.json({'Success': 'user changed'})
-                                }
+                            let userId = result[0].userId;
+                            bcrypt.hash(password, saltRounds, function(err, hash) {
+                                Users.updateOne({_id: userId}, {password: hash}, (err, result) => {
+                                    if (!err) {
+                                        res.json({'Success': 'user changed'})
+                                    }
+                                })
                             })
-                        })
-                    } else {
-                        res.json({'Failure': 'user not changed'})
-                    }
-                })
+                        } else {
+                            res.json({'Failure': 'user not changed'})
+                        }
+                    })
             })
         } else {
             res.json({'Failure': err})
         }
     })
-
 })
+
+router.post('/edit-employee-profile', middleware.verifyToken, async (req, res, next) => {
+    const {firstname, lastname, id, password, discipline, email, businessAddress} = req.body;
+    let obj = {firstname, lastname, discipline: discipline, email, businessAddress}
+    jwt.verify(req.token, 'secret', function(err, decoded) {
+        if (!err) {
+            Employee.updateOne({userId: id}, {$set: obj}, 
+                (err, result) => {
+                    Employee.find({userId: id}, (err, result) => {
+                        if (result.length > 0) {
+                            let userId = id;
+                            bcrypt.hash(password, saltRounds, function(err, hash) {
+                                Users.updateOne({_id: userId}, {password: hash}, (err, result) => {
+                                    if (!err) {
+                                        res.json({'Success': 'user changed'})
+                                    }
+                                })
+                            })
+                        } else {
+                            res.json({'Failure': 'user not changed'})
+                        }
+                    })
+            })
+        } else {
+            res.json({'Failure': err})
+        }
+    })
+})
+
 
 router.post('/add-employee', async (req, res, next) => {
     let {
