@@ -15,35 +15,7 @@ router.post('/delete-employee', middleware.verifyToken, controller.deleteFunc)
 
 router.post('/employee-list', middleware.verifyToken, controller.employeeList)
 
-
-
-router.post('/edit-employee', middleware.verifyToken, async (req, res, next) => {
-    const {firstname, lastname, id, password, discipline, email, businessAddress} = req.body;
-    let obj = {firstname, lastname, discipline: discipline, email, businessAddress}
-    jwt.verify(req.token, 'secret', function(err, decoded) {
-        if (!err) {
-            Employee.updateOne({_id: id}, {$set: obj}, 
-                (err, result) => {
-                    Employee.find({_id: id}, (err, result) => {
-                        if (result.length > 0) {
-                            let userId = result[0].userId;
-                            bcrypt.hash(password, saltRounds, function(err, hash) {
-                                Users.updateOne({_id: userId}, {password: hash}, (err, result) => {
-                                    if (!err) {
-                                        res.json({'Success': 'user changed'})
-                                    }
-                                })
-                            })
-                        } else {
-                            res.json({'Failure': 'user not changed'})
-                        }
-                    })
-            })
-        } else {
-            res.json({'Failure': err})
-        }
-    })
-})
+router.post('/edit-employee', middleware.verifyToken, controller.edit)
 
 router.post('/edit-employee-profile', middleware.verifyToken, async (req, res, next) => {
     const {firstname, lastname, id, password, discipline, email, businessAddress} = req.body;

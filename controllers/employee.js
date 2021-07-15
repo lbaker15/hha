@@ -65,7 +65,35 @@ const employeeList = async (req, res, next) => {
     })
 }
 
+const edit = async (req, res, next) => {
+    jwt.verify(req.token, 'secret', function(err, decoded) {
+    const {firstname, lastname, id, password, discipline, email, businessAddress} = req.body;
+    let obj = {firstname, lastname, discipline: discipline, email, businessAddress}
+        if (!err) {
+            Employee.updateOne({_id: id}, {$set: obj}, 
+                (err, result) => {
+                    Employee.find({_id: id}, (err, result) => {
+                        if (result.length > 0) {
+                            let userId = result[0].userId;
+                            bcrypt.hash(password, saltRounds, function(err, hash) {
+                                Users.updateOne({_id: userId}, {password: hash}, (err, result) => {
+                                    if (!err) {
+                                        res.json({'Success': 'user changed'})
+                                    }
+                                })
+                            })
+                        } else {
+                            res.json({'Failure': 'user not changed'})
+                        }
+                    })
+            })
+        } else {
+            res.json({'Failure': err})
+        }
+    })
+}
 
 
 exports.deleteFunc = deleteFunc;
 exports.employeeList = employeeList;
+exports.edit = edit;
