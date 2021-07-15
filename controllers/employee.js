@@ -18,7 +18,7 @@ const deleteFunc = async (req, res, next) => {
     if (id) {
         if (!err) {
             let promise1 = new Promise((resolve, rej) => {
-                return helpers.employeeFindDelete()
+                return helpers.employeeFindDelete(resolve, rej)
             })
             let promise2 = new Promise((resolve, rej) => {
                 Employee.deleteOne({_id: id}, (err, result) => {
