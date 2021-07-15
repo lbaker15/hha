@@ -13,4 +13,17 @@ const employeeFindDelete = () => {
     })
 }
 
+const employeeDelete = () => {
+    return new Promise((resolve, rej) => {
+        Employee.deleteOne({_id: id}, (err, result) => {
+            if (!err) {
+                resolve()
+            }
+        })
+    })
+}
+
+
+
 exports.employeeFindDelete = employeeFindDelete;
+exports.employeeDelete = employeeDelete;
