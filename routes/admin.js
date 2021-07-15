@@ -37,6 +37,7 @@ router.post('/get-profile', async (req, res, next) => {
         } else {
             employee.find({userId: id}, async (err, result2) => {
                 if (result2.length > 0) {
+                    console.log('HERE2', result2)
                     res.json({'Data': result2, 'Type': 'Employee'})
                 } else {
                     res.json({'Error': 'User not found'})
