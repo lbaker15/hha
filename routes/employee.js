@@ -65,11 +65,12 @@ router.post('/edit-employee', middleware.verifyToken, async (req, res, next) => 
     let obj = {firstname, lastname, discipline: discipline, email, businessAddress}
     jwt.verify(req.token, 'secret', function(err, decoded) {
         if (!err) {
+            console.log('id', id)
             Employee.updateOne({_id: id}, {$set: obj}, 
                 (err, result) => {
                     console.log('one', err, result)
                     Employee.find({_id: id}, (err, result) => {
-                        console.log('two', err, result)
+                        if (result.length > 0) {
                         let userId = result[0].userId;
                         bcrypt.hash(password, saltRounds, function(err, hash) {
                             Users.updateOne({_id: userId}, {password: hash}, (err, result) => {
@@ -78,6 +79,9 @@ router.post('/edit-employee', middleware.verifyToken, async (req, res, next) => 
                                 }
                             })
                         })
+                    } else {
+                        res.json({'Failure': 'user not changed'})
+                    }
                 })
             })
         } else {
