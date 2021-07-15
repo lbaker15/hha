@@ -17,7 +17,10 @@ router.post('/delete-employee', middleware.verifyToken, async (req, res, next) =
         if (!err) {
             Employee.find({_id: id}, (err, result) => {
                 let {userId} = result[0];
-                console.log(userId)
+                //console.log(userId)
+                Users.deleteOne({_id: userId}, (err, result2) => {
+                    console.log(result2)
+                })
             })
             // Employee.deleteOne({_id: id}, (err, result) => {
             //     if (!err) {
