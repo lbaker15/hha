@@ -34,7 +34,7 @@ router.post('/delete-employee', middleware.verifyToken, async (req, res, next) =
                     }
                 })
             })
-            Promise.all(promise1, promise2)
+            Promise.all([promise1, promise2])
             .then(() => res.json({'Success': 'user deleted'}))
             .catch(err => console.log('ERROR', err))
         } else {
