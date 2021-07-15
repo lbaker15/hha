@@ -25,7 +25,7 @@ router.post('/signup', async (req, res, next) => {
                 })
             })
         } else {
-            let error = new HttpError('User already exists.', 401)
+            let error = new HttpError('A user with this username already exists, please try a unique username.', 401)
             next(error)
         }
     })    
