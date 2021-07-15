@@ -37,6 +37,7 @@ router.post('/get-profile', async (req, res, next) => {
         } else {
             employee.find({userId: id}, async (err, result2) => {
                 if (result2.length > 0) {
+                    let userId = result2[0].userId;
                     Users.find({_id: userId}, (err, result3) => {
                         console.log('3', result3)
                     })
