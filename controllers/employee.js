@@ -9,6 +9,7 @@ var jwt = require('jsonwebtoken');
 const middleware = require('../middleware/auth');
 const Providers = require('../models/providers');
 const Employee = require('../models/employee');
+const HttpError = require('../models/http-error');
 
 const deleteFunc = async (req, res, next) => {
     const {id} = req.body;
@@ -36,13 +37,18 @@ const deleteFunc = async (req, res, next) => {
             })
             return Promise.all([promise1, promise2])
             .then(() => res.json({'Success': 'user deleted'}))
-            .catch(err => console.log('ERROR', err))
+            .catch(err => {
+                let error = new HttpError('Could not delete user.', 403)
+                return next(error)
+            }
         } else {
-            return res.json({'Failure': err})
+            let error = new HttpError('Could not delete user.', 403)
+            return next(error)
         }
     })
     } else {
-        return res.json({'Failure': 'No data sent'})
+        let error = new HttpError('Invalid token.', 401)
+        return next(error)
     }
 }
 
