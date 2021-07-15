@@ -31,6 +31,13 @@ router.post('/signup', async (req, res, next) => {
     })    
 })
 
+router.post('/user-check', async (req, res, next) => {
+    let {username} = req.body;
+    Users.find({username: username}, (err, result) => {
+        console.log(result)
+    })
+})
+
 router.post('/login', async (req, res, next) => {
     let {name, password} = req.body;
     Users.find({username: name}, (err, result) => {
