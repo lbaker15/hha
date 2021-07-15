@@ -94,9 +94,9 @@ const edit = async (req, res, next) => {
 }
 
 const editProfile = async (req, res, next) => {
+    jwt.verify(req.token, 'secret', function(err, decoded) {
     const {firstname, lastname, id, password, discipline, email, businessAddress} = req.body;
     let obj = {firstname, lastname, discipline: discipline, email, businessAddress}
-    jwt.verify(req.token, 'secret', function(err, decoded) {
         if (!err) {
             Employee.updateOne({userId: id}, {$set: obj}, 
                 (err, result) => {
