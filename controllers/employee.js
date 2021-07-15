@@ -40,7 +40,7 @@ const deleteFunc = async (req, res, next) => {
             .catch(err => {
                 let error = new HttpError('Could not delete user.', 403)
                 return next(error)
-            }
+            })
         } else {
             let error = new HttpError('Could not delete user.', 403)
             return next(error)
