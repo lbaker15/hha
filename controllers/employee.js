@@ -36,9 +36,9 @@ const deleteFunc = async (req, res, next) => {
 }
 
 const employeeList = async (req, res, next) => {
+    jwt.verify(req.token, 'secret', function(err, decoded) {
     const {id} = req.body;
     if (id) {
-    jwt.verify(req.token, 'secret', function(err, decoded) {
         if (!err) {
             Employee.find({author: id}, async (error, result) => {
                 if (!error) {
@@ -59,10 +59,10 @@ const employeeList = async (req, res, next) => {
         } else {
             res.json({'Failure': err})
         }
-    })
     } else {
         res.json({'Failure': 'No id sent.'})
     }
+    })
 }
 
 
