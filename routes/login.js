@@ -34,7 +34,9 @@ router.post('/signup', async (req, res, next) => {
 router.post('/user-check', async (req, res, next) => {
     let {username} = req.body;
     Users.find({username: username}, (err, result) => {
-        console.log(result)
+        if (result.length === 0) {
+            res.json({'Success': 'No existing user'})
+        }
     })
 })
 
