@@ -17,10 +17,14 @@ router.post('/delete-employee', middleware.verifyToken, async (req, res, next) =
         if (!err) {
             let promise1 = new Promise((resolve, rej) => {
                 Employee.find({_id: id}, (err, result) => {
-                    let {userId} = result[0];
-                    Users.deleteOne({_id: userId}, (err, result2) => {
-                        resolve()
-                    })
+                    if (result) {
+                        let {userId} = result[0];
+                        Users.deleteOne({_id: userId}, (err, result2) => {
+                            if (!err) {
+                                resolve()
+                            }
+                        })
+                    }
                 })
             })
             let promise2 = new Promise((resolve, rej) => {
