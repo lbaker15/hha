@@ -10,6 +10,7 @@ const middleware = require('../middleware/auth');
 const Providers = require('../models/providers');
 const Employee = require('../models/employee');
 const HttpError = require('../models/http-error');
+const helpers = require('./helpers/file');
 
 const deleteFunc = async (req, res, next) => {
     jwt.verify(req.token, 'secret', function(err, decoded) {
@@ -17,16 +18,7 @@ const deleteFunc = async (req, res, next) => {
     if (id) {
         if (!err) {
             let promise1 = new Promise((resolve, rej) => {
-                Employee.find({_id: id}, (err, result) => {
-                    if (result.length > 0) {
-                        let {userId} = result[0];
-                        Users.deleteOne({_id: userId}, (err, result2) => {
-                            if (!err) {
-                                resolve()
-                            }
-                        })
-                    }
-                })
+                return helpers.employeeFindDelete()
             })
             let promise2 = new Promise((resolve, rej) => {
                 Employee.deleteOne({_id: id}, (err, result) => {
