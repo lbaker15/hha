@@ -36,6 +36,8 @@ router.post('/user-check', async (req, res, next) => {
     Users.find({username: username}, (err, result) => {
         if (result.length === 0) {
             res.json({'Success': 'No existing user'})
+        } else {
+            res.json({'Failure': 'User already exists'})
         }
     })
 })
