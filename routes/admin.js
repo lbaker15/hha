@@ -34,7 +34,9 @@ router.post('/get-profile', async (req, res, next) => {
             console.log('HERE', result)
             res.json({'Data': result, 'Type': 'Provider'})
         } else {
+            console.log(id)
             employee.find({userId: id}, async (err, result2) => {
+                console.log(result2)
                 if (result2.length > 0) {
                     let userId = result2[0].userId;
                     let username; let password;
