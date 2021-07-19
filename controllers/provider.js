@@ -51,7 +51,7 @@ const addProvider = async (req, res, next) => {
                 lastname: String(lastname).toLowerCase(),
                 discipline: String(discipline).toLowerCase(),
                 gender: String(gender).toLowerCase(),
-                telephone: Number(telephone),
+                telephone: telephone,
                 businessAddress: String(businessAddress).toLowerCase(),
                 minAge: (minAge) ? Number(minAge) : 0, maxAge: (maxAge) ? Number(maxAge) : 1000, age: age,
                 genders: newGen,
