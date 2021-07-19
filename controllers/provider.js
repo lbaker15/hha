@@ -40,12 +40,11 @@ const addProvider = async (req, res, next) => {
     let { firstname, lastname, discipline, gender, genders, 
     businessAddress, userId, languages, services, 
     minAge, maxAge, age, telephone, author } = req.body;
-    console.log(telephone)
     if (services, genders, languages, age && minAge !== null | undefined && maxAge && firstname && lastname && discipline && gender && businessAddress) {
             let newGen = await genders.map(x => String(x).toLowerCase())
             let newLang = await languages.map(g => String(g).toLowerCase())
             let newServices = await services.map(g => String(g).toLowerCase())
-            telephone = telephone.split(')')[1]
+            telephone = await telephone.split(')')[1]
             console.log('TEL', telephone)
             let obj = {
                 firstname: String(firstname).toLowerCase(),
