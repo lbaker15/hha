@@ -45,6 +45,7 @@ const addProvider = async (req, res, next) => {
             let newGen = await genders.map(x => String(x).toLowerCase())
             let newLang = await languages.map(g => String(g).toLowerCase())
             let newServices = await services.map(g => String(g).toLowerCase())
+            let telephone = telephone.split(')')[1]
             console.log('TEL', telephone)
             let obj = {
                 firstname: String(firstname).toLowerCase(),
