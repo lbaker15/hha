@@ -45,7 +45,7 @@ const addProvider = async (req, res, next) => {
             let newLang = await languages.map(g => String(g).toLowerCase())
             let newServices = await services.map(g => String(g).toLowerCase())
             telephone = await telephone.split(')')[1]
-            console.log('TEL', telephone)
+            console.log('TEL', telephone, Number(telephone))
             let obj = {
                 firstname: String(firstname).toLowerCase(),
                 lastname: String(lastname).toLowerCase(),
@@ -79,7 +79,6 @@ const addProvider = async (req, res, next) => {
                             obj.lng = providerCoords.lng;
                             try {
                                 let add = new Provider(obj)
-                                console.log('OBJ', obj.telephone, 'ADD', add)
                                 add.save().then((data, err) => {
                                 
                                     return res.json({'Data': data})
