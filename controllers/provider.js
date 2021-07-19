@@ -1,4 +1,4 @@
-// const helpers = require('./functionHelpers');
+const helpers = require('./helpers/functionHelpers');
 const express = require('express');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
