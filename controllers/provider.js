@@ -44,16 +44,16 @@ const addProvider = async (req, res, next) => {
             let newGen = await genders.map(x => String(x).toLowerCase())
             let newLang = await languages.map(g => String(g).toLowerCase())
             let newServices = await services.map(g => String(g).toLowerCase())
-            telephone = await telephone.split(')')[1]
-            console.log('TEL', telephone, Number(telephone))
             let obj = {
                 firstname: String(firstname).toLowerCase(),
                 lastname: String(lastname).toLowerCase(),
                 discipline: String(discipline).toLowerCase(),
                 gender: String(gender).toLowerCase(),
-                telephone: telephone,
+                telephone: Number(telephone),
                 businessAddress: String(businessAddress).toLowerCase(),
-                minAge: (minAge) ? Number(minAge) : 0, maxAge: (maxAge) ? Number(maxAge) : 1000, age: age,
+                minAge: (minAge) ? Number(minAge) : 0, 
+                maxAge: (maxAge) ? Number(maxAge) : 1000, 
+                age: age,
                 genders: newGen,
                 languages: newLang, 
                 services: newServices, 
