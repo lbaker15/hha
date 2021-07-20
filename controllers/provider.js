@@ -214,6 +214,7 @@ const editSelf = async (req, res, next) => {
         if (!err) {
             Providers.updateOne({_id: obj.id}, obj, 
                 (err, result) => {
+                    console.log(err, result)
                     if (!err) {
                         res.json({'Success': 'user changed'})
                     }
