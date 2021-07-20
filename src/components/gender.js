@@ -1,4 +1,5 @@
 import React from 'react';
+import InputElement from './inputElement';
 
 let gendersList = [
     'Male', 'Female', 'Trans Female',
@@ -7,7 +8,7 @@ let gendersList = [
 
 class Gender extends React.Component {
     state = {
-        otherGender: '',
+        otherGender: '', 
     }
     setGender = (e) => {
         this.setState({
@@ -15,29 +16,23 @@ class Gender extends React.Component {
         })
     }
     render() {
-        const {handleChange, gender, genders, noGenderWidth, edit} = this.props;
-        const {otherGender} = this.state;
-        //console.log(genders)
+        const {handleChange, otherGender, setGender, gender, genders, noGenderWidth, edit} = this.props;
+        // const {otherGender} = this.state;
         return (
             <React.Fragment>
                 {gendersList.map((x, i) => {
-                    let checker = genders.find(item => item === x.toLowerCase())
                     return (
                         <React.Fragment key={x+i}>
                             <label key={x+i}>
-                                <input 
-                                type={edit ? 'checkbox' : 'radio'}
-                                name="gender" 
-                                value={x.toLowerCase()} 
-                                id={`gender_${i}`} 
-                                onChange={handleChange}
-                                data-value="genders"
-                                checked={edit && checker}
-                                className="gender">
-                                </input>
-                                {x}
+                                <InputElement 
+                                handleChange={handleChange} 
+                                edit={edit} 
+                                value={x} 
+                                i={i} 
+                                dataVal="genders"
+                                id={'gender_' + i}
+                                />
                             </label>
-                     
                         </React.Fragment>
                     )
                 })}        
@@ -46,13 +41,11 @@ class Gender extends React.Component {
                 type="textfield" 
                 name="othergender" 
                 value={otherGender}
-                data-value="gender"
+                data-value="genders"
                 onBlur={(e) => {
-                    if (gender === 'Other') {
-                        handleChange(e, 'gender')
-                    }
+                    handleChange(e)
                 }}
-                onChange={this.setGender}
+                onChange={setGender}
                 placeholder="Your Gender" 
                 
                 id={!noGenderWidth ? "gender_5" : null}

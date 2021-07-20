@@ -1,4 +1,5 @@
 import React from 'react';
+import InputElement from './inputElement';
 
 const languages = [
 'Afrikaans', 'Albanian', 'Amharic', 'Arabic', 'Armenian',
@@ -23,26 +24,19 @@ const languages = [
 
 class ListOfLanguages extends React.Component {
     render() {
-        const {handlePreferredLang, languagesPicked} = this.props;
+        const {handlePreferredLang} = this.props;
         return (
             <React.Fragment>
                 {languages.map((x, i) => {
-                    let checker = languagesPicked.find(item => item === x.toLowerCase())
-                    let num = "languages_" + i;
                     return (
                         <label 
                         key={x+i} style={i === languages.length-1 ? {userSelect: 'none', marginBottom: '50px'} : {userSelect: 'none'}}>
-                            <input 
-                            onChange={handlePreferredLang}
-                            type="checkbox" 
-                            name="preferredLanguage" 
-                            data-value="languages"
-                            checked={checker}
-                            value={x.toLowerCase()} 
-                            id={num}>
-                            </input>
-                            {x}
-                            <br />
+                            <InputElement 
+                            handleChange={handlePreferredLang} 
+                            value={x} i={i} 
+                            id={"languages_" + i}
+                            dataVal="languages"
+                            />
                         </label>
                     )
                 })}

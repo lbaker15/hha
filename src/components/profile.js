@@ -5,6 +5,8 @@ import Gender from './gender';
 import ListOfLanguages from './listOfLanguages';
 import Treatment from './treatment';
 import Header from './header';
+import Discipline from './discipline';
+import Loader from './loader';
 
 class Profile extends React.Component {
     state = {
@@ -12,7 +14,7 @@ class Profile extends React.Component {
         discipline: '', email: '', businessAddress: '', 
         alert: '', redirect: false, admin: '',
         gendersOpen: false, servicesOpen: false,
-        languagesOpen: false
+        languagesOpen: false, validated: false
     }
     closeProfile = () => {
         this.setState({
@@ -29,7 +31,8 @@ class Profile extends React.Component {
                 this.setState({
                     adminName: cookieName[2],
                     cookie,
-                    admin: adminCookie
+                    admin: adminCookie,
+                    validated: true
                 })
             }
         }
@@ -182,7 +185,8 @@ class Profile extends React.Component {
         }))
     }
     render() {
-        const {redirect, type, genders, services, languagesOpen, servicesOpen, gendersOpen, languages, admin, alert, adminName, firstname, lastname, username, password, discipline, email, businessAddress} = this.state;
+        const {validated, redirect, type, genders, services, languagesOpen, servicesOpen, gendersOpen, languages, admin, alert, adminName, firstname, lastname, username, password, discipline, email, businessAddress} = this.state;
+        if (validated) {
         return (
             <React.Fragment>
                 {redirect && admin && (
@@ -235,11 +239,7 @@ class Profile extends React.Component {
                         </div>
                         <div className="row">
                             <label>Discipline</label>
-                            <input
-                            id="discipline"
-                            onChange={this.handleChange}
-                            value={discipline}
-                            ></input>
+                            <Discipline value={discipline} handleChange={this.handleChange} />
                         </div>
                         {type === 'Employee' &&
                         <div className="row">
@@ -336,6 +336,11 @@ class Profile extends React.Component {
                 </div>
             </React.Fragment>
         )
+        } else {
+            return (
+                <Loader />
+            )
+        }
     }
 }
 

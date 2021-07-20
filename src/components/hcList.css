@@ -298,6 +298,18 @@
     color: var(--darkFont);
     padding-left: 7px;
 }
+.editSection .row select {
+    width: 70%;
+    margin-top: 10px;
+    height: 40px;
+    border-radius: 2px;
+    outline: none;
+    border: 1px solid #bbbdbf;
+    margin-right: 50px;
+    font-family: roboto;
+    color: var(--darkFont);
+    padding-left: 7px;
+}
 .row .submit {
     width: 90%;
     margin-left: 5%;
@@ -379,7 +391,7 @@
     width: 70%;
     margin-right: 50px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 #age3 {
     height: 100px;
@@ -390,10 +402,13 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+    margin-left: -5%;
     text-align: center;
 }
 .age3 div:nth-child(2) {
     width: 40%;
+    max-width: 100px;
+    margin-left: 5%;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -401,6 +416,7 @@
 }
 .age3 div:nth-child(3) {
     width: 40%;
+    max-width: 100px;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -421,12 +437,14 @@
 }
 .age3 div:nth-child(1) label {
     font-size: 16px;
+    margin-left: -10px;
 }
 .age3 div:nth-child(2) label {
     font-size: 16px;
+    margin-left: -10px;
 }
 .age3 div:nth-child(3) label {
-    font-size: 16px;
+    font-size: 16px; margin-left: -10px;
 }
 .closeBtnEdit {
     width: 50px; height: 50px; background: black;
@@ -448,6 +466,9 @@
     .editSection .row input {
         width: 60%;
     }
+    .editSection .row select {
+        width: 60%;
+    }
     #s_1_s button {
         width: 60%;
     }
@@ -463,6 +484,12 @@
     }
     .age3 div label {
         margin-left: -6px;
+    }
+    .age3 div:nth-child(1) {
+        margin-left: 0;
+    }
+    .age3 div:nth-child(2) {
+        margin-left: 0;
     }
 }
 @media (max-width: 700px) {
@@ -488,6 +515,9 @@
         text-align: center;
     }
     .editSection .row input {
+        width: 80%; margin: 0;
+    }
+    .editSection .row select {
         width: 80%; margin: 0;
     }
     .editSection .row textarea {
@@ -558,6 +588,15 @@
         height: 60px;
         padding-bottom: 10px;
         padding-top: 10px;
+    }
+    .age3 div:nth-child(1) label {
+        margin-left: 0;
+    }
+    .age3 div:nth-child(2) label {
+        margin-left: 0;
+    }
+    .age3 div:nth-child(3) label {
+        margin-left: 0;
     }
 }
 .deleteMsg {

@@ -1,4 +1,5 @@
 import React from 'react';
+import InputElement from './inputElement';
 
 let values = [
     {value: 'Not sure'},
@@ -23,23 +24,19 @@ class Treatment extends React.Component {
             <React.Fragment>
                 <h2 style={noHeader ? {visibility: 'hidden', marginBottom: -50} : null}>What are you seeking support for?</h2>
                     {values.map((x,i) => {
-                        let checker = treatment.find(item => item === x.value.toLowerCase())
                         return (
                             <React.Fragment key={x+i}>
                                 <label key={x+i}>
-                                    <input 
-                                    type="checkbox"
-                                    name="treatment" 
-                                    value={x.value} 
-                                    data-value='services'
-                                    checked={checker}
-                                    onChange={handleInputArray}
-                                    id="treatment_a"></input>
-                                    {x.value}
+                                    <InputElement 
+                                    value={x.value} i={i}
+                                    handleChange={handleInputArray} 
+                                    dataVal="services"
+                                    id="treatment_a"
+                                    />
                                 </label>
                             </React.Fragment>
-                        )
-                    })
+                            )
+                        })
                     }                       
             </React.Fragment>
         )

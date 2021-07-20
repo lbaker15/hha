@@ -5,7 +5,6 @@ import Treatment from './treatment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencilAlt, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import InputMask from 'react-input-mask';
-import Discipline from './discipline';
 
 
 class EditInputSection extends React.Component {
@@ -14,12 +13,7 @@ class EditInputSection extends React.Component {
         gender: '', address: '', minAge: '', maxAge: '',
         age: '', genders: [], ageSet: false, services: [], 
         languages: [], gendersOpen: false, telephone: '', 
-        alert: '', otherGender: ''
-    }
-    handleOtherGender = (e) => {
-        this.setState({
-            otherGender: e.target.value
-        })
+        alert: ''
     }
     componentDidMount() {
         const {edit, editItem} = this.props;
@@ -40,7 +34,7 @@ class EditInputSection extends React.Component {
             })
         }
     }
-    addProvider = (obj2, cookieId, address, val) => {
+    addProvider = (obj2, cookieId, address) => {
         fetch('https://hannahs-heart-2.herokuapp.com/login/signup', {
             method: 'POST',
             headers: {
@@ -55,7 +49,6 @@ class EditInputSection extends React.Component {
                 let obj = {...this.state, userId, author: cookieId[2], businessAddress: address}
                 obj.firstname = obj.firstname.toLowerCase()
                 obj.lastname = obj.lastname.toLowerCase()
-                obj.telephone = val;
                 delete obj.languagesOpen;
                 delete obj.servicesOpen;
                 delete obj.gendersOpen;
@@ -93,103 +86,78 @@ class EditInputSection extends React.Component {
     }
     handleChange = (e) => {
         let id;
-        let {value} = e.target;
-        let {genders} = this.state;
-        let gendersList = [
-            'male', 'female', 'trans female',
-            'trans male', 'non binary', 'other'
-        ]
-        value = value.toLowerCase();
-        if (e.target.name === 'othergender') {
-            if (genders.includes('other')) {
-                id = e.target.dataset.value;
-                //KNOW THAT OTHER EXISTS IN GENDERS & VALUE ENTERED IS UNIQUE
-                let newState = genders.filter((x) => {
-                    return gendersList.includes(x);
-                })
-                newState = newState.concat(value);
-                this.setState((prev) => ({
-                    [id]: newState
-                }))
-            } 
-        } else if (e.target.value === 'Other' && genders.includes('other') ) {
-            id = e.target.dataset.value;
-            let newState = genders.filter((x) => {
-                return gendersList.includes(x) && x !== 'other';
-            })
-            this.setState((prev) => ({
-                [id]: newState,
-                otherGender: ''
-            }))
-        } else if (e.target.name === 'gender' | e.target.name === 'preferredLanguage' | e.target.name === 'treatment') {
+        console.log(e.target.id)
+        if (e.target.name === 'gender' | e.target.name === 'othergender' | e.target.name === 'preferredLanguage' | e.target.name === 'treatment') {
             id = e.target.dataset.value;
             const check = this.state[id];
-            if (!check.find(x => x === value) ) {
+            if (!check.find(x => x === e.target.value.toLowerCase()) ) {
                 this.setState((prev) => ({
-                    [id]: prev[id].concat(value)
+                    [id]: prev[id].concat(e.target.value.toLowerCase())
                 }))
             } else {
-                let newArr = check.filter(x => x !== value)
-                this.setState({[id]: newArr})
+                let newArr = check.filter(x => x !== e.target.value.toLowerCase())
+                this.setState({
+                    [id]: newArr
+                })
             }      
         } else {
             if (e.target.id === 'gender2') {
                 id = 'gender';
                 this.setState({
-                    [id]: value
+                    [id]: e.target.value
                 })
             } else if (e.target.id === 'address2') {
                 id = 'address';
                 this.setState({
-                    [id]: value
+                    [id]: e.target.value
                 })
+            } else if (e.target.id === 'telephone') {
+                id = 'telephone';
+                let tel = this.state[id];
+                console.log(e.nativeEvent['inputType'], tel.length)                
+                if (tel.length < 10) {
+                    this.setState({
+                        [id]: e.target.value
+                    })
+                } else if (e.nativeEvent['inputType'] === 'deleteContentBackward') {
+                    this.setState({
+                        [id]: e.target.value
+                    })
+                } else {
+                    //SET VALIDATION FOR TELEPHONE
+                }
             } else if (e.target.id === 'firstname' | e.target.id === 'lastname') {
-                let str = value;
+                let str = e.target.value;
                 let letters = /^[A-Za-z]+$/;
                 if (str.match(letters)) {
                     id = e.target.id;
                     this.setState({
-                        [id]: value
+                        [id]: e.target.value
                     })   
                 } else if (str.length === 0) {
                     id = e.target.id;
                     this.setState({
-                        [id]: value
+                        [id]: e.target.value
                     })   
                 }
             } else {
                 id = e.target.id;
                 this.setState({
-                    [id]: value
+                    [id]: e.target.value
                 })
             }
             
         }
     }
-    handleClick = async () => {
-        let num = this.state.telephone.split(')')[1];
-        let finalNum = new String;
-        function removeSpace(str) {
-            let newStr = str.split(" ")
-            return new Promise((res, rej) => {
-                newStr.map((x, i) => {
-                    finalNum = finalNum + x;
-                    if (i === newStr.length - 1) {res(finalNum)}
-                })
-            })
-        }
-        removeSpace(num.trim())
-        .then(val => {
-        val = Number(val)
-        console.log(val)
+    handleClick = () => {
         if (this.props.editItem) {
+            //CHECK FOR ID
             let obj = {
                 ...this.state,
                 id: this.props.editItem._id
             };
             obj.firstname = obj.firstname.toLowerCase()
             obj.lastname = obj.lastname.toLowerCase()
-            obj.telephone = val;
             let cookie = document.cookie.match(new RegExp('(^| )' + 'token' + '=([^;]+)'))[0].split('=')[1];
             setTimeout(() => {
                 fetch('https://hannahs-heart-2.herokuapp.com/provider/edit-provider', {
@@ -219,6 +187,7 @@ class EditInputSection extends React.Component {
                     if (cookieId) {
                         let username = firstname + lastname;
                         let object = {username}
+                        
                         let newUserName = (object) => {
                                 fetch('https://hannahs-heart-2.herokuapp.com/login/user-check', {
                                     method: 'POST',
@@ -236,7 +205,7 @@ class EditInputSection extends React.Component {
                                     } else if (data.Success) {
                                         let password = "1234";
                                         let obj2 = {username: username, password, admin: true, hcProvider: true}
-                                        this.addProvider(obj2, cookieId, address, val)
+                                        this.addProvider(obj2, cookieId, address)
                                     }
                                 })        
                         }
@@ -251,8 +220,7 @@ class EditInputSection extends React.Component {
                         alert: 'Please ensure all fields are filled in correctly.'
                     })
                 }
-            }
-        })
+        }
     }
     openList = (e) => {
         this.setState((prev) => ({
@@ -281,7 +249,6 @@ class EditInputSection extends React.Component {
     render() {
         const {edit, editItem, handleAdd, handleEdit} = this.props;
         const {gendersOpen, age, telephone, ageSet, minAge, maxAge, servicesOpen, languagesOpen, firstname, lastname, discipline, gender, genders, services, languages, address} = this.state;
-        console.log(this.state)
         return (
             <React.Fragment>
             <button
@@ -289,7 +256,7 @@ class EditInputSection extends React.Component {
             className="closeBtnEdit">X</button>
             <div className="editSection">
                 <div className="topRow">
-                    {editItem ? 
+                    { editItem ? 
                         <FontAwesomeIcon style={{fontSize: 80}} icon={faPencilAlt} /> : 
                         <FontAwesomeIcon style={{fontSize: 80}} icon={faPlusCircle} />
                     }
@@ -323,7 +290,11 @@ class EditInputSection extends React.Component {
                 </div>
                 <div className="row">
                     <label>Discipline</label>
-                    <Discipline value={discipline} handleChange={this.handleChange} />
+                    <input
+                    id="discipline"
+                    onChange={this.handleChange}
+                    value={discipline}
+                    ></input>
                 </div>
                 <div style={{height: 70}} className="row">
                     <label>Gender</label>
@@ -343,11 +314,11 @@ class EditInputSection extends React.Component {
                 </div>
                 <div className="row">
                     <label>Telephone Number</label>
-                    <InputMask 
+                    <input
                     id="telephone"
                     onChange={this.handleChange}
                     value={telephone}
-                    mask='(+44) 999 999 9999'
+                    type="number"
                     />
                 </div>
                 <div id="age3" className="row">
@@ -362,7 +333,7 @@ class EditInputSection extends React.Component {
                             onChange={this.allAges}
                             ></input>
                         </div>
-                        <div id="alter">
+                        <div>
                             <label>Minimum Age</label>
                             <input
                             id="minAge"
@@ -397,8 +368,6 @@ class EditInputSection extends React.Component {
                             <Gender 
                             edit={true} 
                             genders={genders}
-                            otherGender={this.state.otherGender}
-                            setGender={this.handleOtherGender}
                             handleChange={this.handleChange} 
                             noGenderWidth={true} />
                         </div>
@@ -417,9 +386,9 @@ class EditInputSection extends React.Component {
                     <div className="myrow">
                         <div className="openFlex">
                             <ListOfLanguages 
+                            languagesPicked={languages}
                             handlePreferredLang={this.handleChange} 
-                            noGenderWidth={true} 
-                            />
+                            noGenderWidth={true} />
                         </div>
                     </div>
                 )}

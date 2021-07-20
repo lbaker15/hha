@@ -53,7 +53,6 @@ class AdminList extends React.Component {
         }
     }
     refreshData = () => {
-        console.log('refresh data fired')
         let cookieId = document.cookie.match(new RegExp('(^| )' + 'id' + '=([^;]+)'));
         let cookie = document.cookie.match(new RegExp('(^| )' + 'token' + '=([^;]+)'));
         if (cookie) {
@@ -67,7 +66,6 @@ class AdminList extends React.Component {
             })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 this.setState({
                     validated: true,
                     data: data.Data
@@ -179,14 +177,12 @@ class AdminList extends React.Component {
                         {!filter && data && (
                             data.map(x => {
                                 return <ListItem key={String(data.id) + Math.random()} edit={edit} handleEdit={this.handleEdit} refreshData={this.refreshData} data={x} />
-                            })
-                        )
+                            }))
                         }
                         {filter && (
                             filteredRes.map(x => {
                                 return <ListItem key={String(data.id) + Math.random()} edit={edit} handleEdit={this.handleEdit} refreshData={this.refreshData} data={x} />
-                            })
-                        )
+                            }))
                         }
                     </div>
                 </React.Fragment>

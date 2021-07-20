@@ -30,9 +30,25 @@ class EditInputSectionEmployee extends React.Component {
     }
     handleChange = (e) => {
         let id = e.target.id;
-        this.setState({
-            [id]: e.target.value
-        })
+        if (e.target.id === 'firstname' | e.target.id === 'lastname') {
+            let str = e.target.value;
+            let letters = /^[A-Za-z]+$/;
+            if (str.match(letters)) {
+                id = e.target.id;
+                this.setState({
+                    [id]: e.target.value
+                })   
+            } else if (str.length === 0) {
+                id = e.target.id;
+                this.setState({
+                    [id]: e.target.value
+                })   
+            }
+        } else {
+            this.setState({
+                [id]: e.target.value
+            })
+        }
     }
     handleClick = (e) => {
         let {editItem} = this.props;
@@ -62,6 +78,7 @@ class EditInputSectionEmployee extends React.Component {
                 })
             }, 1000)
         } else {
+            //VALIDATE TYPES?? EG EMAIL AND AGE AS NUMBER?
             const {username, password, firstname, lastname, discipline, email, businessAddress} = this.state;
                 if (username.length > 0 && password.length > 0 && firstname.length > 0  && lastname.length > 0 && discipline.length > 0 && email.length > 0 && businessAddress.length > 0) {
                     let cookieId = document.cookie.match(new RegExp('(^| )' + 'id' + '=([^;]+)'));
@@ -104,9 +121,7 @@ class EditInputSectionEmployee extends React.Component {
                                     })
                                 }
                             }
-                            //
                         })
-
                     } else {
                         this.setState({
                             alert: 'Please ensure you are correctly logged in.'
@@ -129,7 +144,7 @@ class EditInputSectionEmployee extends React.Component {
                 className="closeBtnEdit">X</button>
                 <div className="editSection">
                     <div className="topRow">
-                        { editItem ? 
+                        {editItem ? 
                             <FontAwesomeIcon style={{fontSize: 80}} icon={faPencilAlt} /> : 
                             <FontAwesomeIcon style={{fontSize: 80}} icon={faPlusCircle} />
                         }
@@ -179,6 +194,7 @@ class EditInputSectionEmployee extends React.Component {
                         <label>Email</label>
                         <input
                         id="email"
+                        type="email"
                         onChange={this.handleChange}
                         value={email}
                         ></input>

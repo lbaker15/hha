@@ -53,6 +53,13 @@ body {
     border-radius: 2px;
     outline: none;
 }
+.myProfile .inner .row select {
+    width: 250px;
+    height: 90%;
+    border: none;
+    border-radius: 2px;
+    outline: none;
+}
 .profileSave {
     width: 160px; height: 40px;
     background: rgb(32, 32, 255);

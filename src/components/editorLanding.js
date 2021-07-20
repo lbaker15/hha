@@ -2,11 +2,12 @@ import React from 'react';
 import './adminLanding.css';
 import pic from './assets/Editor_Icon_Gold.png';
 import {Link, Redirect} from 'react-router-dom';
+import Loader from './loader';
 
 class EditorLanding extends React.Component {
     state = {
         adminName: '',
-        admin: false
+        admin: false, validated: false
     }
     componentDidMount() {
         let cookieName = document.cookie.match(new RegExp('(^| )' + 'name' + '=([^;]+)'));
@@ -16,7 +17,7 @@ class EditorLanding extends React.Component {
             if (adminCookie[2] === 'false') {
                 if (cookieName) {
                     this.setState({
-                        adminName: cookieName[2]
+                        adminName: cookieName[2], validated: true
                     })
                 }
             } else {
@@ -27,7 +28,16 @@ class EditorLanding extends React.Component {
         }
     }
     render() {
-        const {adminName, admin} = this.state;
+        const {adminName, admin, validated} = this.state;
+        if (!validated) {
+            return (
+                <React.Fragment>
+                    <div>
+                        <Loader />
+                    </div>
+                </React.Fragment>
+            )
+        } else {
         return (
             <React.Fragment>
                 {admin && (
@@ -58,6 +68,7 @@ class EditorLanding extends React.Component {
                 </div>
             </React.Fragment>
         )
+        }
     }
 }
 
