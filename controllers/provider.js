@@ -185,7 +185,7 @@ const deleteF = async (req, res, next) => {
     }
 }
 
-const edit = async (req, res, next) => {
+const editSelf = async (req, res, next) => {
     const obj = req.body;
     console.log('obj', obj.id)
     if (obj.id) {
@@ -206,7 +206,7 @@ const edit = async (req, res, next) => {
     }
 }
 
-const editSelf = async (req, res, next) => {
+const edit = async (req, res, next) => {
     const obj = req.body;
     if (obj.id) {
     jwt.verify(req.token, 'secret', function(err, decoded) {

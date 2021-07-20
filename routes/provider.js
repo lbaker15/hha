@@ -15,12 +15,12 @@ let key = process.env.GOOGLE_API;
 router.post('/provider-list', middleware.verifyToken, controller.providerList);
 router.post('/add-provider', controller.addProvider);
 router.post('/delete', middleware.verifyToken, controller.delete);
-router.post('/edit', middleware.verifyToken, controller.edit)
+router.post('/edit', middleware.verifyToken, controller.editSelf)
 
 //CLIENT SIDE
 router.post('/get-providers', controller.getProviders);
 
 //EDIT SELF?
-router.post('/edit-provider', middleware.verifyToken, controller.editSelf)
+router.post('/edit-provider', middleware.verifyToken, controller.edit)
 
 exports.routes = router;
