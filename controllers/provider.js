@@ -211,6 +211,7 @@ const editSelf = async (req, res, next) => {
     console.log('obj', obj.id)
     if (obj.id) {
     jwt.verify(req.token, 'secret', function(err, decoded) {
+        console.log(err, decoded)
         if (!err) {
             Providers.updateOne({_id: obj.id}, obj, 
                 (err, result) => {
