@@ -187,7 +187,7 @@ const deleteF = async (req, res, next) => {
 
 const editSelf = async (req, res, next) => {
     const obj = req.body;
-    console.log('obj', obj.id)
+    console.log('obj here', obj.id)
     if (obj.id) {
     jwt.verify(req.token, 'secret', function(err, decoded) {
         if (!err) {
@@ -210,11 +210,9 @@ const edit = async (req, res, next) => {
     const obj = req.body;
     if (obj.id) {
     jwt.verify(req.token, 'secret', function(err, decoded) {
-        console.log('one', err, decoded)
         if (!err) {
             Providers.updateOne({_id: obj.id}, obj, 
                 (err, result) => {
-                    console.log('two', err, result)
                     if (!err) {
                         res.json({'Success': 'user changed'})
                     }
