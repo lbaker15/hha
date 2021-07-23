@@ -17,8 +17,8 @@ const deleteFunc = async (req, res, next) => {
     const {id} = req.body;
     if (id) {
         if (!err) {
-            let promise1 = helpers.employeeFindDelete;
-            let promise2 = helpers.employeeDelete;
+            let promise1 = helpers.employeeFindDelete(id);
+            let promise2 = helpers.employeeDelete(id);
             return Promise.all([promise1, promise2])
             .then(() => res.json({'Success': 'user deleted'}))
             .catch(err => {
