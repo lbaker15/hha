@@ -1,4 +1,4 @@
-const Employee = require('../models/employee');
+const Employee = require('..../models/employee');
 
 const employeeFindDelete = (id) => {
     console.log('id', id)
@@ -28,8 +28,6 @@ const employeeDelete = (id) => {
         })
     })
 }
-
-
 
 exports.employeeFindDelete = employeeFindDelete;
 exports.employeeDelete = employeeDelete;
