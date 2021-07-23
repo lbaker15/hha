@@ -10,7 +10,7 @@ const middleware = require('../middleware/auth');
 const Providers = require('../models/providers');
 const Employee = require('../models/employee');
 const HttpError = require('../models/http-error');
-const helpers = require('./helpers/file');
+const helpers = require('./file');
 
 const deleteFunc = async (req, res, next) => {
     jwt.verify(req.token, 'secret', function(err, decoded) {
