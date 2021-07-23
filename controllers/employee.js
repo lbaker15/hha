@@ -1,4 +1,4 @@
-const  path = require('path');
+const path = require('path');
 const express = require('express');
 const Users = require('../models/users');
 const router = express.Router();
