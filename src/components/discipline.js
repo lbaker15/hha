@@ -10,12 +10,13 @@ class Discipline extends React.Component {
         return (
             <React.Fragment>
                 <select id="discipline" onChange={handleChange}
+                value={value}
                 >
                     {disciplines.map(x => {
                         let selected = false;
                         if (x === value) { selected = true; }
                         return (
-                            <option selected={selected} key={x} value={x}>{x}</option>
+                            <option key={x} value={x}>{x}</option>
                         )
                     })}
                 </select>

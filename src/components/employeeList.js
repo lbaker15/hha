@@ -7,6 +7,7 @@ import {Link} from 'react-router-dom';
 import AdminIcon from './assets/Admin_Icon_White.png';
 import Loader from './loader';
 import Header from './header';
+import {getEmployees} from './functions/listItem';
 let alphabet = 'abcdefghijklmnopqrstuvwxyz'.split("");
 
 
@@ -58,15 +59,7 @@ class EmployeeList extends React.Component {
         let cookieId = document.cookie.match(new RegExp('(^| )' + 'id' + '=([^;]+)'));
         let cookie = document.cookie.match(new RegExp('(^| )' + 'token' + '=([^;]+)'));
         if (cookie) {
-            fetch('https://hannahs-heart-2.herokuapp.com/employee/employee-list', {
-                method: 'POST',
-                headers: {
-                    'authorization': cookie[0].split('=')[1],
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({id: cookieId[2]})
-            })
-            .then(res => res.json())
+            getEmployees(cookie, cookieId)
             .then(data => {
                 console.log(data)
                 this.setState({
@@ -160,6 +153,7 @@ class EmployeeList extends React.Component {
                         </div>
                     </div>
                     <div className="listHeader">
+                        {/* THIS IS WHERE DISCIPLINE HEADER WOULD GO */}
                     </div>
                     {edit && editItem && (
                         <EditInputSectionEmployee 

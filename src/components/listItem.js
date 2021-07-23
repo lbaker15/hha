@@ -1,9 +1,10 @@
 import React from 'react';
 import Delete from './delete';
 import Edit from './edit';
-import trash from './assets/Trash_Icon_Gold.png';
+import DeleteAlert from './deleteAlert';
+import ThirdRow from './thirdRow';
 import {TweenMax, TimelineMax} from 'gsap';
-import {gsap} from 'gsap';
+import {handleDelete, deleteEmployee} from './functions/listItem';
 
 class ListItem extends React.Component {
     constructor(props) {
@@ -33,38 +34,25 @@ class ListItem extends React.Component {
         if (deleteAlert && !employee) {
             let obj = {id: this.state.id}
             let cookie = document.cookie.match(new RegExp('(^| )' + 'token' + '=([^;]+)'));
-            fetch('https://hannahs-heart-2.herokuapp.com/login/delete', {
-                method: 'POST',
-                headers: {
-                    'authorization': cookie[0].split('=')[1],
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(obj)
-            })
-            .then(res => res.json())
+            handleDelete(obj, cookie)
             .then(data => {
-                this.animation.play().then(() => {
-                    this.props.refreshData()
-                })
+                if (data) {
+                    this.animation.play().then(() => {
+                        this.props.refreshData()
+                    })
+                }
             })
         }
         if (deleteAlert && employee) {
             let obj = {id: this.state.id}
             let cookie = document.cookie.match(new RegExp('(^| )' + 'token' + '=([^;]+)'));
-            fetch('https://hannahs-heart-2.herokuapp.com/employee/delete-employee', {
-                method: 'POST',
-                headers: {
-                    'authorization': cookie[0].split('=')[1],
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(obj)
-            })
-            .then(res => res.json())
+            deleteEmployee(obj, cookie)
             .then(data => {
-                console.log(data)
-                this.animation.play().then(() => {
-                    this.props.refreshData()
-                })
+                if (data) {
+                    this.animation.play().then(() => {
+                        this.props.refreshData()
+                    })
+                }
             })
         }
     }
@@ -80,25 +68,9 @@ class ListItem extends React.Component {
         return (
             <React.Fragment key={data._id} >
                 {deleteAlert && (
-                    <React.Fragment>
-                    <div className="deleteMsg">
-                        <img src={trash} />
-                        <h2>Are you sure you wish to delete
-                            {" " + String(data.lastname)[0].toUpperCase() + String(data.lastname).slice(1) + ", " + String(data.firstname)[0].toUpperCase() + String(data.firstname).slice(1) + " "}
-                             from the database?
-                        </h2>
-                        <h3>This cannot be undone!</h3>
-                        <div className="btFlex">
-                            <button
-                            onClick={this.closeDelete}
-                            >Cancel</button>
-                            <button
-                            onClick={this.deleteMsg}
-                            >Delete</button>
-                        </div>
-                    </div>
-                    <div></div>
-                    </React.Fragment>
+                    <DeleteAlert 
+                    closeDelete={this.closeDelete} deleteMsg={this.deleteMsg}
+                    lastname={data.lastname} firstname={data.firstname} />
                 )}
                 <div ref={this.refe} key={data._id} id={data._id} className="item">
                     <div>
@@ -123,14 +95,10 @@ class ListItem extends React.Component {
                             </h1>
                         )}
                     </div>
-                    <div style={employee ? {width: '20%'} : null}>
-                        {!employee && (
-                            <h3 style={{color: 'white'}}>{(data.gender) === 'female' ? 'F' : 'M' }</h3>
-                        )}
-                        {employee && (
-                            <h3 style={{color: 'white', fontSize: 22, marginTop: 13, fontWeight: 400, opacity: 0.8}}>{data.discipline}</h3>
-                        )}
-                    </div>
+                    <ThirdRow 
+                    discipline={data.discipline} gender={data.gender} 
+                    employee={employee}
+                    />
                     <div>
                         <Delete 
                         deleteMsg={this.deleteMsg}

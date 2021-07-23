@@ -1,6 +1,9 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencilAlt, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import Discipline from './discipline';
+import {submitChange, addEmployee} from './functions/inputSection';
+import Row from './row';
 
 
 class EditInputSectionEmployee extends React.Component {
@@ -59,15 +62,7 @@ class EditInputSectionEmployee extends React.Component {
             };
             let cookie = document.cookie.match(new RegExp('(^| )' + 'token' + '=([^;]+)'))[0].split('=')[1];
             setTimeout(() => {
-                fetch('https://hannahs-heart-2.herokuapp.com/employee/edit-employee', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'authorization': cookie
-                    },
-                    body: JSON.stringify(obj)
-                })
-                .then(res => res.json())
+                submitChange(cookie, obj)
                 .then(data => {
                     if (data.Success) {
                         this.setState({
@@ -85,41 +80,20 @@ class EditInputSectionEmployee extends React.Component {
                     if (cookieId) {
                         let obj2 = {username: username, password, admin: false, hcProvider: false}
                         //ADD USER AS WELL??
-                        fetch('https://hannahs-heart-2.herokuapp.com/login/signup', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(obj2)
-                        })
-                        .then(res => res.json())
+                        addEmployee(cookieId, this.state, obj2)
                         .then(data => {
-                            if (data.Success) {
-                                let userId = data.Success;
-                                let obj = {...this.state, userId, author: cookieId[2]}
-                                fetch('https://hannahs-heart-2.herokuapp.com/employee/add-employee', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify(obj)
+                            if (data.Data) {
+                                this.setState({
+                                    alert: 'Employee Added'
                                 })
-                                .then(res => res.json())
-                                .then(data => {
-                                    if (data.Data) {
-                                        this.setState({
-                                            alert: 'Employee Added'
-                                        })
-                                        this.props.refreshData()
-                                        
-                                    }
+                                this.props.refreshData()        
+                            }
+                        })
+                        .catch(err => {
+                            if (err) {
+                                this.setState({
+                                    alert: err
                                 })
-                            } else {
-                                if (data.message) {
-                                    this.setState({
-                                        alert: data.message
-                                    })
-                                }
                             }
                         })
                     } else {
@@ -149,65 +123,19 @@ class EditInputSectionEmployee extends React.Component {
                             <FontAwesomeIcon style={{fontSize: 80}} icon={faPlusCircle} />
                         }
                     </div>
-                    <div className="row">
-                        <label>Username</label>
-                        <input
-                        id="username"
-                        onChange={this.handleChange}
-                        value={username}
-                        ></input>
-                    </div>
-                    <div className="row">
-                        <label>Password</label>
-                        <input
-                        id="password"
-                        type="password"
-                        onChange={this.handleChange}
-                        value={password}
-                        ></input>
-                    </div>
-                    <div className="row">
-                        <label>First Name</label>
-                        <input
-                        id="firstname"
-                        onChange={this.handleChange}
-                        value={firstname}
-                        ></input>
-                    </div>
-                    <div style={{height: 60}} className="row">
-                        <label>Last Name</label>
-                        <input
-                        id="lastname"
-                        onChange={this.handleChange}
-                        value={lastname}
-                        ></input>
-                    </div>
+                    <Row type="email" label="Username" id="username" value={username} onChange={this.handleChange} />
+                    <Row type="password" label="Password" id="password" value={password} onChange={this.handleChange} />
+                    <Row type="text" label="First Name" id="firstname" value={firstname} onChange={this.handleChange} />
+                    <Row type="text" label="Last Name" id="lastname" value={lastname} onChange={this.handleChange} />                    
                     <div style={{height: 65}} className="row">
                         <label>Discipline</label>
-                        <input
-                        id="discipline"
-                        onChange={this.handleChange}
+                        <Discipline 
+                        handleChange={this.handleChange}  
                         value={discipline}
-                        ></input>
+                        />
                     </div>
-                    <div className="row">
-                        <label>Email</label>
-                        <input
-                        id="email"
-                        type="email"
-                        onChange={this.handleChange}
-                        value={email}
-                        ></input>
-                    </div>
-                    <div className="row">
-                        <label>Business Address</label>
-                        <input
-                        id="businessAddress"
-                        onChange={this.handleChange}
-                        value={businessAddress}
-                        ></input>
-                    </div>
-                  
+                    <Row type="email" label="Email" id="email" value={email} onChange={this.handleChange} />
+                    <Row type="text" label="Business Address" id="businessAddress" value={businessAddress} onChange={this.handleChange} />
                     {alert && (
                         <div style={{justifyContent: 'center'}} className="row">
                             <h4>{alert}</h4>
