@@ -166,20 +166,21 @@ const getProviders = async (req, res, next) => {
 }
 
 const deleteF = async (req, res, next) => {
+    console.log('deleteF fired')
     const {id} = req.body;
     if (id) {
-    jwt.verify(req.token, 'secret', function(err, decoded) {
-        if (!err) {
-            Providers.deleteOne({_id: id}, (err, result) => {
-                if (!err) {
-                    console.log(result)
-                    res.json({'Success': 'user deleted'})
-                }
-            })
-        } else {
-            res.json({'Failure': err})
-        }
-    })
+        jwt.verify(req.token, 'secret', function(err, decoded) {
+            if (!err) {
+                Providers.deleteOne({_id: id}, (err, result) => {
+                    if (!err) {
+                        console.log(result)
+                        res.json({'Success': 'user deleted'})
+                    }
+                })
+            } else {
+                res.json({'Failure': err})
+            }
+        })
     } else {
         res.json({'Failure': 'No data sent'})
     }
