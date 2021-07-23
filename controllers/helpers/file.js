@@ -1,4 +1,4 @@
-const Employee = require('.../models/employee');
+const Employee = require('./employee');
 
 const employeeFindDelete = (id) => {
     console.log('id', id)
