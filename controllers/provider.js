@@ -237,14 +237,19 @@ const edit = async (req, res, next) => {
                 (err, result) => {
                     if (!err) {
                         res.json({'Success': 'user changed'})
+                    } else {
+                        let error = new HttpError(err, 500)
+                        next(error)
                     }
             })
         } else {
-            res.json({'Failure': err})
+            let error = new HttpError(err, 401)
+            next(error)
         }
     })
     } else {
-        res.json({'Failure': 'No data sent'})
+        let error = new HttpError('No id sent', 401)
+        next(error)
     }
 }
 
