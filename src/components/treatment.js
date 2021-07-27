@@ -19,15 +19,17 @@ let values = [
 
 class Treatment extends React.Component {
     render() {
-        const {handleInputArray, treatment, noHeader} = this.props;
+        const {editItem, handleInputArray, services, noHeader} = this.props;
         return (
             <React.Fragment>
                 <h2 style={noHeader ? {visibility: 'hidden', marginBottom: -50} : null}>What are you seeking support for?</h2>
                     {values.map((x,i) => {
+                        let check = (editItem) ? (editItem.services.includes(String(x.value.toLocaleLowerCase()))) ? true : services.includes(String(x.value.toLocaleLowerCase())) : services.includes(String(x.value.toLocaleLowerCase()));
                         return (
                             <React.Fragment key={x+i}>
                                 <label key={x+i}>
                                     <InputElement 
+                                    selected={check}
                                     value={x.value} i={i}
                                     handleChange={handleInputArray} 
                                     dataVal="services"

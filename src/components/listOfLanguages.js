@@ -1,7 +1,7 @@
 import React from 'react';
 import InputElement from './inputElement';
 
-const languages = [
+const languagesList = [
 'Afrikaans', 'Albanian', 'Amharic', 'Arabic', 'Armenian',
 'Azerbaijani', 'Basque', 'Belarusian', 'Bengali', 'Bosnian', 'Bulgarian',
 'Catalan', 'Cebuano', 'Chichewa', 'Chinese', 'Corsican', 'Croatian',
@@ -24,14 +24,16 @@ const languages = [
 
 class ListOfLanguages extends React.Component {
     render() {
-        const {handlePreferredLang} = this.props;
+        const {handlePreferredLang, editItem, languages} = this.props;
         return (
             <React.Fragment>
-                {languages.map((x, i) => {
+                {languagesList.map((x, i) => {
+                    let check = (editItem) ? (editItem.languages.includes(String(x.toLocaleLowerCase()))) ? true : languages.includes(String(x.toLocaleLowerCase())) : languages.includes(String(x.toLocaleLowerCase()));
                     return (
                         <label 
-                        key={x+i} style={i === languages.length-1 ? {userSelect: 'none', marginBottom: '50px'} : {userSelect: 'none'}}>
+                        key={x+i} style={i === languagesList.length-1 ? {userSelect: 'none', marginBottom: '50px'} : {userSelect: 'none'}}>
                             <InputElement 
+                            selected={check}
                             handleChange={handlePreferredLang} 
                             value={x} i={i} 
                             id={"languages_" + i}

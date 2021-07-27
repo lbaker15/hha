@@ -95,10 +95,10 @@ class ListItem extends React.Component {
                             </h1>
                         )}
                     </div>
-                    <ThirdRow 
-                    discipline={data.discipline} gender={data.gender} 
-                    employee={employee}
-                    />
+                        <ThirdRow 
+                        discipline={data.discipline} gender={data.gender} 
+                        employee={employee}
+                        />
                     <div>
                         <Delete 
                         deleteMsg={this.deleteMsg}

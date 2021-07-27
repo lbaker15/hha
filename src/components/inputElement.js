@@ -8,9 +8,17 @@ class InputElement extends React.Component {
         this.setState({ checked: e.target.checked })
         this.props.handleChange(e)
     }
+    componentDidMount() {
+        const { selected } = this.props;
+        if (selected) {
+            this.setState({
+                checked: selected
+            })
+        }
+    }
     render() {
         const {checked} = this.state;
-        const {value, radio, dataVal, id} = this.props;
+        const {value, radio, dataVal, id, selected} = this.props;
         // if (gender) {
         return (
             <React.Fragment>

@@ -6,7 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencilAlt, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import InputMask from 'react-input-mask';
 import Discipline from './discipline';
-
+import Row from './row';
+import {editProvider, usernameCheck, addProvider} from './functions/listItem';
 
 class EditInputSection extends React.Component {
     state = {
@@ -16,9 +17,9 @@ class EditInputSection extends React.Component {
         languages: [], gendersOpen: false, telephone: '', 
         alert: '', otherGender: ''
     }
-    handleOtherGender = (e) => {
+    handleOtherGender = (val) => {
         this.setState({
-            otherGender: e.target.value
+            otherGender: val
         })
     }
     componentDidMount() {
@@ -41,53 +42,20 @@ class EditInputSection extends React.Component {
         }
     }
     addProvider = (obj2, cookieId, address, val) => {
-        fetch('https://hannahs-heart-2.herokuapp.com/login/signup', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(obj2)
-        })
-        .then(res => res.json())
+        addProvider(obj2, cookieId, address, val, this.state)
         .then(data => {
-            if (data.Success) {
-                let userId = data.Success;
-                let obj = {...this.state, userId, author: cookieId[2], businessAddress: address}
-                obj.firstname = obj.firstname.toLowerCase()
-                obj.lastname = obj.lastname.toLowerCase()
-                obj.telephone = val;
-                delete obj.languagesOpen;
-                delete obj.servicesOpen;
-                delete obj.gendersOpen;
-                delete obj.address;
-                fetch('https://hannahs-heart-2.herokuapp.com/provider/add-provider', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(obj)
+            if (data.Data) {
+                this.setState({
+                    alert: 'Provider Added'
                 })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.Data) {
-                        this.setState({
-                            alert: 'Provider Added'
-                        })
-                        this.props.refreshData()
-                        //ANIMATION HERE?
-                        setTimeout(() => {
-                            this.setState({
-                                alert: ''
-                            })
-                        }, 5000)
-                    }
+                this.props.refreshData()
+            }
+        })
+        .catch(err => {
+            if (err) {
+                this.setState({
+                    alert: err
                 })
-            } else {
-                if (data.message) {
-                    this.setState({
-                        alert: data.message
-                    })
-                }
             }
         })
     }
@@ -167,10 +135,10 @@ class EditInputSection extends React.Component {
         }
     }
     handleClick = async () => {
-        let num = this.state.telephone.split(')')[1];
+        let num = (String(this.state.telephone).split(')'))[1] ? String(this.state.telephone).split(')')[1].trim() : this.state.telephone ;
         let finalNum = new String;
         function removeSpace(str) {
-            let newStr = str.split(" ")
+            let newStr = String(str).split(" ")
             return new Promise((res, rej) => {
                 newStr.map((x, i) => {
                     finalNum = finalNum + x;
@@ -178,7 +146,7 @@ class EditInputSection extends React.Component {
                 })
             })
         }
-        removeSpace(num.trim())
+        removeSpace(num)
         .then(val => {
         val = Number(val)
         console.log(val)
@@ -190,17 +158,11 @@ class EditInputSection extends React.Component {
             obj.firstname = obj.firstname.toLowerCase()
             obj.lastname = obj.lastname.toLowerCase()
             obj.telephone = val;
+            obj.businessAddress = obj.address;
             let cookie = document.cookie.match(new RegExp('(^| )' + 'token' + '=([^;]+)'))[0].split('=')[1];
+            console.log('LOOKY',obj)
             setTimeout(() => {
-                fetch('https://hannahs-heart-2.herokuapp.com/provider/edit-provider', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'authorization': cookie
-                    },
-                    body: JSON.stringify(obj)
-                })
-                .then(res => res.json())
+                editProvider(obj, cookie)
                 .then(data => {
                     if (data.Success) {
                         console.log(data)
@@ -220,14 +182,7 @@ class EditInputSection extends React.Component {
                         let username = firstname + lastname;
                         let object = {username}
                         let newUserName = (object) => {
-                                fetch('https://hannahs-heart-2.herokuapp.com/login/user-check', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify(object)
-                                })
-                                .then(res => res.json())
+                                usernameCheck(object)
                                 .then(data => {
                                     if (data.Failure) {
                                         username = username + "1"
@@ -281,7 +236,7 @@ class EditInputSection extends React.Component {
     render() {
         const {edit, editItem, handleAdd, handleEdit} = this.props;
         const {gendersOpen, age, telephone, ageSet, minAge, maxAge, servicesOpen, languagesOpen, firstname, lastname, discipline, gender, genders, services, languages, address} = this.state;
-        console.log(this.state)
+        console.log('LOOK HERE', this.state.genders)
         return (
             <React.Fragment>
             <button
@@ -294,36 +249,13 @@ class EditInputSection extends React.Component {
                         <FontAwesomeIcon style={{fontSize: 80}} icon={faPlusCircle} />
                     }
                 </div>
-                <div className="row">
-                    <label>First Name</label>
-                    <input
-                    id="firstname"
-                    type="text"
-                    onChange={this.handleChange}
-                    value={firstname}
-                    ></input>
-                </div>
-                <div className="row">
-                    <label>Last Name</label>
-                    <input
-                    id="lastname"
-                    type="text"
-                    onChange={this.handleChange}
-                    value={lastname}
-                    ></input>
-                </div>
-                <div className="row">
-                    <label>Age</label>
-                    <input
-                    id="age"
-                    type="number"
-                    onChange={this.handleChange}
-                    value={age}
-                    ></input>
-                </div>
+                <Row type="text" label="First Name" id="firstname" value={firstname} onChange={this.handleChange} />
+                <Row type="text" label="Last Name" id="lastname" value={lastname} onChange={this.handleChange} />
+                <Row type="number" label="Age" id="age" value={age} onChange={this.handleChange} />
+
                 <div className="row">
                     <label>Discipline</label>
-                    <Discipline value={discipline} handleChange={this.handleChange} />
+                    <Discipline editItem={editItem} value={discipline} handleChange={this.handleChange} />
                 </div>
                 <div style={{height: 70}} className="row">
                     <label>Gender</label>
@@ -395,6 +327,7 @@ class EditInputSection extends React.Component {
                     <div className="myrow">
                         <div className="openFlex">
                             <Gender 
+                            editItem={editItem}
                             edit={true} 
                             genders={genders}
                             otherGender={this.state.otherGender}
@@ -417,6 +350,8 @@ class EditInputSection extends React.Component {
                     <div className="myrow">
                         <div className="openFlex">
                             <ListOfLanguages 
+                            languages={languages}
+                            editItem={editItem}
                             handlePreferredLang={this.handleChange} 
                             noGenderWidth={true} 
                             />
@@ -436,7 +371,8 @@ class EditInputSection extends React.Component {
                     <div className="myrow">
                         <div className="openFlex">
                             <Treatment 
-                            treatment={services}
+                            editItem={editItem}
+                            services={services}
                             handleInputArray={this.handleChange} 
                             sendEdit={this.sendEdit} 
                             noHeader={true} />

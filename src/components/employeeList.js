@@ -8,7 +8,9 @@ import AdminIcon from './assets/Admin_Icon_White.png';
 import Loader from './loader';
 import Header from './header';
 import {getEmployees} from './functions/listItem';
-let alphabet = 'abcdefghijklmnopqrstuvwxyz'.split("");
+import Alphabet from './alphabet';
+import ListHeader from './listHeader';
+
 
 
 
@@ -120,6 +122,12 @@ class EmployeeList extends React.Component {
             })
         })
     }
+    closeFilter = () => {
+        this.setState({
+            filter: false,
+            filteredRes: []
+        })
+    }
     render() {
         let adminCookie = document.cookie.match(new RegExp('(^| )' + 'admin' + '=([^;]+)'));
         const {validated, adminName, letter, filteredRes, filter, add, data, edit, editItem, editItemTwo} = this.state;
@@ -138,23 +146,9 @@ class EmployeeList extends React.Component {
                             <Add employee={true} searchFilter={this.searchFilter} handleAdd={this.handleAdd} />
                         </div>
                     </div>
-                    <div className="alphabet">
-                        <div className="aInner">
-                            {alphabet.map(l => {
-                                return (
-                                    <button 
-                                    style={letter === l ? {color: '#727273'} : null}
-                                    value={l}
-                                    onClick={this.filterResults}
-                                    key={l}>{l.toUpperCase()}</button>
-                                    )
-                                })
-                            }
-                        </div>
-                    </div>
-                    <div className="listHeader">
-                        {/* THIS IS WHERE DISCIPLINE HEADER WOULD GO */}
-                    </div>
+
+                    <Alphabet closeFilter={this.closeFilter} letter={letter} filterResults={this.filterResults} />
+                    <ListHeader />
                     {edit && editItem && (
                         <EditInputSectionEmployee 
                         employee={true}

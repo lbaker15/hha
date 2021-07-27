@@ -7,6 +7,8 @@ import AdminIcon from './assets/Admin_Icon_White.png';
 import Loader from './loader';
 import {Link} from 'react-router-dom';
 import Header from './header';
+import Alphabet from './alphabet';
+import ListHeader from './listHeader';
 let alphabet = 'abcdefghijklmnopqrstuvwxyz'.split("");
 
 
@@ -55,7 +57,7 @@ class AdminList extends React.Component {
     refreshData = () => {
         let cookieId = document.cookie.match(new RegExp('(^| )' + 'id' + '=([^;]+)'));
         let cookie = document.cookie.match(new RegExp('(^| )' + 'token' + '=([^;]+)'));
-        if (cookie) {
+        if (cookie && cookieId) {
             fetch('https://hannahs-heart-2.herokuapp.com/provider/provider-list', {
                 method: 'POST',
                 headers: {
@@ -122,6 +124,12 @@ class AdminList extends React.Component {
                 letter: ''
             })
         })
+    } 
+    closeFilter = () => {
+        this.setState({
+            filter: false,
+            filteredRes: []
+        })
     }
     render() {
         const {validated, adminName, letter, filteredRes, filter, add, data, edit, editItem} = this.state;
@@ -142,23 +150,8 @@ class AdminList extends React.Component {
                             <Add searchFilter={this.searchFilter} handleAdd={this.handleAdd} />
                         </div>
                     </div>
-                    <div className="alphabet">
-                        <div className="aInner">
-                            {alphabet.map(l => {
-                                return (
-                                    <button 
-                                    style={letter === l ? {color: '#727273'} : null}
-                                    value={l}
-                                    onClick={this.filterResults}
-                                    key={l}>{l.toUpperCase()}</button>
-                                )
-                            })
-                            }
-                        </div>
-                    </div>
-                    <div className="listHeader">
-                        <div className="gen">Gender</div>
-                    </div>
+                    <Alphabet closeFilter={this.closeFilter} letter={letter} filterResults={this.filterResults} />
+                    <ListHeader className={"gen"} value={"Gender"} />
                     {edit && editItem && (
                         <EditInputSection 
                         handleEdit={this.handleEditClose} 
