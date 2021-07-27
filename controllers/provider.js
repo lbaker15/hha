@@ -12,7 +12,6 @@ const HttpError = require('../models/http-error');
 let key = process.env.GOOGLE_API;
 
 const providerList = async (req, res, next) => {
-    console.log('new')
     const {id} = req.body;
     if (id) {
     jwt.verify(req.token, 'secret', function(err, decoded) {
@@ -171,12 +170,16 @@ const deleteF = async (req, res, next) => {
     if (id) {
         jwt.verify(req.token, 'secret', function(err, decoded) {
             if (!err) {
-                Providers.deleteOne({_id: id}, (err, result) => {
-                    if (!err) {
-                        console.log(result)
-                        res.json({'Success': 'user deleted'})
-                    }
+                Providers.find({_id: id}, (err, result) => {
+                    console.log(result)
+                    let userId = result.userId;
                 })
+                // Providers.deleteOne({_id: id}, (err, result) => {
+                //     if (!err) {
+                //         console.log(result)
+                //         res.json({'Success': 'user deleted'})
+                //     }
+                // })
             } else {
                 res.json({'Failure': err})
             }
