@@ -165,7 +165,7 @@ const getProviders = async (req, res, next) => {
 }
 
 const deleteF = async (req, res, next) => {
-    console.log('deleteF fired')
+    console.log('deleteF fired edit')
     const {id} = req.body;
     if (id) {
         jwt.verify(req.token, 'secret', function(err, decoded) {
