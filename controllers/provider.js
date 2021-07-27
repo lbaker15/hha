@@ -93,7 +93,6 @@ const addProvider = async (req, res, next) => {
                         }
                     // }, 100)
             } catch(err) {
-                console.log('ERR', err.response.data, err.response.headers)
                 let error = new HttpError('Address fail, address cannot be converted.', 500)
                 return next(error);
             }
@@ -181,12 +180,12 @@ const deleteF = async (req, res, next) => {
                                         console.log(result)
                                         res.json({'Success': 'user deleted'})
                                     } else {
-                                        let error = new HttpError('Could not find provider.', 500)
+                                        let error = new HttpError('Could not delete provider.', 500)
                                         next(error)
                                     }
                                 })
                             } else {
-                                let error = new HttpError('Could not find user.', 500)
+                                let error = new HttpError('Could not delete user.', 500)
                                 next(error)
                             }
                         })
@@ -228,6 +227,7 @@ const editSelf = async (req, res, next) => {
 }
 
 const edit = async (req, res, next) => {
+    console.log('edit')
     const obj = req.body;
     if (obj.id) {
     jwt.verify(req.token, 'secret', function(err, decoded) {
