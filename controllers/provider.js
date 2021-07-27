@@ -228,7 +228,7 @@ const editSelf = async (req, res, next) => {
 }
 
 const edit = async (req, res, next) => {
-    console.log('edit')
+    console.log('edit', obj)
     const obj = req.body;
     if (obj.id) {
     jwt.verify(req.token, 'secret', function(err, decoded) {
