@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 var jwt = require('jsonwebtoken');
 const Providers = require('../models/providers');
+const Users = require('../models/users');
 const Provider = require('../models/providers');
 const router = express.Router();
 const axios = require('axios');
@@ -171,15 +172,19 @@ const deleteF = async (req, res, next) => {
         jwt.verify(req.token, 'secret', function(err, decoded) {
             if (!err) {
                 Providers.find({_id: id}, (err, result) => {
-                    console.log(result)
-                    let userId = result.userId;
+                    let userId = result[0].userId;
+                    if (userId) {
+                        Users.deleteOne({_id: userId}, (err, result2) => {
+                            console.log('two',result2)
+                            Providers.deleteOne({_id: id}, (err, result) => {
+                                if (!err) {
+                                    console.log(result)
+                                    res.json({'Success': 'user deleted'})
+                                }
+                            })
+                        })
+                    }
                 })
-                // Providers.deleteOne({_id: id}, (err, result) => {
-                //     if (!err) {
-                //         console.log(result)
-                //         res.json({'Success': 'user deleted'})
-                //     }
-                // })
             } else {
                 res.json({'Failure': err})
             }
