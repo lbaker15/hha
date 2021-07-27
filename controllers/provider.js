@@ -175,22 +175,34 @@ const deleteF = async (req, res, next) => {
                     let userId = result[0].userId;
                     if (userId) {
                         Users.deleteOne({_id: userId}, (err, result2) => {
-                            console.log('two',result2)
-                            Providers.deleteOne({_id: id}, (err, result) => {
-                                if (!err) {
-                                    console.log(result)
-                                    res.json({'Success': 'user deleted'})
-                                }
-                            })
+                            if (!err) {
+                                Providers.deleteOne({_id: id}, (err, result) => {
+                                    if (!err) {
+                                        console.log(result)
+                                        res.json({'Success': 'user deleted'})
+                                    } else {
+                                        let error = new HttpError('Could not find provider.', 500)
+                                        next(error)
+                                    }
+                                })
+                            } else {
+                                let error = new HttpError('Could not find user.', 500)
+                                next(error)
+                            }
                         })
+                    } else {
+                        let error = new HttpError('Could not find provider.', 500)
+                        next(error)
                     }
                 })
             } else {
-                res.json({'Failure': err})
+                let error = new HttpError(err, 401)
+                next(error)
             }
         })
     } else {
-        res.json({'Failure': 'No data sent'})
+        let error = new HttpError('No id sent', 401)
+        next(error)
     }
 }
 
