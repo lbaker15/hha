@@ -207,7 +207,7 @@ const deleteF = async (req, res, next) => {
 
 const editSelf = async (req, res, next) => {
     const obj = req.body;
-    console.log('obj here', obj.id)
+    console.log('obj here', obj)
     if (obj.id) {
     jwt.verify(req.token, 'secret', function(err, decoded) {
         if (!err) {
@@ -222,7 +222,8 @@ const editSelf = async (req, res, next) => {
         }
     })
     } else {
-        res.json({'Failure': 'No data sent'})
+        let error = new HttpError('No id sent', 401)
+        next(error)
     }
 }
 
