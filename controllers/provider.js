@@ -172,8 +172,8 @@ const deleteF = async (req, res, next) => {
         jwt.verify(req.token, 'secret', function(err, decoded) {
             if (!err) {
                 Providers.find({_id: id}, (err, result) => {
+                    if (result[0]) {
                     let userId = result[0].userId;
-                    if (userId) {
                         Users.deleteOne({_id: userId}, (err, result2) => {
                             if (!err) {
                                 Providers.deleteOne({_id: id}, (err, result) => {
